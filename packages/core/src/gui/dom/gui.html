@@ -1,0 +1,62 @@
+<div class="ease-gui mode-select">
+    <div class="header">
+        <div class="property-name"></div>
+        <div class="c">
+            <div class="ease-selector">
+                <div class="corner-curve-container">
+                    <div class="ratio-box">
+                        <div class="ratio-box-inner">
+                            <canvas class="corner-curve"></canvas>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="template-selector">
+                    <div class="curve-selector-container">
+                        <select class="curve-selector" dir="rtl"></select>
+                    </div>
+                    <div class="orientation-selector-container">
+                        <select class="orientation-selector"></select>
+                    </div>
+                    <div class="edit-button-container">
+                        <svg class="edit-button" xmlns="http://www.w3.org/2000/svg" height="18px" viewBox="0 0 24 24" width="18px" fill="#606060"><path d="M0 0h24v24H0z" fill="none"/><path d="M19.5 9.5c-1.03 0-1.9.62-2.29 1.5h-2.92c-.39-.88-1.26-1.5-2.29-1.5s-1.9.62-2.29 1.5H6.79c-.39-.88-1.26-1.5-2.29-1.5C3.12 9.5 2 10.62 2 12s1.12 2.5 2.5 2.5c1.03 0 1.9-.62 2.29-1.5h2.92c.39.88 1.26 1.5 2.29 1.5s1.9-.62 2.29-1.5h2.92c.39.88 1.26 1.5 2.29 1.5 1.38 0 2.5-1.12 2.5-2.5s-1.12-2.5-2.5-2.5z"/></svg>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="editor-container">
+        <div class="ratio-box">
+            <div class="ratio-box-inner">
+                <canvas class="editor"></canvas>
+            </div>
+        </div>
+        <div class="path-selector-container">
+            <input type="text" class="path-selector" onclick="this.select();" value="M0,0 C20, 23,123" />
+            <div class="copy-button-container">
+                <svg class="copy-button" xmlns="http://www.w3.org/2000/svg" height="18px" viewBox="0 0 24 24" width="18px" fill="#606060"><path d="M0 0h24v24H0V0z" fill="none"/><path d="M16 1H4c-1.1 0-2 .9-2 2v14h2V3h12V1zm3 4H8c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h11c1.1 0 2-.9 2-2V7c0-1.1-.9-2-2-2zm0 16H8V7h11v14z"/></svg>
+            </div>
+        </div>
+        <div class="editor-buttons">
+            <div class="decline-button">
+                <div class="icon-container">
+                    <svg class="icon" xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 0 24 24" width="24px" fill="#c93333"><path d="M0 0h24v24H0V0z" fill="none"/><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41z"/></svg>
+                </div>
+                <div class="label-container">
+                    <div class="label">DISCARD</div>
+                </div>
+            </div>
+            <div class="accept-button">
+                <div class="label-container">
+                    <div class="label">ACCEPT</div>
+                </div>
+                <div class="icon-container">
+                    <svg class="icon" xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 0 24 24" width="24px" fill="#84be18"><path d="M0 0h24v24H0V0z" fill="none"/><path d="M9 16.2l-3.5-3.5c-.39-.39-1.01-.39-1.4 0-.39.39-.39 1.01 0 1.4l4.19 4.19c.39.39 1.02.39 1.41 0L20.3 7.7c.39-.39.39-1.01 0-1.4-.39-.39-1.01-.39-1.4 0L9 16.2z"/></svg>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div>
+        
+    </div>
+</div>

@@ -1,0 +1,313 @@
+$color-light: #ace247;
+$color-regular: #88CE02;
+$color-dark: #679e00;
+
+.dg {
+    .cr.ease {
+        height: auto;
+        border-left: 3px solid $color-light;
+        padding: 0;
+
+        .ease-gui {
+            display: flex;
+            flex-direction: column;
+            justify-content: stretch;
+
+            .header {
+                display: flex;
+                width: 100%;
+
+                .property-name {
+                    padding-left: 4px;
+                }
+        
+                .c {
+                    padding-right: 5px;
+                    float: right;
+        
+                    .ease-selector {
+                        display:flex;
+                        justify-content: stretch;
+                        align-items: stretch;
+                        height: 30px;
+
+                        .corner-curve-container {
+                            min-width: 30px;
+                            max-width: 30px;
+                            background-color: #1A1A1A;
+            
+                            .corner-curve {
+                                box-sizing: border-box;
+                                width: 100%;
+                                height: 100%;
+                            }
+                        }
+
+                        .template-selector {
+                            flex-grow: 1;
+                            display: flex;
+                            align-items: stretch;
+
+                            .curve-selector-container {
+                                flex-grow: 1;
+                                max-width: 70px;
+                                min-width: 64px;
+                                margin: 0;
+                                background-color: $color-regular;
+                                font-weight: bold;
+                                text-align: right;
+
+                                .curve-selector {
+                                    width: 100%;
+                                    height: 100%;
+                                    background-color: transparent;
+                                    font-weight: bold;
+                                    text-align: right;
+                                    padding-right: 8px;
+                                }
+                            }
+
+                            .orientation-selector-container {
+                                flex-grow: 2;
+                                margin: 0;
+
+                                .orientation-selector {
+                                    width: 100%;
+                                    height: 100%;
+                                    text-decoration: underline;
+                                    color: #ffffff;
+                                    background-color: #303030;
+                                    padding-left: 6px;
+                                }
+                            }
+
+                            .edit-button-container {
+                                width: 12px;
+                                background-color: #303030;
+                                border-radius: 0px 4px 4px 0px;
+                                display: flex;
+                                flex-direction: column;
+                                align-items: center;
+                                justify-content: center;
+    
+                                .edit-button {
+                                    width: 22px;
+                                    height: 100%;
+                                    margin-right: 4px;
+                                    transform: rotateZ(90deg);
+                                    cursor: pointer;
+                                    transition: fill .2s;
+                                    
+                                    &:hover {
+                                        fill: $color-regular;
+                                    }
+                                }
+                            }
+
+                            select {
+                                appearance: none;
+                                padding: 4px;
+                                margin: 0;
+                                outline: none;
+                                border: none;
+                                cursor: pointer;
+
+                                option {
+                                    background-color: #000000;
+                                    color: #ffffff;
+                                }
+
+                                &:disabled {
+                                    cursor: auto;
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+
+            .editor-container {
+                width: 100%;
+                background-color: #303030;
+
+                .editor {
+                    width: 100%;
+                    height: 100%;
+                }
+
+                .path-selector-container {
+                    height: 22px;
+                    background-color: #303030;
+                    display: flex;
+
+                    .path-selector {
+                        flex-grow: 1;
+                        background-color: transparent;
+                        font-size: 11px;
+                        font-style: italic;
+                        color: #a2a2a2;
+                        padding-left: 6px;
+                        width: 100%;
+                        height: 100%;
+                        margin: 0;
+                        outline: none;
+                        border: none;
+                        border-top: 1px solid #424242
+                    }
+
+                    .copy-button-container {
+                        display: flex;
+                        flex-direction: column;
+                        justify-content: center;
+
+                        .copy-button {
+                            cursor: pointer;
+                            transition: fill .2s;
+                                    
+                            &:hover {
+                                fill: $color-regular;
+                            }
+                        }
+                    }
+                }
+
+                .editor-buttons {
+                    display: flex;
+                    justify-content: center;
+                    align-items: stretch;
+
+                    .accept-button, .decline-button {
+                        background-color: #1A1A1A;
+                        flex-grow: 1;
+                        display: flex;
+                        align-items: stretch;
+                        user-select: none;
+                        cursor: pointer;
+
+                        .label-container {
+                            flex-grow: 1;
+                            display: flex;
+                            justify-content: center;
+                            align-items: stretch;
+
+                            .label {
+                                font-weight: bold;
+                                font-size: 11px;
+                                padding-top: 3px;
+                            }
+                        }
+
+                        .icon-container {
+                            width: 36px;
+                            height: 30px;
+                            display: flex;
+                            align-items: center;
+                            justify-content: center;
+                        }
+
+                        .label {
+                            transition: color .1s;
+                        }
+                        
+                        .icon {
+                            transform-origin: center;
+                            transition: fill .1s, transform .1s;
+                        }
+
+                        &:hover {
+                            .icon {
+                                transform: scale(1.2, 1.2);
+                            }
+                        }
+                    }
+
+                    .accept-button {
+                        border-top: 1px solid #3c4c1c;
+
+                        .label {
+                            text-align: right;
+                            color: #84be18;
+                        }
+
+                        &:hover {
+                            .label {
+                                color: $color-light;
+                            }
+
+                            .icon {
+                                fill: $color-light;
+                            }
+                        }
+                    }
+
+                    .decline-button {
+                        border-top: 1px solid #5a2323;
+
+                        .label {
+                            text-align: left;
+                            color: #c93333;
+                        }
+
+                        &:hover {
+                            .label {
+                                color: #f60d0d;
+                            }
+
+                            .icon {
+                                fill: #f60d0d;
+                            }
+                        }
+                    }
+                }
+            }
+
+            &.mode-edit {
+                .edit-button {
+                    display: none;
+                }
+            }
+
+            &.mode-select {
+                .copy-button, .editor-container {
+                    display: none;
+                }
+            }
+
+            &.mode-custom-path {
+                .curve-selector-container {
+                    border-radius: 0px 4px 4px 0px;
+
+                    .curve-selector {
+                        display: none;
+                    }
+                }
+
+                .orientation-selector-container {
+                    visibility: hidden;
+                }
+
+                .edit-button-container {
+                    visibility: hidden;
+                }
+            }
+        }
+
+        .ratio-box {
+            $aspect-ratio: 1 / 1;
+
+            width: 100%;
+            height: 0;
+            overflow: hidden;
+            padding-top: 1 / $aspect-ratio * 100%;
+            position: relative;
+
+            .ratio-box-inner {
+                position: absolute;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+            }
+        }
+    }
+}

@@ -1,0 +1,48 @@
+{
+  "name": "dat.gui.ease.gsap",
+  "version": "0.1.0",
+  "description": "Adds support of GSAP Ease to dat.GUI",
+  "keywords": [
+    "dat.gui",
+    "gsap",
+    "GreenSock",
+    "ease",
+    "easing",
+    "animation",
+    "bezier",
+    "curve",
+    "dat.gui.ease"
+  ],
+  "author": "Nowan <dniprovskyi.m@gmail.com>",
+  "homepage": "https://github.com/Nowan/dat.gui.ease",
+  "license": "MIT",
+  "main": "dist/dat.gui.ease.gsap.min.js",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Nowan/dat.gui.ease.git"
+  },
+  "scripts": {
+    "build": "webpack --progress --env prod --config webpack.prod.js",
+    "build:watch": "webpack --watch --progress --env dev --config webpack.dev.js"
+  },
+  "bugs": {
+    "url": "https://github.com/Nowan/dat.gui.ease/issues"
+  },
+  "peerDependencies": {
+    "dat.gui.ease": "^0.1.0",
+    "gsap": "^2.0.0"
+  },
+  "devDependencies": {
+    "@babel/core": "7.13.10",
+    "@babel/plugin-proposal-class-properties": "^7.13.0",
+    "@babel/plugin-syntax-dynamic-import": "7.8.3",
+    "@babel/preset-env": "7.13.10",
+    "babel-loader": "8.2.2",
+    "clean-webpack-plugin": "3.0.0",
+    "webpack": "5.27.0",
+    "webpack-cli": "4.5.0",
+    "webpack-merge": "5.7.3",
+    "dat.gui.ease": "^0.1.0",
+    "gsap": "^2.0.0"
+  }
+}
