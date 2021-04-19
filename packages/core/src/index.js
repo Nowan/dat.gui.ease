@@ -21,12 +21,12 @@ export default function extend(dat) {
     }
 
     return {
-        use(middleware) {
-            if (middleware instanceof Middleware) {
+        use(middleware = {}) {
+            if (middleware.toString() === "[object EaseMiddleware]") {
                 middlewares.push(middleware);
             }
             else {
-                console.warn("Middleware expected");
+                console.warn("Middleware instance expected");
             }
         }
     }

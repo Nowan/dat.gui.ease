@@ -19,6 +19,10 @@ export default class Middleware {
         return this._caster.internalToExternal(internalEase);
     }
 
+    toString() {
+        return "[object EaseMiddleware]";
+    }
+
     get templates() {
         return this._caster.supportedTemplates;
     }

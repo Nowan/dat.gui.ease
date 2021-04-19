@@ -25,7 +25,8 @@
   },
   "scripts": {
     "build": "webpack --progress --env prod --config webpack.prod.js",
-    "build:watch": "webpack --watch --progress --env dev --config webpack.dev.js"
+    "build:dev": "webpack --progress --env dev --config webpack.dev.js",
+    "build:dev:watch": "webpack --watch --progress --env dev --config webpack.dev.js"
   },
   "bugs": {
     "url": "https://github.com/Nowan/dat.gui.ease/issues"

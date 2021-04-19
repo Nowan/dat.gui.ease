@@ -22,6 +22,8 @@ const orientationsMap = new Map([
 
 export default class GSAPv2EaseCaster extends GSAPEaseCaster {
     constructor(easeMap, CustomEase) {
+        super();
+
         this._castMap = this._createCastMap(easeMap);
         
         try {
@@ -32,7 +34,7 @@ export default class GSAPv2EaseCaster extends GSAPEaseCaster {
         }
     }
 
-    _createCastMap(easeMap) {
+    _createCastMap(easeMap = {}) {
         const castMap = new Map();
         const curves = Array.from(curvesMap.keys());
         const orientations = Array.from(orientationsMap.keys());
