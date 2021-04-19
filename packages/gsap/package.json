@@ -1,6 +1,6 @@
 {
   "name": "dat.gui.ease.gsap",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Adds support of GSAP Ease to dat.GUI",
   "keywords": [
     "dat.gui",
@@ -40,10 +40,10 @@
     "@babel/preset-env": "7.13.10",
     "babel-loader": "8.2.2",
     "clean-webpack-plugin": "3.0.0",
+    "dat.gui.ease": "^0.1.1",
+    "gsap": "^2.0.0",
     "webpack": "5.27.0",
     "webpack-cli": "4.5.0",
-    "webpack-merge": "5.7.3",
-    "dat.gui.ease": "^0.1.0",
-    "gsap": "^2.0.0"
+    "webpack-merge": "5.7.3"
   }
 }
