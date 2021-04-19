@@ -11,7 +11,7 @@ module.exports = env => {
         },
 
         output: {
-            library: '[name]',
+            library: 'datGUI_Ease',
             libraryTarget: 'umd',
             filename: '[name].min.js'
         },
@@ -28,7 +28,12 @@ module.exports = env => {
         },
 
         externals: {
-            "dat.gui": "dat.gui"
+            "dat.gui": {
+                commonjs: 'dat.gui',
+                commonjs2: 'dat.gui',
+                amd: 'dat.gui',
+                root: 'dat'
+            }
         },
 
         module: {

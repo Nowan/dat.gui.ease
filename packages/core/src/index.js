@@ -5,7 +5,7 @@ import Ease, { Curve, Orientation, Handle, Anchor, Point } from "./gui/ease/Ease
 import EaseTemplate from "./gui/ease/EaseTemplate";
 import * as templates from "./gui/ease/templates";
 
-export default function extend(dat) {
+export function extend(dat) {
     const middlewares = [];
 
     dat.GUI.prototype.addEase = function(object, property) {

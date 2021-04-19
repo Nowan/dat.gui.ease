@@ -8,6 +8,12 @@ module.exports = env => {
             [packageConfig.name]: path.join(__dirname, 'src', 'index.js')
         },
 
+        output: {
+            library: 'datGUI_EaseGSAP',
+            libraryTarget: 'umd',
+            filename: '[name].min.js'
+        },
+
         resolve: {
             modules: [
                 'node_modules',
@@ -16,7 +22,12 @@ module.exports = env => {
         },
 
         externals: {
-            "dat.gui.ease": "dat.gui.ease",
+            "dat.gui.ease": {
+                commonjs: 'dat.gui.ease',
+                commonjs2: 'dat.gui.ease',
+                amd: 'dat.gui.ease',
+                root: 'datGUI_Ease'
+            },
             "gsap": "gsap"
         },
 
@@ -33,12 +44,6 @@ module.exports = env => {
                     }
                 }
             ]
-        },
-
-        output: {
-            library: '[name]',
-            libraryTarget: 'umd',
-            filename: '[name].min.js'
         },
 
         plugins: [
