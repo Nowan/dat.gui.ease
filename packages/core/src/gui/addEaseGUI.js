@@ -12,7 +12,7 @@ export default function addEaseGUI(object, property, middleware) {
     this.onResize();
 
     // Partial copy of add() l.2149 from dat.gui.js
-    dom.addClass(li, dat.GUI.CLASS_CONTROLLER_ROW);
+    dom.addClass(li, "cr");
     dom.addClass(li, 'ease');
 
     // Partial copy of augmentController() l.922 from dat.gui.js
