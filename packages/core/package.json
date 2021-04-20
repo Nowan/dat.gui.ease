@@ -1,6 +1,6 @@
 {
   "name": "dat.gui.ease",
-  "version": "0.1.3",
+  "version": "0.1.4",
   "description": "dat.GUI extension to edit easing effects on the go",
   "keywords": [
     "dat.GUI",
