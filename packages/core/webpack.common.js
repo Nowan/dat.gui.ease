@@ -8,16 +8,14 @@ module.exports = env => {
 
     return {
         entry: {
-            [packageConfig.name]: [
-                path.join(__dirname, 'src', 'index.js'),
-                path.join(__dirname, 'src', 'index.scss')
-            ]
+            [packageConfig.name]: path.join(__dirname, 'src', 'index.js')
         },
 
         output: {
-            library: 'datGUI_Ease',
+            library: 'datGUIEase',
             libraryTarget: 'umd',
-            filename: '[name].min.js'
+            filename: '[name].min.js',
+            clean: true
         },
     
         plugins: [
@@ -59,7 +57,7 @@ module.exports = env => {
                 {
                     test: /\.s?css/,
                     use: [
-                        isDevMode ? 'style-loader' : MiniCssExtractPlugin.loader,
+                        MiniCssExtractPlugin.loader,
                         {
                             loader: 'css-loader',
                             options: {

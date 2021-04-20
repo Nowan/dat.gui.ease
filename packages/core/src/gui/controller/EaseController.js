@@ -1,7 +1,7 @@
 import * as dat from "dat.gui";
-import guiTemplate from "./dom/gui.html";
-import Ease, { Curve } from './ease/Ease';
-import EaseEditor, { EditorCurveChangeEvent } from "./editor/EaseEditor";
+import guiTemplate from "../dom/gui.html";
+import Ease, { Curve } from '../ease/Ease';
+import EaseEditor, { EditorCurveChangeEvent } from "../editor/EaseEditor";
 
 export default class EaseController extends dat.controllers.Controller {
     constructor(object, property, middleware) {

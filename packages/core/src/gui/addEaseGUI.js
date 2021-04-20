@@ -1,8 +1,8 @@
 import * as dat from "dat.gui";
-import EaseController from "./gui/EaseController";
+import EaseController from "./controller/EaseController";
 
 const dom = dat.dom.dom;
-export default function addEase(object, property, middleware) {
+export default function addEaseGUI(object, property, middleware) {
     const controller = new EaseController(object, property, middleware);
 
     // Copy of the addRow() l.2149 from dat.gui.js

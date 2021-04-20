@@ -1,35 +1,31 @@
-import addEase from "./addEase";
+import styles from "./index.scss";
+import EaseManager from "./EaseManager";
+import addEaseGUI from "./gui/addEaseGUI";
 import Middleware from "./middleware/Middleware";
 import EaseCaster from "./middleware/EaseCaster";
 import Ease, { Curve, Orientation, Handle, Anchor, Point } from "./gui/ease/Ease";
 import EaseTemplate from "./gui/ease/EaseTemplate";
 import * as templates from "./gui/ease/templates";
 
+const easeManager = new EaseManager();
+
+function addEase(object, property) {
+    const ease = object[property];
+        
+    if (easeManager.supports(ease)) {
+        return addEaseGUI.call(this, object, property, easeManager.getCompatibleMiddleware(ease));
+    }
+    else {
+        console.warn("No compatible middleware found.");
+    }
+}
+
 export function extend(dat) {
-    const middlewares = [];
+    dat.gui.ease = easeManager;
+    dat.GUI.prototype.addEase = addEase;
+    dat.gui.GUI.prototype.addEase = addEase;
 
-    dat.GUI.prototype.addEase = function(object, property) {
-        const ease = object[property];
-        const middleware = middlewares.find(middleware => middleware.isFormatSupported(ease));
-    
-        if (middleware) {
-            return addEase.call(this, object, property, middleware);
-        }
-        else {
-            console.warn("No compatible middleware found.");
-        }
-    }
-
-    return {
-        use(middleware = {}) {
-            if (middleware.toString() === "[object EaseMiddleware]") {
-                middlewares.push(middleware);
-            }
-            else {
-                console.warn("Middleware instance expected");
-            }
-        }
-    }
+    return easeManager;
 }
 
 export {
@@ -42,5 +38,8 @@ export {
     Handle,
     Anchor,
     Point,
-    templates
+    templates,
+    easeManager as manager
 }
+
+export default extend;

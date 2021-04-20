@@ -3,15 +3,18 @@ const path = require('path');
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 
 module.exports = env => {
+    const isDevMode = !!env.dev;
+
     return {
         entry: {
             [packageConfig.name]: path.join(__dirname, 'src', 'index.js')
         },
 
         output: {
-            library: 'datGUI_EaseGSAP',
+            library: 'datGUIEaseGSAP',
             libraryTarget: 'umd',
-            filename: '[name].min.js'
+            filename: '[name].min.js',
+            clean: true
         },
 
         resolve: {
@@ -26,7 +29,7 @@ module.exports = env => {
                 commonjs: 'dat.gui.ease',
                 commonjs2: 'dat.gui.ease',
                 amd: 'dat.gui.ease',
-                root: 'datGUI_Ease'
+                root: 'datGUIEase'
             },
             "gsap": "gsap"
         },
@@ -39,7 +42,7 @@ module.exports = env => {
                     use: {
                         loader: 'babel-loader',
                         options: {
-                            compact: true
+                            compact: !isDevMode
                         }
                     }
                 }

@@ -13,3 +13,8 @@ export {
     GSAPv2Middleware,
     GSAPv3Middleware
 }
+
+export default {
+    v2, 
+    v3
+}
