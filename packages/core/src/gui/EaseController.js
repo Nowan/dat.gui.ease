@@ -1,6 +1,5 @@
 import * as dat from "dat.gui";
 import guiTemplate from "./dom/gui.html";
-import guiStyle from "./dom/gui.scss";
 import Ease, { Curve } from './ease/Ease';
 import EaseEditor, { EditorCurveChangeEvent } from "./editor/EaseEditor";
 

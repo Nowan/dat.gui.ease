@@ -1,13 +1,17 @@
 const packageConfig = require("./package.json");
 const path = require('path');
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
+const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 
 module.exports = env => {
-    const IS_DEV = !!env.dev;
+    const isDevMode = !!env.dev;
 
     return {
         entry: {
-            [packageConfig.name]: path.join(__dirname, 'src', 'index.js')
+            [packageConfig.name]: [
+                path.join(__dirname, 'src', 'index.js'),
+                path.join(__dirname, 'src', 'index.scss')
+            ]
         },
 
         output: {
@@ -17,7 +21,10 @@ module.exports = env => {
         },
     
         plugins: [
-            new CleanWebpackPlugin()
+            new CleanWebpackPlugin(),
+            new MiniCssExtractPlugin({
+                filename: '[name].css',
+            })
         ],
 
         resolve: {
@@ -44,38 +51,25 @@ module.exports = env => {
                     use: {
                         loader: 'babel-loader',
                         options: {
-                            compact: true
+                            compact: !isDevMode
                         }
                     }
                 },
 
                 {
-                    test: /\.css$/,
+                    test: /\.s?css/,
                     use: [
-                        'style-loader',
+                        isDevMode ? 'style-loader' : MiniCssExtractPlugin.loader,
                         {
                             loader: 'css-loader',
                             options: {
-                                sourceMap: IS_DEV
-                            }
-                        },
-                    ]
-                },
-
-                {
-                    test: /\.scss/,
-                    use: [
-                        'style-loader',
-                        {
-                            loader: 'css-loader',
-                            options: {
-                                sourceMap: IS_DEV
+                                sourceMap: isDevMode
                             }
                         },
                         {
                             loader: 'sass-loader',
                             options: {
-                                sourceMap: IS_DEV
+                                sourceMap: isDevMode
                             }
                         }
                     ]
