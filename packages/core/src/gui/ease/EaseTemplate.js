@@ -1,9 +1,24 @@
 import Ease, { Anchor, Curve, Orientation } from "./Ease";
 
 export default class EaseTemplate extends Ease {
-    constructor(curve = Curve.LINEAR, orientation = Orientation.NONE, points = [x1 = 0, y1 = 0, x2 = 0, y2 = 0]) {
+    constructor(curve = Curve.LINEAR, orientation = Orientation.NONE, points = [0, 0, 1, 1]) {
         super(curve, ..._parseAnchors(points));
         this.orientation = orientation;
+        this.displayName = curve;
+    }
+
+    clone() {
+        const clone = new EaseTemplate(this.curve, this.orientation);
+        clone.anchors.length = 0;
+        
+        this.anchors.forEach(anchor => {
+            const anchorClone = new Anchor(anchor.x, anchor.y);
+            anchorClone.handle.x = anchor.handle.x;
+            anchorClone.handle.y = anchor.handle.y;
+            clone.anchors.push(anchorClone);
+        });
+        
+        return clone;
     }
 }
 

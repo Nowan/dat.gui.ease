@@ -12,7 +12,7 @@ module.exports = env => {
         },
 
         output: {
-            library: 'datGUIEase',
+            library: 'datGuiEase',
             libraryTarget: 'umd',
             filename: '[name].min.js',
             clean: true

@@ -1,5 +1,6 @@
-import EaseTemplate, { Curve, Orientation } from "./EaseTemplate";
+import EaseTemplate, { Curve, Orientation } from "../gui/ease/EaseTemplate";
 
+// Predefined list of easings commonly used across many animation engines
 export const Linear = new EaseTemplate(Curve.LINEAR, Orientation.NONE, [0, 0, 1, 1]);
 
 export const SineIn = new EaseTemplate(Curve.SINE, Orientation.IN, [0.12, 0, 0.39, 0]);

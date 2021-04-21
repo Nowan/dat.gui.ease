@@ -2,10 +2,10 @@ import styles from "./index.scss";
 import EaseManager from "./EaseManager";
 import addEaseGUI from "./gui/addEaseGUI";
 import Middleware from "./middleware/Middleware";
-import EaseCaster from "./middleware/EaseCaster";
+import EaseEntry from "./middleware/EaseEntry";
 import Ease, { Curve, Orientation, Handle, Anchor, Point } from "./gui/ease/Ease";
 import EaseTemplate from "./gui/ease/EaseTemplate";
-import * as templates from "./gui/ease/templates";
+import * as templates from "./middleware/easeTemplates";
 
 const easeManager = new EaseManager();
 
@@ -30,7 +30,7 @@ export function extend(dat) {
 
 export {
     Middleware,
-    EaseCaster,
+    EaseEntry,
     Ease,
     EaseTemplate,
     Curve,
@@ -42,4 +42,6 @@ export {
     easeManager as manager
 }
 
-export default extend;
+export default {
+    extend
+};

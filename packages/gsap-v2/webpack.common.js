@@ -11,7 +11,7 @@ module.exports = env => {
         },
 
         output: {
-            library: 'datGUIEaseGSAP',
+            library: 'datGuiEaseGsapV2',
             libraryTarget: 'umd',
             filename: '[name].min.js',
             clean: true
@@ -29,9 +29,14 @@ module.exports = env => {
                 commonjs: 'dat.gui.ease',
                 commonjs2: 'dat.gui.ease',
                 amd: 'dat.gui.ease',
-                root: 'datGUIEase'
+                root: 'datGuiEase'
             },
-            "gsap": "gsap"
+            "gsap": {
+                commonjs: 'gsap',
+                commonjs2: 'gsap',
+                amd: 'gsap',
+                root: 'window'
+            }
         },
 
         module: {

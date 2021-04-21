@@ -1,3 +1,5 @@
+import Middleware from "./middleware/Middleware";
+
 export default class EaseManager {
     constructor() {
         this._middlewares = [];
@@ -27,7 +29,8 @@ export default class EaseManager {
      * @return {this} self reference for chaining.
      */
     use(middleware) {
-        if (middleware.toString() === "[object EaseMiddleware]") {
+        // TODO: fix transpilation problem to use "instanceof" here
+        if (middleware.toString() === `[object ${Middleware.CLASS_NAME}]`) {
             this._middlewares.push(middleware);
         }
         else {

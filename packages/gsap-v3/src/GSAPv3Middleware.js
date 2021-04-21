@@ -1,27 +1,33 @@
-import { EaseCaster, Curve } from "dat.gui.ease";
+import { Middleware, Curve } from "dat.gui.ease";
+import easeEntries from "./entries";
 
-export default class GSAPEaseCaster extends EaseCaster {
+export default class GSAPv3Middleware extends Middleware {
     constructor(CustomEase) {
-        super();
-        
+        super(easeEntries);
+
         try {
             this._createCustomEase = this._extractCreatorMethod(CustomEase);
         }
         catch(error) {
-            console.warn("Couldn't access CustomEase, curve editing disabled");
+            console.warn("Couldn't access CustomEase, ease editing disabled");
         }
     }
 
-    internalToExternal(internalEase) {
-        if (internalEase.curve === Curve.CUSTOM && this.isCustomEaseSupported()) {
+    import(externalEase) {
+        // TODO: check for CustomEase
+        return super.import(externalEase);
+    }
+
+    export(internalEase) {
+        if (internalEase.curve === Curve.CUSTOM && this._createCustomEase) {
             return this._createCustomEase(internalEase);
         }
         else {
-            return super.internalToExternal(internalEase);
+            return super.export(internalEase);
         }
     }
 
-    isCustomEaseSupported() {
+    isEditingSupported() {
         return !!this._createCustomEase;
     }
 
