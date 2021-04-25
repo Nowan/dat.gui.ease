@@ -27,7 +27,7 @@ export default class EaseEditor {
       const precedingCurveEndAnchor = anchors[i];
       const followingCurveStartAnchor = anchors[i + 1];
       const point = new BezierPoint(this._toCanvasX(precedingCurveEndAnchor.x), this._toCanvasY(precedingCurveEndAnchor.y), this._ctx, pointColor, pointSize, cpDist);
-      
+
       point.cp1.x = this._toCanvasX(precedingCurveEndAnchor.handle.x);
       point.cp1.y = this._toCanvasY(precedingCurveEndAnchor.handle.y);
       point.cp2.x = this._toCanvasX(followingCurveStartAnchor.handle.x);
@@ -48,21 +48,21 @@ export default class EaseEditor {
 
   get ease() {
     const ease = new Ease();
-      const { cw, ch, points } = this._curve;
-  
-      for (let i = 0; i < points.length - 1; i++) {
-        const startPoint = points[i];
-        const startAnchor = ease.addAnchor(this._fromCanvasX(startPoint.position.x), this._fromCanvasY(startPoint.position.y));
-        startAnchor.handle.x = this._fromCanvasX(startPoint.cp2.x);
-        startAnchor.handle.y = this._fromCanvasY(startPoint.cp2.y);
-  
-        const endPoint = points[i + 1];
-        const endAnchor = ease.addAnchor(this._fromCanvasX(endPoint.position.x), this._fromCanvasY(endPoint.position.y));
-        endAnchor.handle.x = this._fromCanvasX(endPoint.cp1.x);
-        endAnchor.handle.y = this._fromCanvasY(endPoint.cp1.y);
-      }
-      
-      return ease;
+    const { cw, ch, points } = this._curve;
+
+    for (let i = 0; i < points.length - 1; i++) {
+      const startPoint = points[i];
+      const startAnchor = ease.addAnchor(this._fromCanvasX(startPoint.position.x), this._fromCanvasY(startPoint.position.y));
+      startAnchor.handle.x = this._fromCanvasX(startPoint.cp2.x);
+      startAnchor.handle.y = this._fromCanvasY(startPoint.cp2.y);
+
+      const endPoint = points[i + 1];
+      const endAnchor = ease.addAnchor(this._fromCanvasX(endPoint.position.x), this._fromCanvasY(endPoint.position.y));
+      endAnchor.handle.x = this._fromCanvasX(endPoint.cp1.x);
+      endAnchor.handle.y = this._fromCanvasY(endPoint.cp1.y);
+    }
+
+    return ease;
   }
 
   _prepareContext(canvas) {
@@ -74,7 +74,7 @@ export default class EaseEditor {
 
   _createCurveJSInstance(ctx) {
     const curve = new CurveJS(ctx);
-    
+
     curve.setPointStyle('#ffffff', 8);
     curve.setLineStyle('#ace247', 2);
 

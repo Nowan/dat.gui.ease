@@ -28,7 +28,7 @@ export default class EaseController extends dat.controllers.Controller {
         return this._ease.toString();
     }
 
-    // Use primitive type here to utilize `dat.GUI.prototype.getSaveObject()` correctly
+    // Use primitive type here to support serialization for `dat.GUI.prototype.getSaveObject()`
     setValue(easeString) {
         this._ease = interpret(easeString);
         this._applyValue(this._ease);
@@ -94,15 +94,11 @@ export default class EaseController extends dat.controllers.Controller {
     _initCustomPathSelector() {
         const customPathSelectElement = this.domElement.querySelector(".path-selector");
 
-        customPathSelectElement.oninput = (value) => {
+        customPathSelectElement.oninput = event => {
             const svgPath = customPathSelectElement.value;
 
             try {
-                const ease = Ease.fromSVGPath(customPathSelectElement.value);
-
-                this._editor.ease = ease;
-                this._updateCornerCurve(ease);
-                this.setValue(this._ease.toString());
+                this.setValue(Ease.fromSVGPath(svgPath).toString());
             }
             catch(e) {
                 console.warn(`Couldn't parse SVG path ${svgPath}`);
@@ -152,11 +148,7 @@ export default class EaseController extends dat.controllers.Controller {
 
         buttonElement.addEventListener("click", () => {
             this._closeEditor();
-            this._ease = this._preEditEase;
-            
-            this._updateSelectors(this._ease);
-            this._updateCornerCurve(this._ease);
-            this.setValue(this._ease.toString());
+            this.setValue(this._preEditEase.toString());
         });
     }
 
@@ -164,15 +156,10 @@ export default class EaseController extends dat.controllers.Controller {
         this._toggleEditMode(true);
         const canvas = this.domElement.querySelector(".editor");
         const editor = new EaseEditor(canvas);
-        const curveSelectElement = this.domElement.querySelector(".curve-selector");
         editor.ease = ease;
         
         canvas.addEventListener(EditorCurveChangeEvent.KEY, () => {
-            this._ease = editor.ease;
-
-            this._updateSelectors(this._ease);
-            this._updateCornerCurve(this._ease);
-            this.setValue(this._ease.toString());
+            this.setValue(editor.ease.toString());
         });
 
         this._editor = editor;

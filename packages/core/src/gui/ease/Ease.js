@@ -12,16 +12,16 @@ export default class Ease {
 
     static fromSVGPath(svgPath) {
         const ease = new Ease();
-        const { x: startX, y: startY } = svgPath.match(/M ?(?<x>\d+),(?<y>\d+)/).groups;
-        const cCoords = svgPath.replace(/^M.*C ?/, "").replace(/ ?$/, "").split(" ").reduce((coords, pointString) => [...coords, ...pointString.split(",").map(Number.parseFloat)], []);
+        const [startX, startY] = svgPath.match(/M ?(?<x>\d+),(?<y>\d+)/).splice(-2).map(Number.parseFloat);
+        const cCoords = svgPath.replace(/^M.*C ?/, "").replace(/ *$/, "").split(/[ ,]/).map(Number.parseFloat);
         
         ease.anchors[0] = new Anchor(startX, startY);
         ease.anchors[0].handle.x = cCoords[0];
         ease.anchors[0].handle.y = cCoords[1];
 
         for (let i = 2; i < cCoords.length - 4; i += 6) {
-            const a = (i - 2) / 6 + 1;
-
+            const a = (i - 2) / 3 + 1;
+            
             ease.anchors[a] = new Anchor(cCoords[i + 2], cCoords[i + 3]);
             ease.anchors[a].handle.x = cCoords[i];
             ease.anchors[a].handle.y = cCoords[i + 1];
