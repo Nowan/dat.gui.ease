@@ -7,7 +7,7 @@ export default function addEaseGUI(object, property, middleware) {
 
     // Partial copy of add() method
     // https://github.com/dataarts/dat.gui/blob/40f4fc193e25ee51e7e57dfbbfc3118b3927169f/src/dat/gui/GUI.js#L1152
-    _recallSavedValue(gui, controller);
+    _recallSavedValue(this, controller);
 
     const li = _addRow(this);
     dom.addClass(li, "cr");
