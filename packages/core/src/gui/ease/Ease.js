@@ -39,6 +39,19 @@ export default class Ease {
         return ease;
     }
 
+    static toSVGPath(ease) {
+        let path = `M ${ease.firstAnchor.x},${ease.firstAnchor.y} C`;
+
+        for (let i = 0; i < ease.anchors.length; i += 2) {
+            const startAnchor = ease.anchors[i];
+            const endAnchor = ease.anchors[i + 1];
+            
+            path += ` ${startAnchor.handle.x},${startAnchor.handle.y} ${endAnchor.handle.x},${endAnchor.handle.y} ${endAnchor.x},${endAnchor.y}`;
+        }
+
+        return path;
+    }
+
     get anchors() {
         return this._anchors;
     }
@@ -58,16 +71,7 @@ export default class Ease {
     }
 
     toString() {
-        let path = `M ${this.firstAnchor.x},${this.firstAnchor.y} C`;
-
-        for (let i = 0; i < this.anchors.length; i += 2) {
-            const startAnchor = this.anchors[i];
-            const endAnchor = this.anchors[i + 1];
-            
-            path += ` ${startAnchor.handle.x},${startAnchor.handle.y} ${endAnchor.handle.x},${endAnchor.handle.y} ${endAnchor.x},${endAnchor.y}`;
-        }
-
-        return path;
+        return Ease.toSVGPath(this);
     }
 }
 

@@ -61,10 +61,12 @@ export default class EaseController extends dat.controllers.Controller {
 
     _initCurveSelector() {
         const curveSelectElement = this.domElement.querySelector(".curve-selector");
-        const curves = new Set(this._middleware.templates.map(ease => ease.curve));
+        const curves = [];
 
-        for (let curve of curves) {
-            curveSelectElement.options.add(new Option(curve, curve));
+        for (let template of this._middleware.templates) {
+            if (curves.includes(template.curve)) continue;
+            curves.push(template.curve);
+            curveSelectElement.options.add(new Option(template.displayName, template.curve));
         }
 
         const custom = new Option(Curve.CUSTOM, Curve.CUSTOM);
@@ -203,11 +205,10 @@ export default class EaseController extends dat.controllers.Controller {
     _updateSelectors(ease) {
         const curveSelectElement = this.domElement.querySelector(".curve-selector");
         const orientationSelectElement = this.domElement.querySelector(".orientation-selector");
-        const customPathSelectElement = this.domElement.querySelector(".path-selector");
 
         curveSelectElement.value = ease.curve;
-        customPathSelectElement.value = ease.toString();
         
+        this._updatePathInspector(ease);
         this._updateOrientations(this._getCurveOrientations(ease.curve), ease.orientation);
         orientationSelectElement.value = ease.orientation;
     }
@@ -239,7 +240,7 @@ export default class EaseController extends dat.controllers.Controller {
 
     _updatePathInspector(ease) {
         const pathInspectorElement = this.domElement.querySelector(".path-selector");
-        pathInspectorElement.value = ease.toString();
+        pathInspectorElement.value = Ease.toSVGPath(ease);
     }
 
     _toggleEditMode(flag) {
@@ -250,15 +251,6 @@ export default class EaseController extends dat.controllers.Controller {
         else {
             this.domElement.classList.remove("mode-edit");
             this.domElement.classList.add("mode-select");
-        }
-    }
-
-    _toggleCustomPathMode(flag) {
-        if (flag) {
-            this.domElement.classList.add("mode-custom-path");
-        }
-        else {
-            this.domElement.classList.remove("mode-custom-path");
         }
     }
 
