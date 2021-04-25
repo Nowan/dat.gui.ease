@@ -20,6 +20,10 @@ export default class EaseTemplate extends Ease {
         
         return clone;
     }
+
+    toString() {
+        return `${this.curve}.${this.orientation}`;
+    }
 }
 
 function _parseAnchors(points) {

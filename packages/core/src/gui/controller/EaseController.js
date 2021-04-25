@@ -2,28 +2,52 @@ import * as dat from "dat.gui";
 import guiTemplate from "../dom/gui.html";
 import Ease, { Curve } from '../ease/Ease';
 import EaseEditor, { EditorCurveChangeEvent } from "../editor/EaseEditor";
+import interpret from "./interpret";
 
 export default class EaseController extends dat.controllers.Controller {
     constructor(object, property, middleware) {
         super(...arguments);
-        
-        this._middleware = middleware;
-        this._initDOM();
 
         const rawEase = object[property];
         const ease = middleware.import(rawEase);
+        
         this._orientation = ease.orientation;
         this._ease = ease;
+        this._preEditEase = null;
         this._editor = null;
-        this._isCustomCurve = ease.curve === Curve.CUSTOM;
+
+        this._middleware = middleware;
+        this._initDOM();
 
         this.domElement.querySelector(".property-name").innerHTML = property;
         this._updateSelectors(ease);
         this._updateCornerCurve(ease);
     }
 
-    setValue(ease) {
-        super.setValue(this._middleware.export(ease));
+    getValue() {
+        return this._ease.toString();
+    }
+
+    // Use primitive type here to utilize `dat.GUI.prototype.getSaveObject()` correctly
+    setValue(easeString) {
+        this._ease = interpret(easeString);
+        this._applyValue(this._ease);
+    }
+
+    isModified() {
+        return this.initialValue.toString() !== this._ease.toString();
+    }
+
+    _applyValue(ease) {
+        this.object[this.property] = this._middleware.export(ease);
+        if (this.__onChange) {
+            this.__onChange.call(this, ease);
+        }
+        if (this.__onFinishChange) {
+            this.__onFinishChange.call(this, ease);
+        }
+        this._updateElements(ease);
+        this.updateDisplay();
     }
 
     _initDOM() {
@@ -48,19 +72,12 @@ export default class EaseController extends dat.controllers.Controller {
         curveSelectElement.options.add(custom);
 
         curveSelectElement.onchange = () => {
-            const curve = curveSelectElement.value;
             const prevEase = this._ease;
-            
-            this._updateOrientations(this._getCurveOrientations(curve), prevEase.orientation);
-            this._ease = this._getEaseTemplate();
+            const curve = curveSelectElement.value;
+            const orientations = this._getCurveOrientations(curve);
+            const ease = this._getTemplateByCurveAndOrientation(curve, orientations.includes(prevEase.orientation) ? prevEase.orientation : orientations[0]); 
 
-            if (this._editor) {
-                this._editor.ease = this._ease;
-            }
-
-            this._updatePathInspector(this._ease);
-            this._updateCornerCurve(this._ease);
-            this.setValue(this._ease);
+            this.setValue(ease.toString());
         };
     }
 
@@ -68,15 +85,9 @@ export default class EaseController extends dat.controllers.Controller {
         const orientationSelectElement = this.domElement.querySelector(".orientation-selector");
 
         orientationSelectElement.onchange = () => {
-            this._ease = this._getEaseTemplate();
+            const ease = this._getTemplateByCurveAndOrientation(this._ease.curve, orientationSelectElement.value); 
 
-            if (this._editor) {
-                this._editor.ease = this._ease;
-            }
-
-            this._updatePathInspector(this._ease);
-            this._updateCornerCurve(this._ease);
-            this.setValue(this._ease);
+            this.setValue(ease.toString());
         };
     }
 
@@ -91,7 +102,7 @@ export default class EaseController extends dat.controllers.Controller {
 
                 this._editor.ease = ease;
                 this._updateCornerCurve(ease);
-                this.setValue(ease);
+                this.setValue(this._ease.toString());
             }
             catch(e) {
                 console.warn(`Couldn't parse SVG path ${svgPath}`);
@@ -145,7 +156,7 @@ export default class EaseController extends dat.controllers.Controller {
             
             this._updateSelectors(this._ease);
             this._updateCornerCurve(this._ease);
-            this.setValue(this._ease);
+            this.setValue(this._ease.toString());
         });
     }
 
@@ -161,7 +172,7 @@ export default class EaseController extends dat.controllers.Controller {
 
             this._updateSelectors(this._ease);
             this._updateCornerCurve(this._ease);
-            this.setValue(this._ease);
+            this.setValue(this._ease.toString());
         });
 
         this._editor = editor;
@@ -176,6 +187,16 @@ export default class EaseController extends dat.controllers.Controller {
 
         this._toggleEditMode(false);
         this._editor = null;
+    }
+
+    _updateElements(ease) {
+        this._updateSelectors(ease);
+        this._updatePathInspector(this._ease);
+        this._updateCornerCurve(this._ease);
+        
+        if (this._editor) {
+            this._editor.ease = this._ease;
+        }
     }
 
     _updateOrientations(orientations = [], orientationToSelect = undefined) {
@@ -194,12 +215,14 @@ export default class EaseController extends dat.controllers.Controller {
 
     _updateSelectors(ease) {
         const curveSelectElement = this.domElement.querySelector(".curve-selector");
+        const orientationSelectElement = this.domElement.querySelector(".orientation-selector");
         const customPathSelectElement = this.domElement.querySelector(".path-selector");
 
         curveSelectElement.value = ease.curve;
         customPathSelectElement.value = ease.toString();
         
         this._updateOrientations(this._getCurveOrientations(ease.curve), ease.orientation);
+        orientationSelectElement.value = ease.orientation;
     }
 
     _updateCornerCurve(ease) {
@@ -264,10 +287,14 @@ export default class EaseController extends dat.controllers.Controller {
         return this._middleware.templates.filter(template => template.curve === curve);
     }
 
-    _getEaseTemplate() {
+    _getTemplateBySelectorsValues() {
         const curve = this.domElement.querySelector(".curve-selector").value;
         const orientation = this.domElement.querySelector(".orientation-selector").value;
 
+        return this._getTemplateByCurveAndOrientation(curve, orientation);              
+    }
+
+    _getTemplateByCurveAndOrientation(curve, orientation) {
         return this._middleware.templates.find(template => template.curve === curve && template.orientation === orientation);                
     }
 };

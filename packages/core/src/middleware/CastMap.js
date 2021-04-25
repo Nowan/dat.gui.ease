@@ -13,7 +13,7 @@ export default class CastMap {
     }
 
     internalToExternal(internalEase) {
-        return this._entries.find(entry => entry.internal === internalEase).external;
+        return this._entries.find(entry => entry.internal.toString() === internalEase.toString()).external;
     }
 
     _createHashMap(entries, hashFunction) {
