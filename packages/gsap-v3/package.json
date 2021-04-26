@@ -1,6 +1,6 @@
 {
   "name": "dat.gui.ease.gsap.v3",
-  "version": "0.1.2",
+  "version": "0.1.3",
   "description": "Allows to edit GSAP v3.x easings in dat.GUI",
   "keywords": [
     "dat.GUI",
@@ -39,7 +39,7 @@
     "@babel/preset-env": "7.13.10",
     "babel-loader": "8.2.2",
     "clean-webpack-plugin": "3.0.0",
-    "dat.gui.ease": "^0.1.7",
+    "dat.gui.ease": "^0.1.8",
     "gsap": "^3.0.0",
     "webpack": "5.27.0",
     "webpack-cli": "4.5.0",
