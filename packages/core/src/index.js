@@ -28,10 +28,10 @@ export function extend(dat) {
         const value = object[property] || object;
 
         if (easeManager.supports(value)) {
-            addEase.call(this, ...arguments);
+            return addEase.call(this, ...arguments);
         }
         else {
-            add.call(this, ...arguments);
+            return add.call(this, ...arguments);
         }
     }
 
