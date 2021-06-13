@@ -1,18 +1,18 @@
-import * as templates from "../../middleware/easeTemplates";
+import * as presets from "../editor/presets";
 import Ease from "../ease/Ease";
 
-const templatesMap = _createTemplatesMap(templates);
+const presetsMap = _createPresetsMap(presets);
 
 export default function interpret(easeString) {
-    return templatesMap[easeString] || Ease.fromSVGPath(easeString);
+    return presetsMap[easeString] || Ease.fromSVGPath(easeString);
 }
 
-function _createTemplatesMap(templates) {
-    const templatesMap = {};
+function _createPresetsMap(presets) {
+    const presetsMap = {};
     
-    for (let template of Object.values(templates)) {
-        templatesMap[template.toString()] = template;
+    for (let preset of Object.values(presets)) {
+        presetsMap[preset.toString()] = preset;
     }
 
-    return templatesMap;
+    return presetsMap;
 }

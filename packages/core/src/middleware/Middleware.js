@@ -1,8 +1,8 @@
 import CastMap from "./CastMap";
 
 export default class Middleware {
-    constructor(entries) {
-        this._templates = entries.map(entry => entry.internal);
+    constructor(...entries) {
+        this._presets = entries.map(entry => entry.internal);
         this._castMap = new CastMap(entries);
     }
 
@@ -27,8 +27,8 @@ export default class Middleware {
         return `[object ${Middleware.CLASS_NAME}]`;
     }
 
-    get templates() {
-        return this._templates;
+    get presets() {
+        return this._presets;
     }
 
     static CLASS_NAME = "DatGuiEaseMiddleware";

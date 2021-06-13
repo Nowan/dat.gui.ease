@@ -1,6 +1,7 @@
 import * as dat from "dat.gui";
 import guiTemplate from "../dom/gui.html";
-import Ease, { Curve } from '../ease/Ease';
+import Ease from '../ease/Ease';
+import { Curve } from "../ease/preset/EasePreset";
 import EaseEditor, { EditorCurveChangeEvent } from "../editor/EaseEditor";
 import interpret from "./interpret";
 
@@ -63,10 +64,10 @@ export default class EaseController extends dat.controllers.Controller {
         const curveSelectElement = this.domElement.querySelector(".curve-selector");
         const curves = [];
 
-        for (let template of this._middleware.templates) {
-            if (curves.includes(template.curve)) continue;
-            curves.push(template.curve);
-            curveSelectElement.options.add(new Option(template.displayName, template.curve));
+        for (let preset of this._middleware.presets) {
+            if (curves.includes(preset.curve)) continue;
+            curves.push(preset.curve);
+            curveSelectElement.options.add(new Option(preset.displayName, preset.curve));
         }
 
         const custom = new Option(Curve.CUSTOM, Curve.CUSTOM);
@@ -263,7 +264,7 @@ export default class EaseController extends dat.controllers.Controller {
     }
 
     _getCurveTemplates(curve) {
-        return this._middleware.templates.filter(template => template.curve === curve);
+        return this._middleware.presets.filter(preset => preset.curve === curve);
     }
 
     _getTemplateBySelectorsValues() {
@@ -274,6 +275,6 @@ export default class EaseController extends dat.controllers.Controller {
     }
 
     _getTemplateByCurveAndOrientation(curve, orientation) {
-        return this._middleware.templates.find(template => template.curve === curve && template.orientation === orientation);                
+        return this._middleware.presets.find(preset => preset.curve === curve && preset.orientation === orientation);                
     }
 };

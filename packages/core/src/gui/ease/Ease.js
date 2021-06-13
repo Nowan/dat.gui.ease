@@ -1,12 +1,9 @@
 import Anchor from "./composites/Anchor";
 import Handle from "./composites/Handle";
 import Point from "./composites/Point";
-import Curve from "./enum/Curve";
-import Orientation from "./enum/Orientation";
 
 export default class Ease {
-    constructor(curve = Curve.CUSTOM, ...anchors) {
-        this.curve = curve;
+    constructor(...anchors) {
         this._anchors = anchors;
     }
 
@@ -78,7 +75,5 @@ export default class Ease {
 export {
     Anchor,
     Handle,
-    Point,
-    Curve,
-    Orientation
+    Point
 }

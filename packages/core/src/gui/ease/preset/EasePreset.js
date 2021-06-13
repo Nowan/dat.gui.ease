@@ -1,14 +1,29 @@
-import Ease, { Anchor, Curve, Orientation } from "./Ease";
+import Ease, { Anchor } from "../Ease";
+import Curve from "./enum/Curve";
+import Orientation from "./enum/Orientation";
 
-export default class EaseTemplate extends Ease {
-    constructor(curve = Curve.LINEAR, orientation = Orientation.NONE, points = [0, 0, 1, 1]) {
-        super(curve, ..._parseAnchors(points));
+export {
+    Curve,
+    Orientation
+}
+
+export default class EasePreset extends Ease {
+    static CURVE = Curve;
+    static ORIENTATION = Orientation;
+
+    constructor(curve = EasePreset.CURVE.LINEAR, orientation = EasePreset.ORIENTATION.NONE, points = [0, 0, 1, 1]) {
+        super(..._parseAnchors(points));
+        this.curve = curve;
         this.orientation = orientation;
-        this.displayName = curve;
+        this._alias = null;
+    }
+
+    get name() {
+        return this._alias || this.curve;
     }
 
     clone() {
-        const clone = new EaseTemplate(this.curve, this.orientation);
+        const clone = new EasePreset(this.curve, this.orientation);
         clone.anchors.length = 0;
         
         this.anchors.forEach(anchor => {
@@ -19,6 +34,11 @@ export default class EaseTemplate extends Ease {
         });
         
         return clone;
+    }
+
+    alias(value) {
+        this._alias = value;
+        return this;
     }
 
     toString() {
@@ -36,9 +56,4 @@ function _parseAnchors(points) {
     endAnchor.handle.y = points[3];
 
     return [startAnchor, endAnchor];
-}
-
-export {
-    Curve,
-    Orientation
 }
