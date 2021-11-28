@@ -29,6 +29,8 @@ import * as dat from 'dat.gui';
 import datGuiEase from 'dat.gui.ease';
 import styles from 'dat.gui.ease/dist/dat.gui.ease.css';
 ```
+
+
 3. CommonJS
 ```javascript
 const dat = require('dat.gui');
@@ -58,7 +60,18 @@ gui.addEase({ ease: Power2.easeIn }, "ease"); // Voila! Ease is editable in dat.
 ```
 <br>
 
-#### Credits
+### Common issue
+#### Missing styles (es6)
+
+```javascript
+// build tools with treeshaking might ignore the following statement
+import styles from 'dat.gui.ease/dist/dat.gui.ease.css';
+
+// use this instead
+import 'dat.gui.ease/dist/dat.gui.ease.css'
+```
+
+### Credits
 
 [SidneyDouw/curvesjs](https://github.com/SidneyDouw/curvesjs) - minimalistic yet nonetheless powerful bezier curve editor with no dependencies - exactly what I've looked for. Hope it gets more attention.
 

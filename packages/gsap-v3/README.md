@@ -42,3 +42,18 @@ const middleware = new GSAPv3Middleware();
 const datGuiEaseGsapV3 = require('dat.gui.ease.gsap.v3');
 const middleware = new datGuiEaseGsapV3.Middleware();
 ```
+
+## Adding ease gui
+1. Standard ease
+```javascript
+let gui = new dat.GUI();
+gui.addEase({ ease: "power1.out" }, "ease");
+```
+
+
+2. Custom ease
+```javascript
+let gui = new dat.GUI();
+let myCustomEase = new CustomEase("myCustomEaseName", "M0,0,C0.036,0.208,0.216,0.488,0.486,0.488,0.742,0.488,1,0.362,1,0.01");
+gui.addEase({ ease: myCustomEase }, "ease");
+```
