@@ -1,4 +1,4 @@
-import { Middleware, Curve } from "dat.gui.ease";
+import { Middleware, Curve, Ease } from "dat.gui.ease";
 import easeEntries from "./entries";
 
 export default class GSAPv3Middleware extends Middleware {
