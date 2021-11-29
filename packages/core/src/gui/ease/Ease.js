@@ -12,7 +12,7 @@ export default class Ease {
 
     static fromSVGPath(svgPath) {
         const ease = new Ease();
-        const [startX, startY] = svgPath.match(/M ?(?<x>\d+),(?<y>\d+)/).splice(-2).map(Number.parseFloat);
+        const [startX, startY] = svgPath.match(/M ?(?<x>[\d\.]+),(?<y>[\d\.]+)/).splice(-2).map(Number.parseFloat);
         const cCoords = svgPath.replace(/^M.*C ?/, "").replace(/ *$/, "").split(/[ ,]/).map(Number.parseFloat);
         
         ease.anchors[0] = new Anchor(startX, startY);
