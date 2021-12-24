@@ -28,6 +28,9 @@
   "bugs": {
     "url": "https://github.com/Nowan/dat.gui.ease/issues"
   },
+  "publishConfig": {
+    "registry": "https://npm.pkg.github.com/"
+  },
   "peerDependencies": {
     "dat.gui.ease": "^0.1.0",
     "gsap": "^3.0.0"

@@ -30,6 +30,9 @@
   "bugs": {
     "url": "https://github.com/Nowan/dat.gui.ease/issues"
   },
+  "publishConfig": {
+    "registry": "https://npm.pkg.github.com/"
+  },
   "peerDependencies": {
     "dat.gui": "^0.7.7"
   },
