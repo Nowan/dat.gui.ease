@@ -1,5 +1,5 @@
-import * as presets from "../editor/presets";
-import Ease from "../ease/Ease";
+import * as presets from "../model/preset/presets";
+import Ease from "../model/ease/Ease";
 
 const presetsMap = _createPresetsMap(presets);
 

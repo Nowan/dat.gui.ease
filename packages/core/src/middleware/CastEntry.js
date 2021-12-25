@@ -1,7 +1,7 @@
-export default class EaseEntry {
-    constructor(externalTemplate, internalTemplate) {
+export default class EaseCast {
+    constructor(externalTemplate, internalPreset) {
         this.external = externalTemplate;
-        this.internal = internalTemplate.clone();
+        this.internal = internalPreset.clone();
     }
 
     displayAs(displayName) {

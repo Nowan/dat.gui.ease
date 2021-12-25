@@ -1,4 +1,4 @@
-import Ease, { Anchor } from "../Ease";
+import Ease, { Anchor } from "../ease/Ease";
 import Curve from "./enum/Curve";
 import Orientation from "./enum/Orientation";
 

@@ -11,8 +11,8 @@ export default class Middleware {
         return true;
     }
 
-    isFormatSupported(externalEase) {
-        return !!externalEase && this._castMap.hasExternal(externalEase);
+    isFormatSupported(externalPreset) {
+        return !!externalPreset && this._castMap.hasExternal(externalPreset);
     }
 
     import(externalEase) {

@@ -1,9 +1,9 @@
-import EasePreset, { Curve, Orientation } from "../ease/preset/EasePreset";
+import EasePreset, { Curve, Orientation } from "./EasePreset";
 
 // Predefined list of easings commonly used across many animation engines
-export const Linear = new EasePreset(Curve.LINEAR, Orientation.NONE, [0, 0, 1, 1]);
+export const Linear = new EasePreset(Curve.LINEAR, Orientation.NONE, [0, 0, 1, 1]).alias("Linear");
 
-export const SineIn = new EasePreset(Curve.SINE, Orientation.IN, [0.12, 0, 0.39, 0]);
+export const SineIn = new EasePreset(Curve.SINE, Orientation.IN, [0.12, 0, 0.39, 0]).alias("SineIn");
 export const SineOut = new EasePreset(Curve.SINE, Orientation.OUT, [0.61, 1, 0.88, 1]);
 export const SineInOut = new EasePreset(Curve.SINE, Orientation.IN_OUT, [0.37, 0, 0.63, 1]);
 

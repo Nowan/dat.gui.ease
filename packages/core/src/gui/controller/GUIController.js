@@ -1,14 +1,15 @@
 import * as dat from "dat.gui";
-import guiTemplate from "../dom/gui.html";
-import Ease from '../ease/Ease';
-import { Curve } from "../ease/preset/EasePreset";
-import EaseEditor, { EditorCurveChangeEvent } from "../editor/EaseEditor";
+import guiTemplate from "../view/dom/gui.html";
+import Ease from '../model/ease/Ease';
+import { Curve } from "../model/preset/EasePreset";
+import EaseEditor, { EditorCurveChangeEvent } from "../view/editor/EaseEditor";
 import interpret from "./interpret";
+import GUIView from "../view/GUIView";
 
-export default class EaseController extends dat.controllers.Controller {
+export default class GUIController extends dat.controllers.Controller {
     constructor(object, property, middleware) {
         super(...arguments);
-
+        
         const rawEase = object[property];
         const ease = middleware.import(rawEase);
         
@@ -16,6 +17,7 @@ export default class EaseController extends dat.controllers.Controller {
         this._ease = ease;
         this._preEditEase = null;
         this._editor = null;
+        this._view = new GUIView();
 
         this._middleware = middleware;
         this._initDOM();
@@ -52,7 +54,7 @@ export default class EaseController extends dat.controllers.Controller {
     }
 
     _initDOM() {
-        this.domElement = this._renderTemplate(guiTemplate);
+        this.domElement = this._view.domElement;
         
         this._initCurveSelector();
         this._initOrientationSelector();
@@ -253,10 +255,6 @@ export default class EaseController extends dat.controllers.Controller {
             this.domElement.classList.remove("mode-edit");
             this.domElement.classList.add("mode-select");
         }
-    }
-
-    _renderTemplate(template) {
-        return (new DOMParser()).parseFromString(template, "text/html").body.firstChild;
     }
 
     _getCurveOrientations(curve) {

@@ -1,7 +1,6 @@
 export default class CastMap {
     constructor(entries) {
         this._entries = entries;
-        this._entriesHashMap = this._createHashMap(entries, this._createHash);
     }
 
     hasExternal(externalEase) {
@@ -14,19 +13,5 @@ export default class CastMap {
 
     internalToExternal(internalEase) {
         return this._entries.find(entry => entry.internal.toString() === internalEase.toString()).external;
-    }
-
-    _createHashMap(entries, hashFunction) {
-        const hashMap = {};
-       
-        entries.forEach((entry, i) => {
-            hashMap[hashFunction(entry, i)] = entry;
-        });
-
-        return hashMap;
-    }
-
-    _createHash(entry) {
-        return `${entry.internal.curve}.${entry.internal.orientation}`;
     }
 }
