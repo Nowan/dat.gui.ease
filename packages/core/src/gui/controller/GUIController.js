@@ -4,27 +4,38 @@ import Ease from '../model/ease/Ease';
 import { Curve } from "../model/preset/EasePreset";
 import EaseEditor, { EditorCurveChangeEvent } from "../view/editor/EaseEditor";
 import interpret from "./interpret";
-import GUIView from "../view/GUIView";
+import GUIView, { GUIViewEvent } from "../view/GUIView";
+import GUIModel from "../model/GUIModel";
 
 export default class GUIController extends dat.controllers.Controller {
     constructor(object, property, middleware) {
         super(...arguments);
         
         const rawEase = object[property];
-        const ease = middleware.import(rawEase);
+        const preset = middleware.import(rawEase);
         
-        this._orientation = ease.orientation;
-        this._ease = ease;
-        this._preEditEase = null;
-        this._editor = null;
-        this._view = new GUIView();
+        // this._orientation = ease.orientation;
+        // this._ease = ease;
+        // this._preEditEase = null;
+        // this._editor = null;
+        // this._view = new GUIView();
 
         this._middleware = middleware;
-        this._initDOM();
+        this._model = new GUIModel(middleware);
+        this._view = new GUIView(this._model.presets);
 
-        this.domElement.querySelector(".property-name").innerHTML = property;
-        this._updateSelectors(ease);
-        this._updateCornerCurve(ease);
+        this._view.on(GUIViewEvent.CURVE_SELECTED, curve => {
+            console.log(curve);
+        });
+
+        this._view.setEase(preset.curve, preset.orientation);
+
+        this.domElement = this._view.domElement;
+        // this._initDOM();
+
+        // this.domElement.querySelector(".property-name").innerHTML = property;
+        // this._updateSelectors(ease);
+        // this._updateCornerCurve(ease);
     }
 
     getValue() {

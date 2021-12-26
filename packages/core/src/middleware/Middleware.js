@@ -1,9 +1,11 @@
 import CastMap from "./CastMap";
 
 export default class Middleware {
-    constructor(...entries) {
-        this._presets = entries.map(entry => entry.internal);
-        this._castMap = new CastMap(entries);
+    constructor(...castEntries) {
+        this._presets = castEntries.map(entry => entry.internal);
+        this._castMap = new CastMap(castEntries);
+
+        this.castEntries = castEntries;
     }
 
     isEditingSupported() {

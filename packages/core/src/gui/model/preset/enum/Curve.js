@@ -10,5 +10,6 @@ export default Object.freeze({
     BACK: "Back",
     ELASTIC: "Elastic",
     BOUNCE: "Bounce",
-    CUSTOM: "Custom"
+    CUSTOM: "Custom",
+    UNDEFINED: "Undefined"
 });

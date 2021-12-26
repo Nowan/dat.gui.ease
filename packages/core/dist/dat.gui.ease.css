@@ -1,25 +1,200 @@
-/*!
- * @license MIT License
- *
- * Copyright (c) 2021 Mykyta Dniprovskyi
- *
- * Permission is hereby granted, free of charge, to any person obtaining a copy
- * of this software and associated documentation files (the "Software"), to deal
- * in the Software without restriction, including without limitation the rights
- * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
- * copies of the Software, and to permit persons to whom the Software is
- * furnished to do so, subject to the following conditions:
- *
- * The above copyright notice and this permission notice shall be included in all
- * copies or substantial portions of the Software.
- *
- * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
- * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
- * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
- * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
- * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
- * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
- * SOFTWARE.
- */
-.dg .cr.ease{height:auto;border-left:3px solid #ace247;padding:0}.dg .cr.ease .ease-gui{display:flex;flex-direction:column;justify-content:stretch}.dg .cr.ease .ease-gui .header{display:flex;width:100%}.dg .cr.ease .ease-gui .header .property-name{padding-left:4px}.dg .cr.ease .ease-gui .header .c{padding-right:5px;float:right}.dg .cr.ease .ease-gui .header .c .ease-selector{display:flex;justify-content:stretch;align-items:stretch;height:30px}.dg .cr.ease .ease-gui .header .c .ease-selector .corner-curve-container{min-width:30px;max-width:30px;background-color:#1A1A1A}.dg .cr.ease .ease-gui .header .c .ease-selector .corner-curve-container .corner-curve{box-sizing:border-box;width:100%;height:100%;position:absolute}.dg .cr.ease .ease-gui .header .c .ease-selector .template-selector{flex-grow:1;display:flex;align-items:stretch}.dg .cr.ease .ease-gui .header .c .ease-selector .template-selector .curve-selector-container{flex-grow:1;max-width:70px;min-width:64px;margin:0;background-color:#88CE02;font-weight:bold;text-align:right}.dg .cr.ease .ease-gui .header .c .ease-selector .template-selector .curve-selector-container .curve-selector{width:100%;height:100%;background-color:transparent;font-weight:bold;text-align:right;padding-right:8px}.dg .cr.ease .ease-gui .header .c .ease-selector .template-selector .orientation-selector-container{flex-grow:2;margin:0}.dg .cr.ease .ease-gui .header .c .ease-selector .template-selector .orientation-selector-container .orientation-selector{width:100%;height:100%;text-decoration:underline;color:#ffffff;background-color:#303030;padding-left:6px}.dg .cr.ease .ease-gui .header .c .ease-selector .template-selector .edit-button-container{width:12px;background-color:#303030;border-radius:0px 4px 4px 0px;display:flex;flex-direction:column;align-items:center;justify-content:center}.dg .cr.ease .ease-gui .header .c .ease-selector .template-selector .edit-button-container .edit-button{width:22px;height:100%;margin-right:4px;transform:rotateZ(90deg);cursor:pointer;transition:fill .2s}.dg .cr.ease .ease-gui .header .c .ease-selector .template-selector .edit-button-container .edit-button:hover{fill:#88CE02}.dg .cr.ease .ease-gui .header .c .ease-selector .template-selector select{appearance:none;padding:4px;margin:0;outline:none;border:none;cursor:pointer}.dg .cr.ease .ease-gui .header .c .ease-selector .template-selector select option{background-color:#000000;color:#ffffff}.dg .cr.ease .ease-gui .header .c .ease-selector .template-selector select:disabled{cursor:auto}.dg .cr.ease .ease-gui .editor-container{width:100%;background-color:#303030}.dg .cr.ease .ease-gui .editor-container .editor{box-sizing:border-box;width:100%;height:100%;position:absolute}.dg .cr.ease .ease-gui .editor-container .path-selector-container{height:22px;background-color:#303030;display:flex}.dg .cr.ease .ease-gui .editor-container .path-selector-container .path-selector{flex-grow:1;background-color:transparent;font-size:11px;font-style:italic;color:#a2a2a2;padding-left:6px;width:100%;height:100%;margin:0;outline:none;border:none;border-top:1px solid #424242}.dg .cr.ease .ease-gui .editor-container .path-selector-container .copy-button-container{display:flex;flex-direction:column;justify-content:center}.dg .cr.ease .ease-gui .editor-container .path-selector-container .copy-button-container .copy-button{cursor:pointer;transition:fill .2s}.dg .cr.ease .ease-gui .editor-container .path-selector-container .copy-button-container .copy-button:hover{fill:#88CE02}.dg .cr.ease .ease-gui .editor-container .editor-buttons{display:flex;justify-content:center;align-items:stretch}.dg .cr.ease .ease-gui .editor-container .editor-buttons .accept-button,.dg .cr.ease .ease-gui .editor-container .editor-buttons .decline-button{background-color:#1A1A1A;flex-grow:1;display:flex;align-items:stretch;user-select:none;cursor:pointer}.dg .cr.ease .ease-gui .editor-container .editor-buttons .accept-button .label-container,.dg .cr.ease .ease-gui .editor-container .editor-buttons .decline-button .label-container{flex-grow:1;display:flex;justify-content:center;align-items:stretch}.dg .cr.ease .ease-gui .editor-container .editor-buttons .accept-button .label-container .label,.dg .cr.ease .ease-gui .editor-container .editor-buttons .decline-button .label-container .label{font-weight:bold;font-size:11px;padding-top:3px}.dg .cr.ease .ease-gui .editor-container .editor-buttons .accept-button .icon-container,.dg .cr.ease .ease-gui .editor-container .editor-buttons .decline-button .icon-container{width:36px;height:30px;display:flex;align-items:center;justify-content:center}.dg .cr.ease .ease-gui .editor-container .editor-buttons .accept-button .label,.dg .cr.ease .ease-gui .editor-container .editor-buttons .decline-button .label{transition:color .1s}.dg .cr.ease .ease-gui .editor-container .editor-buttons .accept-button .icon,.dg .cr.ease .ease-gui .editor-container .editor-buttons .decline-button .icon{transform-origin:center;transition:fill .1s, transform .1s}.dg .cr.ease .ease-gui .editor-container .editor-buttons .accept-button:hover .icon,.dg .cr.ease .ease-gui .editor-container .editor-buttons .decline-button:hover .icon{transform:scale(1.2, 1.2)}.dg .cr.ease .ease-gui .editor-container .editor-buttons .accept-button{border-top:1px solid #3c4c1c}.dg .cr.ease .ease-gui .editor-container .editor-buttons .accept-button .label{text-align:right;color:#84be18}.dg .cr.ease .ease-gui .editor-container .editor-buttons .accept-button:hover .label{color:#ace247}.dg .cr.ease .ease-gui .editor-container .editor-buttons .accept-button:hover .icon{fill:#ace247}.dg .cr.ease .ease-gui .editor-container .editor-buttons .decline-button{border-top:1px solid #5a2323}.dg .cr.ease .ease-gui .editor-container .editor-buttons .decline-button .label{text-align:left;color:#c93333}.dg .cr.ease .ease-gui .editor-container .editor-buttons .decline-button:hover .label{color:#f60d0d}.dg .cr.ease .ease-gui .editor-container .editor-buttons .decline-button:hover .icon{fill:#f60d0d}.dg .cr.ease .ease-gui.mode-edit .edit-button{display:none}.dg .cr.ease .ease-gui.mode-select .copy-button,.dg .cr.ease .ease-gui.mode-select .editor-container{display:none}.dg .cr.ease .ease-gui.mode-custom-path .curve-selector-container{border-radius:0px 4px 4px 0px}.dg .cr.ease .ease-gui.mode-custom-path .curve-selector-container .curve-selector{display:none}.dg .cr.ease .ease-gui.mode-custom-path .orientation-selector-container{visibility:hidden}.dg .cr.ease .ease-gui.mode-custom-path .edit-button-container{visibility:hidden}.dg .cr.ease .ratio-box{width:100%;height:0;overflow:hidden;padding-top:100%;position:relative}.dg .cr.ease .ratio-box .ratio-box-inner{position:absolute;top:0;left:0;width:100%;height:100%}
+.dg .cr.ease {
+  height: auto;
+  border-left: 3px solid #ace247;
+  padding: 0; }
+  .dg .cr.ease .ease-gui {
+    display: flex;
+    flex-direction: column;
+    justify-content: stretch; }
+    .dg .cr.ease .ease-gui .header {
+      display: flex;
+      width: 100%; }
+      .dg .cr.ease .ease-gui .header .property-name {
+        padding-left: 4px; }
+      .dg .cr.ease .ease-gui .header .c {
+        padding-right: 5px;
+        float: right; }
+        .dg .cr.ease .ease-gui .header .c .ease-selector {
+          display: flex;
+          justify-content: stretch;
+          align-items: stretch;
+          height: 30px; }
+          .dg .cr.ease .ease-gui .header .c .ease-selector .corner-curve-container {
+            min-width: 30px;
+            max-width: 30px;
+            background-color: #1A1A1A; }
+            .dg .cr.ease .ease-gui .header .c .ease-selector .corner-curve-container .corner-curve {
+              box-sizing: border-box;
+              width: 100%;
+              height: 100%;
+              position: absolute; }
+          .dg .cr.ease .ease-gui .header .c .ease-selector .template-selector {
+            flex-grow: 1;
+            display: flex;
+            align-items: stretch; }
+            .dg .cr.ease .ease-gui .header .c .ease-selector .template-selector .curve-selector-container {
+              flex-grow: 1;
+              max-width: 70px;
+              min-width: 64px;
+              margin: 0;
+              background-color: #88CE02;
+              font-weight: bold;
+              text-align: right; }
+              .dg .cr.ease .ease-gui .header .c .ease-selector .template-selector .curve-selector-container .curve-selector {
+                width: 100%;
+                height: 100%;
+                background-color: transparent;
+                font-weight: bold;
+                text-align: right;
+                padding-right: 8px; }
+            .dg .cr.ease .ease-gui .header .c .ease-selector .template-selector .orientation-selector-container {
+              flex-grow: 2;
+              margin: 0; }
+              .dg .cr.ease .ease-gui .header .c .ease-selector .template-selector .orientation-selector-container .orientation-selector {
+                width: 100%;
+                height: 100%;
+                text-decoration: underline;
+                color: #ffffff;
+                background-color: #303030;
+                padding-left: 6px; }
+            .dg .cr.ease .ease-gui .header .c .ease-selector .template-selector .edit-button-container {
+              width: 12px;
+              background-color: #303030;
+              border-radius: 0px 4px 4px 0px;
+              display: flex;
+              flex-direction: column;
+              align-items: center;
+              justify-content: center; }
+              .dg .cr.ease .ease-gui .header .c .ease-selector .template-selector .edit-button-container .edit-button {
+                width: 22px;
+                height: 100%;
+                margin-right: 4px;
+                transform: rotateZ(90deg);
+                cursor: pointer;
+                transition: fill .2s; }
+                .dg .cr.ease .ease-gui .header .c .ease-selector .template-selector .edit-button-container .edit-button:hover {
+                  fill: #88CE02; }
+            .dg .cr.ease .ease-gui .header .c .ease-selector .template-selector select {
+              appearance: none;
+              padding: 4px;
+              margin: 0;
+              outline: none;
+              border: none;
+              cursor: pointer; }
+              .dg .cr.ease .ease-gui .header .c .ease-selector .template-selector select option {
+                background-color: #000000;
+                color: #ffffff; }
+              .dg .cr.ease .ease-gui .header .c .ease-selector .template-selector select:disabled {
+                cursor: auto; }
+    .dg .cr.ease .ease-gui .editor-container {
+      width: 100%;
+      background-color: #303030; }
+      .dg .cr.ease .ease-gui .editor-container .editor {
+        box-sizing: border-box;
+        width: 100%;
+        height: 100%;
+        position: absolute; }
+      .dg .cr.ease .ease-gui .editor-container .path-selector-container {
+        height: 22px;
+        background-color: #303030;
+        display: flex; }
+        .dg .cr.ease .ease-gui .editor-container .path-selector-container .path-selector {
+          flex-grow: 1;
+          background-color: transparent;
+          font-size: 11px;
+          font-style: italic;
+          color: #a2a2a2;
+          padding-left: 6px;
+          width: 100%;
+          height: 100%;
+          margin: 0;
+          outline: none;
+          border: none;
+          border-top: 1px solid #424242; }
+        .dg .cr.ease .ease-gui .editor-container .path-selector-container .copy-button-container {
+          display: flex;
+          flex-direction: column;
+          justify-content: center; }
+          .dg .cr.ease .ease-gui .editor-container .path-selector-container .copy-button-container .copy-button {
+            cursor: pointer;
+            transition: fill .2s; }
+            .dg .cr.ease .ease-gui .editor-container .path-selector-container .copy-button-container .copy-button:hover {
+              fill: #88CE02; }
+      .dg .cr.ease .ease-gui .editor-container .editor-buttons {
+        display: flex;
+        justify-content: center;
+        align-items: stretch; }
+        .dg .cr.ease .ease-gui .editor-container .editor-buttons .accept-button, .dg .cr.ease .ease-gui .editor-container .editor-buttons .decline-button {
+          background-color: #1A1A1A;
+          flex-grow: 1;
+          display: flex;
+          align-items: stretch;
+          user-select: none;
+          cursor: pointer; }
+          .dg .cr.ease .ease-gui .editor-container .editor-buttons .accept-button .label-container, .dg .cr.ease .ease-gui .editor-container .editor-buttons .decline-button .label-container {
+            flex-grow: 1;
+            display: flex;
+            justify-content: center;
+            align-items: stretch; }
+            .dg .cr.ease .ease-gui .editor-container .editor-buttons .accept-button .label-container .label, .dg .cr.ease .ease-gui .editor-container .editor-buttons .decline-button .label-container .label {
+              font-weight: bold;
+              font-size: 11px;
+              padding-top: 3px; }
+          .dg .cr.ease .ease-gui .editor-container .editor-buttons .accept-button .icon-container, .dg .cr.ease .ease-gui .editor-container .editor-buttons .decline-button .icon-container {
+            width: 36px;
+            height: 30px;
+            display: flex;
+            align-items: center;
+            justify-content: center; }
+          .dg .cr.ease .ease-gui .editor-container .editor-buttons .accept-button .label, .dg .cr.ease .ease-gui .editor-container .editor-buttons .decline-button .label {
+            transition: color .1s; }
+          .dg .cr.ease .ease-gui .editor-container .editor-buttons .accept-button .icon, .dg .cr.ease .ease-gui .editor-container .editor-buttons .decline-button .icon {
+            transform-origin: center;
+            transition: fill .1s, transform .1s; }
+          .dg .cr.ease .ease-gui .editor-container .editor-buttons .accept-button:hover .icon, .dg .cr.ease .ease-gui .editor-container .editor-buttons .decline-button:hover .icon {
+            transform: scale(1.2, 1.2); }
+        .dg .cr.ease .ease-gui .editor-container .editor-buttons .accept-button {
+          border-top: 1px solid #3c4c1c; }
+          .dg .cr.ease .ease-gui .editor-container .editor-buttons .accept-button .label {
+            text-align: right;
+            color: #84be18; }
+          .dg .cr.ease .ease-gui .editor-container .editor-buttons .accept-button:hover .label {
+            color: #ace247; }
+          .dg .cr.ease .ease-gui .editor-container .editor-buttons .accept-button:hover .icon {
+            fill: #ace247; }
+        .dg .cr.ease .ease-gui .editor-container .editor-buttons .decline-button {
+          border-top: 1px solid #5a2323; }
+          .dg .cr.ease .ease-gui .editor-container .editor-buttons .decline-button .label {
+            text-align: left;
+            color: #c93333; }
+          .dg .cr.ease .ease-gui .editor-container .editor-buttons .decline-button:hover .label {
+            color: #f60d0d; }
+          .dg .cr.ease .ease-gui .editor-container .editor-buttons .decline-button:hover .icon {
+            fill: #f60d0d; }
+    .dg .cr.ease .ease-gui.mode-edit .edit-button {
+      display: none; }
+    .dg .cr.ease .ease-gui.mode-select .copy-button, .dg .cr.ease .ease-gui.mode-select .editor-container {
+      display: none; }
+    .dg .cr.ease .ease-gui.mode-custom-path .curve-selector-container {
+      border-radius: 0px 4px 4px 0px; }
+      .dg .cr.ease .ease-gui.mode-custom-path .curve-selector-container .curve-selector {
+        display: none; }
+    .dg .cr.ease .ease-gui.mode-custom-path .orientation-selector-container {
+      visibility: hidden; }
+    .dg .cr.ease .ease-gui.mode-custom-path .edit-button-container {
+      visibility: hidden; }
+  .dg .cr.ease .ratio-box {
+    width: 100%;
+    height: 0;
+    overflow: hidden;
+    padding-top: 100%;
+    position: relative; }
+    .dg .cr.ease .ratio-box .ratio-box-inner {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%; }
 
+
+/*# sourceMappingURL=dat.gui.ease.css.map*/

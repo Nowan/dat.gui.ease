@@ -2,10 +2,10 @@ import styles from "./index.scss";
 import EaseManager from "./EaseManager";
 import addEaseGUI from "./gui/addEaseGUI";
 import Middleware from "./middleware/Middleware";
-import CastEntry from "./middleware/CastEntry";
+import CastEntry, { cast } from "./middleware/CastEntry";
 import Ease, { Handle, Anchor, Point } from "./gui/model/ease/Ease";
 import EasePreset from "./gui/model/preset/EasePreset";
-import * as presets from "./gui/model/preset/presets";
+//import * as presets from "./gui/model/preset/presets";
 
 const easeManager = new EaseManager();
 
@@ -52,7 +52,8 @@ export {
     Handle,
     Anchor,
     Point,
-    presets,
+    //presets,
+    cast,
     easeManager as manager
 }
 
