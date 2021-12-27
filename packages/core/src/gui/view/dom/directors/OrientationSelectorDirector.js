@@ -2,14 +2,14 @@ import HTMLElementDirector from "../../HTMLElementDirector";
 import { orientationSelector } from "../selectors";
 import GUIViewEvent from  "../../GUIViewEvent";
 
-export default class EasePanelDirector extends HTMLElementDirector {
+export default class OrientationSelectorDirector extends HTMLElementDirector {
     constructor(rootDomElement) {
         super(orientationSelector(rootDomElement));
 
-        this._element.onchange = () => this.emit(GUIViewEvent.ORIENTATION_SELECTED, this._element.value);
+        this._element.onchange = () => this.emit(GUIViewEvent.ORIENTATION_PRESET_SELECTED, this._element.value);
     }
     
-    set options(orientations) {
+    set values(orientations) {
         this._element.options.length = 0;
         
         for (let orientation of orientations) {

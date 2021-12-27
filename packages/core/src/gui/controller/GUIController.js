@@ -22,20 +22,17 @@ export default class GUIController extends dat.controllers.Controller {
 
         this._middleware = middleware;
         this._model = new GUIModel(middleware);
-        this._view = new GUIView(this._model.presets);
+        this._view = new GUIView(this._model.curves);
 
-        this._view.on(GUIViewEvent.CURVE_SELECTED, curve => {
-            console.log(curve);
-        });
+        this._model.activePreset = preset;
 
-        this._view.setEase(preset.curve, preset.orientation);
+        this._view.setOrientations(this._model.getCurveOrientations(preset.curve));
+        this._view.setPreset(preset);
+
+        this._view.on(GUIViewEvent.CURVE_PRESET_SELECTED, this._onCurvePresetSelected.bind(this));
+        this._view.on(GUIViewEvent.ORIENTATION_PRESET_SELECTED, this._onOrientationPresetSelected.bind(this));
 
         this.domElement = this._view.domElement;
-        // this._initDOM();
-
-        // this.domElement.querySelector(".property-name").innerHTML = property;
-        // this._updateSelectors(ease);
-        // this._updateCornerCurve(ease);
     }
 
     getValue() {
@@ -50,6 +47,25 @@ export default class GUIController extends dat.controllers.Controller {
 
     isModified() {
         return this.initialValue.toString() !== this._ease.toString();
+    }
+
+    _onCurvePresetSelected(nextCurve) {
+        const { orientation: currentOrientation } = this._model.activePreset;
+        const nextOrientations = this._model.getCurveOrientations(nextCurve);
+        const nextOrientation = nextOrientations.includes(currentOrientation) ? currentOrientation : nextOrientations[0];
+        const nextPreset = this._model.getMatchingPreset(nextCurve, nextOrientation);
+
+        this._model.activePreset = nextPreset;
+
+        this._view.setOrientations(nextOrientations);
+        this._view.setPreset(nextPreset);
+    }
+
+    _onOrientationPresetSelected(nextOrientation) {
+        const nextPreset = this._model.getMatchingPreset(this._model.activePreset.curve, nextOrientation);
+
+        this._model.activePreset = nextPreset;
+        this._view.setPreset(nextPreset);
     }
 
     _applyValue(ease) {

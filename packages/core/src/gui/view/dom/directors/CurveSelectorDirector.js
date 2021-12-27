@@ -11,11 +11,11 @@ export default class CurveSelectorDirector extends HTMLElementDirector {
             this._element.options.add(option);
         }
 
-        this._element.onchange = () => this.emit(GUIViewEvent.CURVE_SELECTED, this._element.value);
+        this._element.onchange = () => this.emit(GUIViewEvent.CURVE_PRESET_SELECTED, this._element.value);
     }
 
     set value(curve) {
-        this._element.curve = curve;
+        this._element.value = curve;
     }
 
     _composeOptions(curves) {

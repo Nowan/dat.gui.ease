@@ -1,14 +1,33 @@
 class GUIModel {
     constructor(middleware) {
         this._presets = _extractPresets(middleware);
-        this._ease = null;
-
-        console.log(this._presets);
-        
+        this._curves = _extractCurves(this._presets);
+        this._orientationsMap = _extractOrientationsPerCurveMap(this._presets, this._curves);
+        this._activePreset = null;
     }
 
     get presets() {
         return this._presets;
+    }
+
+    get curves() {
+        return this._curves;
+    }
+
+    get activePreset() {
+        return this._activePreset;
+    }
+
+    set activePreset(preset) {
+        this._activePreset = preset;
+    }
+
+    getCurveOrientations(curve) {
+        return this._orientationsMap.get(curve);
+    }
+
+    getMatchingPreset(curve, orientation) {
+        return this._presets.find(preset => preset.curve === curve && preset.orientation === orientation);
     }
 }
 

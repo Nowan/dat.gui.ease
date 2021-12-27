@@ -1,5 +1,5 @@
 export default Object.freeze({
-    CURVE_SELECTED: "CurveSelectedEvent",
-    ORIENTATION_SELECTED: "OrientationSelectedEvent",
-    CURVE_PATH_MODIFIED: "CurvePathModifiedEvent"
+    CURVE_PRESET_SELECTED: "CurvePresetSelectedEvent",
+    ORIENTATION_PRESET_SELECTED: "OrientationPresetSelectedEvent",
+    CURVE_EDITED: "CurvePathModifiedEvent"
 });
