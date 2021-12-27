@@ -1,7 +1,7 @@
 import * as dat from "dat.gui";
 import guiTemplate from "../view/dom/gui.html";
 import Ease from '../model/ease/Ease';
-import { Curve } from "../model/preset/EasePreset";
+import EasePreset, { Curve } from "../model/preset/EasePreset";
 import EaseEditor, { EditorCurveChangeEvent } from "../view/editor/EaseEditor";
 import interpret from "./interpret";
 import GUIView, { GUIViewEvent } from "../view/GUIView";
@@ -31,6 +31,10 @@ export default class GUIController extends dat.controllers.Controller {
 
         this._view.on(GUIViewEvent.CURVE_PRESET_SELECTED, this._onCurvePresetSelected.bind(this));
         this._view.on(GUIViewEvent.ORIENTATION_PRESET_SELECTED, this._onOrientationPresetSelected.bind(this));
+        this._view.on(GUIViewEvent.EDIT_EASE_CLICKED, this._onEditEaseClicked.bind(this));
+        this._view.on(GUIViewEvent.EASE_MODIFIED, this._onEaseModified.bind(this));
+        this._view.on(GUIViewEvent.ACCEPT_EASE_EDIT_CLICKED, this._onAcceptEaseEditClicked.bind(this));
+        this._view.on(GUIViewEvent.DISCARD_EASE_EDIT_CLICKED, this._onDiscardEaseEditClicked.bind(this));
 
         this.domElement = this._view.domElement;
     }
@@ -66,6 +70,36 @@ export default class GUIController extends dat.controllers.Controller {
 
         this._model.activePreset = nextPreset;
         this._view.setPreset(nextPreset);
+    }
+
+    _onEditEaseClicked() {
+        this._model.preEditPreset = this._model.activePreset.clone();
+
+        this._view.openEditor(this._model.activePreset.ease);
+    }
+
+    _onEaseModified(modifiedEase) {
+        const matchingPreset = this._model.getPresetMatchingEase(modifiedEase);
+
+        if (matchingPreset) {
+            this._model.activePreset = matchingPreset;
+        }
+        else {
+            this._model.activePreset = new EasePreset(modifiedEase, EasePreset.CURVE.CUSTOM, EasePreset.ORIENTATION.NONE);
+        }
+
+        this._view.setPreset(this._model.activePreset);
+    }
+
+    _onAcceptEaseEditClicked() {
+        this._view.closeEditor();
+        this._view.setPreset(this._model.activePreset);
+    }
+
+    _onDiscardEaseEditClicked() {
+        this._model.activePreset = this._model.preEditPreset;
+        this._view.closeEditor();
+        this._view.setPreset(this._model.activePreset);
     }
 
     _applyValue(ease) {

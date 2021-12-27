@@ -4,6 +4,7 @@ class GUIModel {
         this._curves = _extractCurves(this._presets);
         this._orientationsMap = _extractOrientationsPerCurveMap(this._presets, this._curves);
         this._activePreset = null;
+        this._preEditPreset = null;
     }
 
     get presets() {
@@ -22,12 +23,24 @@ class GUIModel {
         this._activePreset = preset;
     }
 
+    get preEditPreset() {
+        return this._preEditPreset;
+    }
+
+    set preEditPreset(preset) {
+        this._preEditPreset = preset;
+    }
+
     getCurveOrientations(curve) {
         return this._orientationsMap.get(curve);
     }
 
     getMatchingPreset(curve, orientation) {
         return this._presets.find(preset => preset.curve === curve && preset.orientation === orientation);
+    }
+
+    getPresetMatchingEase(ease) {
+        return this._presets.find(preset => preset.ease.equals(ease));
     }
 }
 

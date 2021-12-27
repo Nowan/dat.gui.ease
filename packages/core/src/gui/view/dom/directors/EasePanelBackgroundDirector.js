@@ -3,7 +3,7 @@ import { cornerCurveCanvas } from "../selectors";
 
 export default class EasePanelBackgroundDirector extends HTMLElementDirector {
     constructor(rootDomElement) {
-        super(rootDomElement);
+        super();
 
         this._cornerCurveCanvas = cornerCurveCanvas(rootDomElement);
         this._cornerCurveCanvas.width = this._cornerCurveCanvas.height = 60;

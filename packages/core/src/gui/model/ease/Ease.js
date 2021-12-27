@@ -7,6 +7,32 @@ export default class Ease {
         this._anchors = anchors;
     }
 
+    get anchors() {
+        return this._anchors;
+    }
+
+    get firstAnchor() {
+        return this._anchors[0];
+    }
+
+    get lastAnchor() {
+        return this._anchors[this._anchors.length - 1];
+    }
+
+    equals(ease) {
+        return this.toString() === ease.toString();
+    }
+    
+    addAnchor(x, y) {
+        const anchor = new Anchor(x, y);
+        this.anchors.push(anchor);
+        return anchor;
+    }
+
+    toString() {
+        return Ease.toSVGPath(this);
+    }
+
     static fromSVGPath(svgPath) {
         const ease = new Ease();
         const [startX, startY] = svgPath.match(/M ?(?<x>\d+),(?<y>\d+)/).splice(-2).map(Number.parseFloat);
@@ -47,28 +73,6 @@ export default class Ease {
         }
 
         return path;
-    }
-
-    get anchors() {
-        return this._anchors;
-    }
-
-    get firstAnchor() {
-        return this._anchors[0];
-    }
-
-    get lastAnchor() {
-        return this._anchors[this._anchors.length - 1];
-    }
-    
-    addAnchor(x, y) {
-        const anchor = new Anchor(x, y);
-        this.anchors.push(anchor);
-        return anchor;
-    }
-
-    toString() {
-        return Ease.toSVGPath(this);
     }
 }
 

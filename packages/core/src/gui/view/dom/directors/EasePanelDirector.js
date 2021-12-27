@@ -1,5 +1,5 @@
 import HTMLElementDirector from "../../HTMLElementDirector";
-import { easePanel } from "../selectors";
+import { easePanel, editButton } from "../selectors";
 import CurveSelectorDirector from "./CurveSelectorDirector";
 import OrientationSelectorDirector from "./OrientationSelectorDirector";
 import GUIViewEvent from "../../GUIViewEvent";
@@ -16,6 +16,8 @@ export default class EasePanelDirector extends HTMLElementDirector {
         this._orientationSelector.on(GUIViewEvent.ORIENTATION_PRESET_SELECTED, (...args) => this.emit(GUIViewEvent.ORIENTATION_PRESET_SELECTED, ...args));
 
         this._background = new EasePanelBackgroundDirector(rootDomElement);
+
+        editButton(rootDomElement).addEventListener("click", () => this.emit(GUIViewEvent.EDIT_EASE_CLICKED));
     }
 
     setOrientations(orientations) {

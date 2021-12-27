@@ -1,4 +1,4 @@
-import Ease, { Anchor } from "../ease/Ease";
+import Ease from "../ease/Ease";
 import Curve from "./enum/Curve";
 import Orientation from "./enum/Orientation";
 
@@ -11,8 +11,8 @@ class EasePreset {
     static CURVE = Curve;
     static ORIENTATION = Orientation;
 
-    constructor(svgPath, curve = EasePreset.CURVE.UNDEFINED, orientation = EasePreset.ORIENTATION.NONE) {
-        this.ease = Ease.fromSVGPath(svgPath);
+    constructor(easeOrSvgPath, curve = EasePreset.CURVE.UNDEFINED, orientation = EasePreset.ORIENTATION.NONE) {
+        this.ease = easeOrSvgPath instanceof Ease ? easeOrSvgPath : Ease.fromSVGPath(easeOrSvgPath);
         this.curve = curve;
         this.orientation = orientation;
     }

@@ -1,5 +1,8 @@
 export default Object.freeze({
-    CURVE_PRESET_SELECTED: "CurvePresetSelectedEvent",
-    ORIENTATION_PRESET_SELECTED: "OrientationPresetSelectedEvent",
-    CURVE_EDITED: "CurvePathModifiedEvent"
+    CURVE_PRESET_SELECTED: "CurvePresetSelectedGUIViewEvent",
+    ORIENTATION_PRESET_SELECTED: "OrientationPresetSelectedGUIViewEvent",
+    EDIT_EASE_CLICKED: "EditEaseClickedGUIViewEvent",
+    EASE_MODIFIED: "EaseModifiedGUIViewEvent",
+    ACCEPT_EASE_EDIT_CLICKED: "AcceptEaseEditClickedGUIViewEvent",
+    DISCARD_EASE_EDIT_CLICKED: "DiscardEaseEditClickedGUIViewEvent"
 });
