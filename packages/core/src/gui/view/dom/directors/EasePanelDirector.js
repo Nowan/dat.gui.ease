@@ -17,7 +17,9 @@ export default class EasePanelDirector extends HTMLElementDirector {
 
         this._background = new EasePanelBackgroundDirector(rootDomElement);
 
-        editButton(rootDomElement).addEventListener("click", () => this.emit(GUIViewEvent.EDIT_EASE_CLICKED));
+        this._editButtonElement = editButton(rootDomElement);
+        this._editButtonElement.style.display = "none"
+        this._editButtonElement.addEventListener("click", () => this.emit(GUIViewEvent.EDIT_EASE_CLICKED));
     }
 
     setOrientations(orientations) {
@@ -28,5 +30,9 @@ export default class EasePanelDirector extends HTMLElementDirector {
         this._curveSelector.value = preset.curve;
         this._orientationSelector.value = preset.orientation;
         this._background.refresh(preset.ease);
+    }
+
+    showEditButton() {
+        this._editButtonElement.style.display = null;
     }
 }

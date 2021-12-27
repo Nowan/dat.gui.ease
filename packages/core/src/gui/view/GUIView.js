@@ -51,6 +51,10 @@ class GUIView extends HTMLElementDirector {
         this._easeEditorDirector = null;
     }
 
+    showEditButton() {
+        this._easePanelDirector.showEditButton();
+    }
+
     get domElement() {
         return this._element;
     }

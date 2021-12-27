@@ -12,8 +12,14 @@ export default class OrientationSelectorDirector extends HTMLElementDirector {
     set values(orientations) {
         this._element.options.length = 0;
         
-        for (let orientation of orientations) {
-            this._element.options.add(new Option(orientation, orientation));
+        if (orientations.length > 0) {
+            for (let orientation of orientations) {
+                this._element.options.add(new Option(orientation, orientation));
+            }
+            this._element.removeAttribute("disabled");
+        }
+        else {
+            this._element.setAttribute("disabled", true);
         }
     }
 

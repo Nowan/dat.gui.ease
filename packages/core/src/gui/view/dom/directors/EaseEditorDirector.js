@@ -41,7 +41,7 @@ export default class EaseEditorDirector extends HTMLElementDirector {
                 this.emit(GUIViewEvent.EASE_MODIFIED, ease);
             }
             catch(e) {
-                console.warn(`Couldn't parse SVG path ${svgPath}`);
+                console.warn(`Couldn't parse SVG path ${inspectorElement.value}`);
             }
         }
 
