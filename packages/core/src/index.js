@@ -1,7 +1,7 @@
-import styles from "./index.scss";
+import "./index.scss";
 import EaseManager from "./EaseManager";
 import addEaseGUI from "./gui/addEaseGUI";
-import Middleware from "./middleware/Middleware";
+import Middleware, { middleware } from "./middleware/Middleware";
 import CastEntry, { cast } from "./middleware/CastEntry";
 import Ease, { Handle, Anchor, Point } from "./gui/model/ease/Ease";
 import EasePreset from "./gui/model/preset/EasePreset";
@@ -47,12 +47,12 @@ export function extend(dat) {
 export {
     Middleware,
     CastEntry,
-    Ease,
     EasePreset,
+    Ease,
     Handle,
     Anchor,
     Point,
-    //presets,
+    middleware,
     cast,
     easeManager as manager
 }

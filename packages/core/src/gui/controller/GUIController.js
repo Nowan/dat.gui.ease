@@ -1,7 +1,6 @@
 import * as dat from "dat.gui";
 import Ease from '../model/ease/Ease';
 import EasePreset from "../model/preset/EasePreset";
-import interpret from "./interpret";
 import GUIView, { GUIViewEvent } from "../view/GUIView";
 import GUIModel from "../model/GUIModel";
 
@@ -33,20 +32,58 @@ export default class GUIController extends dat.controllers.Controller {
         this._view.on(GUIViewEvent.DISCARD_EASE_EDIT_CLICKED, this._onDiscardEaseEditClicked.bind(this));
 
         this.domElement = this._view.domElement;
+        this._onValueModified = null;
     }
 
+    // Called from dat.GUI to store serialized value in revertable preset
+    // (part of dat.GUi.prototype.remember() functionality)
     getValue() {
-        return this._ease.toString();
+        return this._model.activePreset.ease.toString();
     }
 
-    // Use primitive type here to support serialization for `dat.GUI.prototype.getSaveObject()`
-    setValue(easeString) {
-        this._ease = interpret(easeString);
-        this._applyValue(this._ease);
+    // Called from dat.GUI upon initializing with remembered value
+    // or once preset is reverted
+    setValue(easeSvgPath) {
+        const ease = Ease.fromSVGPath(easeSvgPath);
+        const matchingPreset = this._model.getPresetMatchingEase(ease);
+        
+        if (matchingPreset) {
+            this._model.activePreset = matchingPreset;
+        }
+        else {
+            this._model.activePreset = new EasePreset(ease, EasePreset.CURVE.CUSTOM, EasePreset.ORIENTATION.NONE);
+        }
+        
+        this._view.setOrientations(this._model.getCurveOrientations(matchingPreset.curve));
+        this._view.setPreset(this._model.activePreset);
+
+        this._applyRevertedValue(this._model.activePreset);
     }
 
-    isModified() {
-        return this.initialValue.toString() !== this._ease.toString();
+    set onValueModified(callback) {
+        this._onValueModified = callback;
+    }
+
+    _applyValue(preset) {
+        this._applyRevertedValue(preset);
+
+        if (this._onValueModified) {
+            this._onValueModified();
+        }
+    }
+
+    _applyRevertedValue(preset) {
+        const externalEase = this._middleware.export(preset);
+        this.object[this.property] = externalEase;
+        
+        if (this.__onChange) {
+            this.__onChange.call(this, externalEase);
+        }
+        if (this.__onFinishChange) {
+            this.__onFinishChange.call(this, externalEase);
+        }
+
+        this.updateDisplay();
     }
 
     _onCurvePresetSelected(nextCurve) {
@@ -59,6 +96,8 @@ export default class GUIController extends dat.controllers.Controller {
 
         this._view.setOrientations(nextOrientations);
         this._view.setPreset(nextPreset);
+
+        this._applyValue(nextPreset);
     }
 
     _onOrientationPresetSelected(nextOrientation) {
@@ -66,6 +105,8 @@ export default class GUIController extends dat.controllers.Controller {
 
         this._model.activePreset = nextPreset;
         this._view.setPreset(nextPreset);
+
+        this._applyValue(nextPreset);
     }
 
     _onEditEaseClicked() {
@@ -85,28 +126,19 @@ export default class GUIController extends dat.controllers.Controller {
         }
 
         this._view.setPreset(this._model.activePreset);
+        this._applyValue(this._model.activePreset);
     }
 
     _onAcceptEaseEditClicked() {
         this._view.closeEditor();
         this._view.setPreset(this._model.activePreset);
+        this._applyValue(this._model.activePreset);
     }
 
     _onDiscardEaseEditClicked() {
         this._model.activePreset = this._model.preEditPreset;
         this._view.closeEditor();
         this._view.setPreset(this._model.activePreset);
-    }
-
-    _applyValue(ease) {
-        this.object[this.property] = this._middleware.export(ease);
-        if (this.__onChange) {
-            this.__onChange.call(this, ease);
-        }
-        if (this.__onFinishChange) {
-            this.__onFinishChange.call(this, ease);
-        }
-        this._updateElements(ease);
-        this.updateDisplay();
+        this._applyValue(this._model.activePreset);
     }
 };

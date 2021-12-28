@@ -27,6 +27,10 @@ class EasePreset {
         return this;
     }
 
+    toString() {
+        return `[${this.ease.toString()}][${this.curve}.${this.orientation}]`;
+    }
+
     static of(svgPath, curve = EasePreset.CURVE.UNDEFINED, orientation = EasePreset.ORIENTATION.NONE) {
         return new EasePreset(svgPath, curve, orientation);
     }

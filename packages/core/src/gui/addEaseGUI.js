@@ -92,14 +92,7 @@ function _augmentController(gui, li, controller) {
         return this;
     };
 
-    const setValue = controller.setValue;
-    controller.setValue = function setValueOverride(value) {
-        setValue.call(controller, ...arguments);
-        if (gui.getRoot().__preset_select && controller.isModified()) {
-            _markPresetModified(gui.getRoot(), true);
-        }
-        return value;
-    }
+    controller.onValueModified = _markPresetModified.bind(null, gui, true);
 }
 
 // Copy of markPresetModified() method
