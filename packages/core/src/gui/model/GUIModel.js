@@ -1,6 +1,6 @@
 class GUIModel {
     constructor(middleware) {
-        this._presets = _extractPresets(middleware);
+        this._presets = middleware.presets;
         this._curves = _extractCurves(this._presets);
         this._orientationsMap = _extractOrientationsPerCurveMap(this._presets, this._curves);
         this._activePreset = null;
@@ -32,7 +32,7 @@ class GUIModel {
     }
 
     getCurveOrientations(curve) {
-        return this._orientationsMap.get(curve);
+        return this._orientationsMap.get(curve) || [];
     }
 
     getMatchingPreset(curve, orientation) {
@@ -42,10 +42,6 @@ class GUIModel {
     getPresetMatchingEase(ease) {
         return this._presets.find(preset => preset.ease.equals(ease));
     }
-}
-
-function _extractPresets(middleware) {
-    return middleware.castEntries.map(entry => entry.internal);
 }
 
 function _extractCurves(presets) {

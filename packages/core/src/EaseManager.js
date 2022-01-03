@@ -10,7 +10,7 @@ export default class EaseManager {
      * @param {Ease} ease - Ease instance of animation library of your choice
      * @return {boolean}
      */
-    supports(ease) {
+    hasCompatibleMiddleware(ease) {
         return this._middlewares.some(middleware => middleware.isFormatSupported(ease));
     }
 
@@ -29,8 +29,7 @@ export default class EaseManager {
      * @return {this} self reference for chaining.
      */
     use(middleware) {
-        // TODO: fix transpilation problem to use "instanceof" here
-        if (middleware.toString() === `[object ${Middleware.CLASS_NAME}]`) {
+        if (middleware instanceof Middleware) {
             this._middlewares.push(middleware);
         }
         else {

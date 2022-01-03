@@ -92,7 +92,9 @@ function _augmentController(gui, li, controller) {
         return this;
     };
 
-    controller.onValueModified = _markPresetModified.bind(null, gui, true);
+    if (gui.getRoot().__preset_select) {
+        controller.onValueModified = _markPresetModified.bind(null, gui, true);
+    }
 }
 
 // Copy of markPresetModified() method

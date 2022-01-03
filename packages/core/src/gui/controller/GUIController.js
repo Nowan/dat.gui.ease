@@ -54,7 +54,7 @@ export default class GUIController extends dat.controllers.Controller {
             this._model.activePreset = new EasePreset(ease, EasePreset.CURVE.CUSTOM, EasePreset.ORIENTATION.NONE);
         }
         
-        this._view.setOrientations(this._model.getCurveOrientations(matchingPreset.curve));
+        this._view.setOrientations(this._model.getCurveOrientations(this._model.activePreset.curve));
         this._view.setPreset(this._model.activePreset);
 
         this._applyRevertedValue(this._model.activePreset);

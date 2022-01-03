@@ -2,17 +2,16 @@ import "./index.scss";
 import EaseManager from "./EaseManager";
 import addEaseGUI from "./gui/addEaseGUI";
 import Middleware, { middleware } from "./middleware/Middleware";
-import CastEntry, { cast } from "./middleware/CastEntry";
 import Ease, { Handle, Anchor, Point } from "./gui/model/ease/Ease";
 import EasePreset from "./gui/model/preset/EasePreset";
-//import * as presets from "./gui/model/preset/presets";
+import * as presets from "./gui/model/preset/presets";
 
 const easeManager = new EaseManager();
 
 function addEase(object, property) {
     const ease = object[property];
         
-    if (easeManager.supports(ease)) {
+    if (easeManager.hasCompatibleMiddleware(ease)) {
         return addEaseGUI.call(this, object, property, easeManager.getCompatibleMiddleware(ease));
     }
     else {
@@ -27,7 +26,7 @@ export function extend(dat) {
     function addOverride(object, property) {
         const value = object[property] || object;
 
-        if (easeManager.supports(value)) {
+        if (easeManager.hasCompatibleMiddleware(value)) {
             return addEase.call(this, ...arguments);
         }
         else {
@@ -46,14 +45,13 @@ export function extend(dat) {
 
 export {
     Middleware,
-    CastEntry,
     EasePreset,
     Ease,
     Handle,
     Anchor,
     Point,
     middleware,
-    cast,
+    presets,
     easeManager as manager
 }
 

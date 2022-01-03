@@ -3,4 +3,8 @@ export default class Point {
         this.x = x;
         this.y = y;
     }
+
+    static of(pointLike) {
+        return new Point(pointLike.x, pointLike.y);
+    }
 }

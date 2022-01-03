@@ -19,8 +19,25 @@ export default class Ease {
         return this._anchors[this._anchors.length - 1];
     }
 
+    get svgPath() {
+        return Ease.toSVGPath(this);
+    }
+
+    get points() {
+        const points = [];
+
+        for (let i = 0; i < this.anchors.length; i += 2) {
+            const startAnchor = this.anchors[i];
+            const endAnchor = this.anchors[i + 1];
+            
+            points.push(Point.of(startAnchor), Point.of(startAnchor.handle), Point.of(endAnchor.handle), Point.of(endAnchor));
+        }
+
+        return points;
+    }
+
     equals(ease) {
-        return this.toString() === ease.toString();
+        return this.svgPath === ease.svgPath;
     }
     
     addAnchor(x, y) {
@@ -30,7 +47,7 @@ export default class Ease {
     }
 
     toString() {
-        return Ease.toSVGPath(this);
+        return this.svgPath;
     }
 
     static fromSVGPath(svgPath) {
@@ -70,6 +87,14 @@ export default class Ease {
             const endAnchor = ease.anchors[i + 1];
             
             path += ` ${startAnchor.handle.x},${startAnchor.handle.y} ${endAnchor.handle.x},${endAnchor.handle.y} ${endAnchor.x},${endAnchor.y}`;
+        }
+
+        const points = ease.points;
+        const originPoint = points.shift();
+        let path2 = `M ${originPoint.x},${originPoint.y} C`;
+
+        for (let point of points) {
+            path2 += ` ${point.x},${point.y}`;
         }
 
         return path;
