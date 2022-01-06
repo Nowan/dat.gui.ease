@@ -29,7 +29,7 @@ export default class EaseManager {
      * @return {this} self reference for chaining.
      */
     use(middleware) {
-        if (middleware instanceof Middleware) {
+        if (middleware && Middleware.checkSignature(middleware)) {
             this._middlewares.push(middleware);
         }
         else {
