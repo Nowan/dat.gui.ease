@@ -4,7 +4,12 @@ export default class Point {
         this.y = y;
     }
 
-    static of(pointLike) {
-        return new Point(pointLike.x, pointLike.y);
+    copy(pointLike) {
+        this.x = pointLike.x;
+        this.y = pointLike.y;
+    }
+
+    static of(x, y) {
+        return new Point(x, y);
     }
 }

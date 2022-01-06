@@ -1,0 +1,13 @@
+{
+    "folders": [
+      {
+        "path": "./packages/core"
+      },
+      {
+        "path": "./packages/gsap-v2"
+      },
+      {
+        "path": "./packages/gsap-v3"
+      }
+    ]
+  }

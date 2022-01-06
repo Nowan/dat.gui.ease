@@ -7,7 +7,7 @@ class EasePreset {
     static ORIENTATION = Orientation;
 
     constructor(easeOrSvgPath, curve = EasePreset.CURVE.UNDEFINED, orientation = EasePreset.ORIENTATION.NONE) {
-        this.ease = easeOrSvgPath instanceof Ease ? easeOrSvgPath : Ease.fromSVGPath(easeOrSvgPath);
+        this.ease = easeOrSvgPath instanceof Ease ? easeOrSvgPath : Ease.ofSVGPath(easeOrSvgPath);
         this.curve = curve;
         this.orientation = orientation;
     }

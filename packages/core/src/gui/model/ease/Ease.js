@@ -1,10 +1,11 @@
 import Anchor from "./composites/Anchor";
 import Handle from "./composites/Handle";
 import Point from "./composites/Point";
+import InvalidSVGPathException from "./exceptions/InvalidSVGPathException";
 
 export default class Ease {
     constructor(...anchors) {
-        this._anchors = anchors;
+        this._anchors = Array.from(anchors);
     }
 
     get anchors() {
@@ -30,7 +31,7 @@ export default class Ease {
             const startAnchor = this.anchors[i];
             const endAnchor = this.anchors[i + 1];
             
-            points.push(Point.of(startAnchor), Point.of(startAnchor.handle), Point.of(endAnchor.handle), Point.of(endAnchor));
+            points.push(startAnchor.toPoint(), startAnchor.handle.toPoint(), endAnchor.handle.toPoint(), endAnchor.toPoint());
         }
 
         return points;
@@ -50,33 +51,54 @@ export default class Ease {
         return this.svgPath;
     }
 
-    static fromSVGPath(svgPath) {
-        const ease = new Ease();
-        const [startX, startY] = svgPath.match(/M ?(?<x>\d+),(?<y>\d+)/).splice(-2).map(Number.parseFloat);
-        const cCoords = svgPath.replace(/^M.*C ?/, "").replace(/ *$/, "").split(/[ ,]/).map(Number.parseFloat);
+    static of(...anchors) {
+        return new Ease(...anchors);
+    }
+
+    static ofSVGPath(svgPath) {
+        try {
+            const trimmedPath = svgPath.trim();
+            const [startX, startY] = trimmedPath.match(/^M *(?<x>[\d\.]+),(?<y>[\d\.]+)/).splice(-2).map(safeParseCoordinate);
+            const cCoords = trimmedPath.replace(/^M.*C */, "").replace(/ *$/, "").split(/[ ,]/).map(safeParseCoordinate);
+
+            if (cCoords.length % 6 !== 0) {
+                throw new Error("Irregular number of coordinates provided.")
+            }
+            else {
+                const anchors = [];
+
+                anchors[0] = Anchor.ofOriginAndHandle(
+                    Point.of(startX, startY),
+                    Point.of(cCoords[0], cCoords[1])
+                );
         
-        ease.anchors[0] = new Anchor(startX, startY);
-        ease.anchors[0].handle.x = cCoords[0];
-        ease.anchors[0].handle.y = cCoords[1];
-
-        for (let i = 2; i < cCoords.length - 4; i += 6) {
-            const a = (i - 2) / 3 + 1;
-            
-            ease.anchors[a] = new Anchor(cCoords[i + 2], cCoords[i + 3]);
-            ease.anchors[a].handle.x = cCoords[i];
-            ease.anchors[a].handle.y = cCoords[i + 1];
-            
-            ease.anchors[a + 1] = new Anchor(cCoords[i + 2], cCoords[i + 3]);
-            ease.anchors[a + 1].handle.x = cCoords[i + 4];
-            ease.anchors[a + 1].handle.y = cCoords[i + 5];
+                for (let i = 2; i < cCoords.length - 4; i += 6) {
+                    const a = (i - 2) / 3 + 1;
+                    
+                    anchors[a] = Anchor.ofOriginAndHandle(
+                        Point.of(cCoords[i + 2], cCoords[i + 3]),
+                        Point.of(cCoords[i],  cCoords[i + 1])
+                    );
+    
+                    anchors[a + 1] = Anchor.ofOriginAndHandle(
+                        Point.of(cCoords[i + 2], cCoords[i + 3]),
+                        Point.of(cCoords[i + 4], cCoords[i + 5])
+                    );
+                }
+    
+                const lastAnchor = Anchor.ofOriginAndHandle(
+                    Point.of(...cCoords.slice(-2)),
+                    Point.of(cCoords[cCoords.length - 4], cCoords[cCoords.length - 3])
+                );
+    
+                anchors.push(lastAnchor);
+                
+                return Ease.of(...anchors);
+            }
         }
-
-        const lastAnchor = new Anchor(...cCoords.slice(-2));
-        lastAnchor.handle.x = cCoords[cCoords.length - 4];
-        lastAnchor.handle.y = cCoords[cCoords.length - 3];
-        ease.anchors.push(lastAnchor);
-
-        return ease;
+        catch (e) {
+            throw new InvalidSVGPathException(e);
+        }
     }
 
     static toSVGPath(ease) {
@@ -101,8 +123,15 @@ export default class Ease {
     }
 }
 
+function safeParseCoordinate(rawCoordinate) {
+    const coordinate = Number.parseFloat(rawCoordinate);
+    if (coordinate === NaN) throw new Error(`Error parsing coordinate "${rawCoordinate}"`);
+    return coordinate;
+}
+
 export {
     Anchor,
     Handle,
-    Point
+    Point,
+    InvalidSVGPathException
 }
