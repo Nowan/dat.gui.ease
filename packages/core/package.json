@@ -32,7 +32,7 @@
     "url": "https://github.com/Nowan/dat.gui.ease/issues"
   },
   "publishConfig": {
-    "registry": "https://npm.pkg.github.com/"
+    "registry": "https://npm.pkg.github.com/@Nowan"
   },
   "peerDependencies": {
     "dat.gui": "^0.7.7"
@@ -69,5 +69,6 @@
     "moduleFileExtensions": [
       "js"
     ]
-  }
+  },
+  "gitHead": "bfcd89ecce5e2f7cb60e39f513113ffeb777ec02"
 }
