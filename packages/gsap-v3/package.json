@@ -32,7 +32,7 @@
     "registry": "https://npm.pkg.github.com/"
   },
   "peerDependencies": {
-    "dat.gui.ease": "^0.1.0",
+    "dat.gui.ease": "^0.2.0",
     "gsap": "^3.0.0"
   },
   "devDependencies": {
