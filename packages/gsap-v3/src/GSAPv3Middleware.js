@@ -2,7 +2,7 @@ import { Middleware, Ease, EasePreset, presets } from "dat.gui.ease"
 
 const { Linear, CircIn, CircOut, CircInOut, ExpoIn, ExpoOut, ExpoInOut } = presets;
 
-export default class GSAPv3Middleware extends Middleware {
+class GSAPv3Middleware extends Middleware {
     constructor(CustomEase) {
         super("GSAPv3");
         
@@ -26,10 +26,13 @@ export default class GSAPv3Middleware extends Middleware {
             .preset("circ.out", CircOut)
             .preset("circ.inOut", CircInOut);
 
-        if (CustomEase) {
-            this.pick(datObject => !!CustomEase.get(datObject)).transform(
-                datEase => Ease.fromSVGPath(CustomEase.getSVGData(datEase)),
-                middlewareEase => CustomEase.create("custom", middlewareEase.svgPath));
+        if (typeof CustomEase === "function") {
+            this.pick(datObject => typeof datObject.custom === "object" && datObject.custom instanceof CustomEase).transform(
+                gsapEase => Ease.ofSVGPath(gsapEase.custom.data),
+                middlewareEase => CustomEase.create("custom", middlewareEase.svgPath)
+            );
         }
     }
 }
+
+export default GSAPv3Middleware;

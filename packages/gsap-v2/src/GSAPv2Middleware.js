@@ -27,9 +27,9 @@ export default class GSAPv2Middleware extends Middleware {
             .preset(Circ.easeOut, CircOut)
             .preset(Circ.easeInOut, CircInOut);
 
-        if (CustomEase) {
+        if (typeof CustomEase === "function") {
             this.pick(datObject => datObject instanceof CustomEase).transform(
-                datEase => Ease.fromSVGPath(datEase.data),
+                gsapEase => Ease.ofSVGPath(gsapEase.data),
                 middlewareEase => CustomEase.create("custom", middlewareEase.svgPath));
         }
     }
