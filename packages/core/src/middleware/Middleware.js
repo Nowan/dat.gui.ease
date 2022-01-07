@@ -1,35 +1,82 @@
-import CastMap from "./CastMap";
+import PresetCastEntry from "./cast/PresetCastEntry";
+import TransformCastEntry from "./cast/TransformCastEntry";
 
-export default class Middleware {
-    constructor(entries) {
-        this._templates = entries.map(entry => entry.internal);
-        this._castMap = new CastMap(entries);
+class Middleware {
+    constructor(name, castEntries = []) {
+        this._name = name;
+        this._castEntries = castEntries;
+    }
+
+    get castEntries() {
+        return this._castEntries;
+    }
+
+    get presets() {
+        return this._castEntries.filter(castEntry => castEntry instanceof PresetCastEntry).map(entry => entry.preset);
+    }
+
+    preset(thirdPartyEase, nativeEasePreset) {
+        this.castEntries.push(PresetCastEntry.of(thirdPartyEase, nativeEasePreset));
+        return this;
+    }
+
+    pick(predicateFunction) {
+        const middleware = this;
+
+        return {
+            transform(thirdPartyToNativeCast, nativeToThirdPartyCast) {
+                middleware.castEntries.push(TransformCastEntry.of(predicateFunction, thirdPartyToNativeCast, nativeToThirdPartyCast));
+                return middleware;
+            }
+        }
+    }
+
+    transform(thirdPartyToNativeCast, nativeToThirdPartyCast) {
+        this.castEntries.push(TransformCastEntry.of(thirdPartyToNativeCast, nativeToThirdPartyCast));
+        return this;
     }
 
     isEditingSupported() {
-        // Some frameworks don't allow custom easing curves, this flag is used to disable ease editor in such cases.
-        return true;
+        return this.castEntries.some(castEntry => castEntry instanceof TransformCastEntry);
     }
 
-    isFormatSupported(externalEase) {
-        return !!externalEase && this._castMap.hasExternal(externalEase);
+    isFormatSupported(thirdPartyEase) {
+        return this.castEntries.some(castEntry => castEntry.supportsCastInward(thirdPartyEase));
     }
 
-    import(externalEase) {
-        return this._castMap.externalToInternal(externalEase);
+    import(thirdPartyEase) {
+        const castEntry = this._castEntries.find(castEntry => castEntry.supportsCastInward(thirdPartyEase));
+        
+        if (castEntry) {
+            return castEntry.castInward(thirdPartyEase);
+        }
+        else {
+            console.warn(`Unsupported inward cast requested for ease ${thirdPartyEase.toString()}`);
+        }
     }
 
-    export(internalEase) {
-        return this._castMap.internalToExternal(internalEase);
+    export(nativeEase) {
+        const castEntry = this._castEntries.find(castEntry => castEntry.supportsCastOutward(nativeEase));
+        
+        if (castEntry) {
+            return castEntry.castOutward(nativeEase);
+        }
+        else {
+            console.warn(`Unsupported outward cast requested for ease ${nativeEase.toString()}`);
+        }
     }
 
     toString() {
-        return `[object ${Middleware.CLASS_NAME}]`;
+        return `[object DatGuiEase${this._name}Middleware]`;
     }
 
-    get templates() {
-        return this._templates;
+    static checkSignature(instanceLike) {
+        return /^\[object DatGuiEase(?:.*)Middleware\]$/.test(instanceLike.toString());
     }
-
-    static CLASS_NAME = "DatGuiEaseMiddleware";
 }
+
+export function middleware(name) {
+    return new Middleware(name);
+}
+
+export default Middleware;

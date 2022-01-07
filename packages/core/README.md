@@ -4,13 +4,7 @@
 
 An extension of [dat.GUI](https://github.com/dataarts/dat.gui) to edit animation easings in real time. 
 
-Include middlewares to support animation libraries of your choice:
-
-| Library        | Middleware   |
-|:---------------:|:-------------:|
-| [GSAP](https://greensock.com/)  | [GSAPv2Middleware](https://github.com/Nowan/dat.gui.ease/tree/master/packages/gsap-v2)&nbsp;&nbsp;&nbsp;[![npm](https://img.shields.io/npm/v/dat.gui.ease.gsap.v2)](https://www.npmjs.com/package/dat.gui.ease.gsap.v2)<br>[GSAPv3Middleware](https://github.com/Nowan/dat.gui.ease/tree/master/packages/gsap-v3)&nbsp;&nbsp;&nbsp;[![npm](https://img.shields.io/npm/v/dat.gui.ease.gsap.v3)](https://www.npmjs.com/package/dat.gui.ease.gsap.v3) |
-| [anime.js](https://animejs.com/)  | in progress |
-| [tween.js](http://tweenjs.github.io/tween.js/)  | pending |
+![Extension preview](https://raw.githubusercontent.com/Nowan/dat.gui.ease/master/docs/images/panel-preview.png)
 
 ## Installation
 ```bash
@@ -20,7 +14,7 @@ npm install --save-dev dat.gui dat.gui.ease
 1. File include:
 ```html
 <script  type="'text/javascript" src="https://unpkg.com/dat.gui@^0.7.7/build/dat.gui.min.js"></script>
-<script type="text/javascript" src="https://unpkg.com/dat.gui.ease@latest/dist/dat.gui.ease.min.js"></script>
+<script type="text/javascript" src="https://unpkg.com/dat.gui.ease@latest/dist/dat.gui.ease.min.js"></script><!-- adds 'datGuiEase' global variable -->
 <link rel="stylesheet" type="text/css" href="https://unpkg.com/dat.gui.ease@latest/dist/dat.gui.ease.css">
 ```
 2. ES6 module
@@ -36,30 +30,92 @@ const datGuiEase = require('dat.gui.ease');
 const styles = require('dat.gui.ease/dist/dat.gui.ease.css');
 ```
 
-## Set up the extension
-```javascript
-datGuiEase.extend(dat);
+## <a name="setUpMiddlewares"></a> Set up middlewares
+`Middleware` object is used to process ease values inside `dat.GUI` inspected object. You'll need to create and configure one to make your easing objects processable:
 
-const gui = new dat.GUI();
-gui.addEase({ ease: {} }, "ease"); // Shows warning "No compatible middleware found"
-```
-
-To support ease objects of animation library of your choice, a corresponding middleware(from the list on top) should be included to the project and registered via `use()` method:
 ```javascript
-import { Power2 } from "gsap";
-import GSAPv2Middleware from "dat.gui.ease.gsap.v2";
+import dat from "dat.gui";
+import datGuiEase, { middleware, presets } from "dat.gui.ease";
 
 datGuiEase.extend(dat).use(
-     new GSAPv2Middleware()
+     middleware("MyAnimationLib")
+          .preset("linear", presets.Linear)
+          .preset("sine.in", presets.SineIn)
+          .preset("sine.out", presets.SineOut)
+          .preset("sine.inOut", presets.SineInOut)
+          .preset("quad.in", presets.QuadIn)
+          .preset("quad.out", preset.QuadOut)
+          .preset("quad.inOut", preset.QuadInOut)
 );
 
 const gui = new dat.GUI();
-gui.addEase({ ease: Power2.easeIn }, "ease"); // Voila! Ease is editable in dat.GUI
+const config = { ease: "linear" };
+
+gui.add(config, "ease"); // Voila! "ease" property is processed as ease in dat.GUI
 ```
-<br>
 
-#### Credits
+For more customization options see API reference below.
 
-[SidneyDouw/curvesjs](https://github.com/SidneyDouw/curvesjs) - minimalistic yet nonetheless powerful bezier curve editor with no dependencies - exactly what I've looked for. Hope it gets more attention.
+## Middleware API
 
-[Jeremboo/dat.gui.image](https://github.com/Jeremboo/dat.gui.image) - gave me an idea of custom control for dat.GUI.
+### new Middleware([name]) ⇒ `Middleware`
+| Param        | Type   |  Description   |
+|:---------------:|:-------------:|:-------------:|
+| [name]  | `String` | Identification name for middleware. Purely descriptive. |
+
+```javascript
+import datGuiEase, { Middleware, middleware } from "dat.gui.ease";
+
+const myMiddleware = new Middleware("MyAnimationLib");
+// Or static method, whatever you prefer
+const myMiddleware = middleware("MyAnimationLib");
+```
+
+### Middleware.prototype.preset(easeInstance, middlewarePresetInstance) => `Middleware`
+Registers ease object as one of selectable options in `dat.GUI` ease control. If inspected value equals ease object, a `dat.GUI` ease control will be created for it.
+| Param        | Type   |  Description   |
+|:---------------:|:-------------:|:-------------:|
+| easeInstance  | `Object` \| `String` | Instance of an object representing your ease |
+| middlewarePresetInstance  | `EasePreset` | Middleware ease preset instance. Used to map your instance to middleware-supported ease and to generate GUI selection option in provided categories. You can either declare your own, or use one of `presets` for [most common easings](https://easings.net/). |
+
+```javascript
+import datGuiEase, { middleware, presets } from "dat.gui.ease";
+const {
+     Linear,
+     SineIn, SineOut, SineInOut,
+     QuadIn, QuadOut, QuadInOut,
+     CubicIn, CubicOut, CubicInOut,
+     QuartIn, QuartOut, QuartInOut,
+     ExpoIn, ExpoOut, ExpoInOut,
+     CircIn, CircOut, CircInOut,
+     BackIn, BackOut, BackInOut
+} = presets;
+
+middleware("MyAnimationLib")
+     .preset("sine.out", SineOut),
+     .preset("aliasSine.out", SineOut.withAlias("AliasSine")),
+     .preset("customSine.out", EasePreset.of("M 0,0 C 0.61,1 0.88,1 1,1", "CustomSine", "out"));
+```
+
+### Middleware.prototype.pick(predicateFn).transform(outInTransformationFn, inOutTransformationFn) ⇒ `Middleware`
+Enables GUI editing mode if inspected value fits `predicateFn`.
+| Param        | Type   |  Description   |
+|:---------------:|:-------------:|:-------------:|
+| predicateFn  | `Function`<`Object` \| `String`> : `Boolean` | Predicate function checking whether inspected value is valid for transformation in edit mode |
+| outInTransformationFn  | `Function`<`Object` \| `String`> : `Ease` | Function transforming inspected value to middleware-supported `Ease` format |
+| inOutTransformationFn  | `Function`<`Ease`> : `Object` \| `String` | Function transforming middleware-supported `Ease` instance back to the original format of inspected value |
+
+```javascript
+import datGuiEase, { middleware } from "dat.gui.ease";
+
+class MyEase {
+     constructor(svgPath) {
+          this.svgPath = svgPath;
+     };
+}
+
+middleware("MyAnimationLib")
+     .pick(datObject => datObject instanceof MyEase).transform(
+          datEase => Ease.ofSVGPath(datEase.svgPath),
+          middlewareEase => new MyEase(middlewareEase.svgPath));
+```

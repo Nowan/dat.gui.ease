@@ -1,7 +1,7 @@
 import CurveJS from "./lib/curvesjs/Curve";
 import BezierPoint from "./lib/curvesjs/BezierPoint";
 import { EditorCurveChangeEvent } from "./events";
-import Ease from "../ease/Ease";
+import Ease from "../../model/ease/Ease";
 
 export default class EaseEditor {
   constructor(canvas) {

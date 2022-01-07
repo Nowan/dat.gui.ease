@@ -1,18 +1,17 @@
-import styles from "./index.scss";
+import "./index.scss";
 import EaseManager from "./EaseManager";
 import addEaseGUI from "./gui/addEaseGUI";
-import Middleware from "./middleware/Middleware";
-import EaseEntry from "./middleware/EaseEntry";
-import Ease, { Curve, Orientation, Handle, Anchor, Point } from "./gui/ease/Ease";
-import EaseTemplate from "./gui/ease/EaseTemplate";
-import * as templates from "./middleware/easeTemplates";
+import Middleware, { middleware } from "./middleware/Middleware";
+import Ease, { Handle, Anchor, Point } from "./gui/model/ease/Ease";
+import EasePreset from "./gui/model/preset/EasePreset";
+import * as presets from "./gui/model/preset/presets";
 
 const easeManager = new EaseManager();
 
 function addEase(object, property) {
     const ease = object[property];
         
-    if (easeManager.supports(ease)) {
+    if (easeManager.hasCompatibleMiddleware(ease)) {
         return addEaseGUI.call(this, object, property, easeManager.getCompatibleMiddleware(ease));
     }
     else {
@@ -27,7 +26,7 @@ export function extend(dat) {
     function addOverride(object, property) {
         const value = object[property] || object;
 
-        if (easeManager.supports(value)) {
+        if (easeManager.hasCompatibleMiddleware(value)) {
             return addEase.call(this, ...arguments);
         }
         else {
@@ -46,15 +45,13 @@ export function extend(dat) {
 
 export {
     Middleware,
-    EaseEntry,
+    EasePreset,
     Ease,
-    EaseTemplate,
-    Curve,
-    Orientation,
     Handle,
     Anchor,
     Point,
-    templates,
+    middleware,
+    presets,
     easeManager as manager
 }
 

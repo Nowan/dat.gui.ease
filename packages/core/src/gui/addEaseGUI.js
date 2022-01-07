@@ -1,9 +1,9 @@
 import * as dat from "dat.gui";
-import EaseController from "./controller/EaseController";
+import GUIController from "./controller/GUIController";
 const dom = dat.dom.dom;
 
 export default function addEaseGUI(object, property, middleware) {
-    const controller = new EaseController(object, property, middleware);
+    const controller = new GUIController(object, property, middleware);
 
     // Partial copy of add() method
     // https://github.com/dataarts/dat.gui/blob/40f4fc193e25ee51e7e57dfbbfc3118b3927169f/src/dat/gui/GUI.js#L1152
@@ -22,7 +22,7 @@ export default function addEaseGUI(object, property, middleware) {
 }
 
 
-const DEFAULT_DEFAULT_PRESET_NAME = 'Default';
+const DEFAULT_PRESET_NAME = 'Default';
 // Copy of recallSavedValue() method
 // https://github.com/dataarts/dat.gui/blob/40f4fc193e25ee51e7e57dfbbfc3118b3927169f/src/dat/gui/GUI.js#L1080
 function _recallSavedValue(gui, controller) {
@@ -46,8 +46,8 @@ function _recallSavedValue(gui, controller) {
 
             if (presetMap[gui.preset]) {
                 preset = presetMap[gui.preset];
-            } else if (presetMap[DEFAULT_DEFAULT_PRESET_NAME]) {
-                preset = presetMap[DEFAULT_DEFAULT_PRESET_NAME];
+            } else if (presetMap[DEFAULT_PRESET_NAME]) {
+                preset = presetMap[DEFAULT_PRESET_NAME];
             } else {
                 return;
             }
@@ -92,13 +92,8 @@ function _augmentController(gui, li, controller) {
         return this;
     };
 
-    const setValue = controller.setValue;
-    controller.setValue = function setValueOverride(value) {
-        setValue.call(controller, ...arguments);
-        if (gui.getRoot().__preset_select && controller.isModified()) {
-            _markPresetModified(gui.getRoot(), true);
-        }
-        return value;
+    if (gui.getRoot().__preset_select) {
+        controller.onValueModified = _markPresetModified.bind(null, gui, true);
     }
 }
 
