@@ -6,7 +6,7 @@ describe("Ease", () => {
     for (let [svgPath, expectedEase] of validSamples.entries()) {
         it(`Parses "${svgPath}"`, () => {
             const ease = Ease.ofSVGPath(svgPath);
-            console.log(svgPath, ease, expectedEase);
+            
             expect(ease).toEqual(expectedEase);
         });
     }

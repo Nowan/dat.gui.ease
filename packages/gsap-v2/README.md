@@ -3,7 +3,7 @@
 # dat.GUI.Ease.GSAP.v2
 
 Provides support for GreenSock [Ease](https://greensock.com/docs/v2/Easing/Ease) classes.
-[CustomEase](https://greensock.com/docs/v2/Easing/CustomEase) plugin should be provided to enable curve editing.
+[CustomEase](https://greensock.com/docs/v2/Easing/CustomEase) plugin can be provided to enable curve editing.
 
 Example usage:
 ```javascript

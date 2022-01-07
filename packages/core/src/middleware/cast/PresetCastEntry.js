@@ -42,8 +42,7 @@ class PresetCastEntry extends CastEntry {
             return rawNativePreset.clone();
         }
         else {
-            console.warn(`Native preset or preset provider expected`);
-            console.log(rawNativePreset);
+            console.warn(`Native preset or preset provider expected. Instead got `, rawNativePreset);
         }
     }
 }

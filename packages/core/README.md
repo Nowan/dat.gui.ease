@@ -4,14 +4,6 @@
 
 An extension of [dat.GUI](https://github.com/dataarts/dat.gui) to edit animation easings in real time. 
 
-Include middlewares to support animation libraries of your choice:
-
-| Library        | Middleware   |
-|:---------------:|:-------------:|
-| [GSAP](https://greensock.com/)  | [GSAPv2Middleware](https://github.com/Nowan/dat.gui.ease/tree/master/packages/gsap-v2)&nbsp;&nbsp;&nbsp;[![npm](https://img.shields.io/npm/v/dat.gui.ease.gsap.v2)](https://www.npmjs.com/package/dat.gui.ease.gsap.v2)<br>[GSAPv3Middleware](https://github.com/Nowan/dat.gui.ease/tree/master/packages/gsap-v3)&nbsp;&nbsp;&nbsp;[![npm](https://img.shields.io/npm/v/dat.gui.ease.gsap.v3)](https://www.npmjs.com/package/dat.gui.ease.gsap.v3) |
-| [anime.js](https://animejs.com/)  | in progress |
-| [tween.js](http://tweenjs.github.io/tween.js/)  | pending |
-
 ## Installation
 ```bash
 npm install --save-dev dat.gui dat.gui.ease
@@ -20,7 +12,7 @@ npm install --save-dev dat.gui dat.gui.ease
 1. File include:
 ```html
 <script  type="'text/javascript" src="https://unpkg.com/dat.gui@^0.7.7/build/dat.gui.min.js"></script>
-<script type="text/javascript" src="https://unpkg.com/dat.gui.ease@latest/dist/dat.gui.ease.min.js"></script>
+<script type="text/javascript" src="https://unpkg.com/dat.gui.ease@latest/dist/dat.gui.ease.min.js"></script><!-- adds 'datGuiEase' global variable -->
 <link rel="stylesheet" type="text/css" href="https://unpkg.com/dat.gui.ease@latest/dist/dat.gui.ease.css">
 ```
 2. ES6 module
@@ -36,26 +28,93 @@ const datGuiEase = require('dat.gui.ease');
 const styles = require('dat.gui.ease/dist/dat.gui.ease.css');
 ```
 
-## Set up the extension
-```javascript
-datGuiEase.extend(dat);
+## Set up the middleware
+`Middleware` object is used to identify ease objects passed within `dat.GUI` instance via [`gui.add()`](https://github.com/dataarts/dat.gui/blob/master/API.md#GUI+add) method. You'll need to create one for your own ease format.
 
-const gui = new dat.GUI();
-gui.addEase({ ease: {} }, "ease"); // Shows warning "No compatible middleware found"
+<br>
+
+### new Middleware([name]) ⇒ `Middleware`
+| Param        | Type   |  Description   |
+|:---------------:|:-------------:|:-------------:|
+| [name]  | `String` | Identification name for middleware. Purely descriptive |
+```javascript
+import datGuiEase, { Middleware, middleware } from "dat.gui.ease";
+
+const myMiddleware = new Middleware("MyAnimationLib");
+// Or static method, for your preference
+const myMiddleware = middleware("MyAnimationLib");
 ```
 
-To support ease objects of animation library of your choice, a corresponding middleware(from the list on top) should be included to the project and registered via `use()` method:
+### Middleware.prototype.preset(easeInstance, middlewarePresetInstance) => `Middleware`
+Registers ease object as one of selectable options in `dat.GUI`. Once [`gui.add()`](https://github.com/dataarts/dat.gui/blob/master/API.md#GUI+add) encounters this instance under provided property, it will be recognized as ease and generates appropriate GUI for it.
+| Param        | Type   |  Description   |
+|:---------------:|:-------------:|:-------------:|
+| easeInstance  | `Object` \| `String` | Instance of an object representing your ease |
+| middlewarePresetInstance  | `EasePreset` | Middleware ease preset instance. Used to map your instance to middleware's `Ease` format and to generate GUI selection option in provided category. You can either declare your own, or use one of `presets` for [most common easings](https://easings.net/). |
+
 ```javascript
-import { Power2 } from "gsap";
-import GSAPv2Middleware from "dat.gui.ease.gsap.v2";
+import datGuiEase, { middleware, presets } from "dat.gui.ease";
+const {
+     Linear,
+     SineIn, SineOut, SineInOut,
+     QuadIn, QuadOut, QuadInOut,
+     CubicIn, CubicOut, CubicInOut,
+     QuartIn, QuartOut, QuartInOut,
+     ExpoIn, ExpoOut, ExpoInOut,
+     CircIn, CircOut, CircInOut,
+     BackIn, BackOut, BackInOut
+} = presets;
+
+middleware("MyAnimationLib")
+     .preset("sine.out", SineOut),
+     .preset("customSine.out", EasePreset.of("M 0,0 C 0.61,1 0.88,1 1,1", "CustomSine", "out"));
+```
+
+### Middleware.prototype.pick(predicateFn).transform(outInTransformationFn, inOutTransformationFn) ⇒ `Middleware`
+Enables GUI editing mode if object under `dat.GUI` inspection fits `predicateFn`.
+| Param        | Type   |  Description   |
+|:---------------:|:-------------:|:-------------:|
+| predicateFn  | `Function`<`Object` \| `String`> : `Boolean` | Predicate function returning whether object under inspection is valid for transformation in edit mode |
+| outInTransformationFn  | `Function`<`Object` \| `String`> : `Ease` | Tranformation function to convert ease instance to middleware-supported `Ease` format |
+| inOutTransformationFn  | `Function`<`Ease`> : `Object` \| `String` | Tranformation function to convert middleware-supported `Ease` instance back to the original format |
+
+```javascript
+import datGuiEase, { middleware } from "dat.gui.ease";
+
+class MyEase {
+     constructor(svgPath) {
+          this.svgPath = svgPath;
+     };
+}
+
+middleware("MyAnimationLib")
+     .pick(datObject => datObject instanceof MyEase).transform(
+          datEase => Ease.ofSVGPath(datEase.svgPath),
+          middlewareEase => new MyEase(middlewareEase.svgPath));
+```
+
+## Set up the extension
+After middleware is set up, all that's left is to add it within `use()` method, and feed `dat.GUI` a sample of your ease via [`gui.add()`](https://github.com/dataarts/dat.gui/blob/master/API.md#GUI+add) method:
+```javascript
+import dat from "dat.gui";
+import datGuiEase, { middleware, presets } from "dat.gui.ease";
 
 datGuiEase.extend(dat).use(
-     new GSAPv2Middleware()
+     middleware("MyAnimationLib")
+          .preset("linear", presets.Linear)
+          .preset("sine.in", presets.SineIn)
+          .preset("sine.out", presets.SineOut)
+          .preset("sine.inOut", presets.SineInOut)
+          .preset("quad.in", presets.QuadIn)
+          .preset("quad.out", preset.QuadOut)
+          .preset("quad.inOut", preset.QuadInOut)
 );
 
 const gui = new dat.GUI();
-gui.addEase({ ease: Power2.easeIn }, "ease"); // Voila! Ease is editable in dat.GUI
+const config = { ease: "linear" };
+gui.add(config, "ease"); // Voila! MyEase object is editable in dat.GUI
 ```
+
 <br>
 
 #### Credits
