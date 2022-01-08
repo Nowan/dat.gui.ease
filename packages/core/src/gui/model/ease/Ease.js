@@ -2,6 +2,7 @@ import Anchor from "./composites/Anchor";
 import Handle from "./composites/Handle";
 import Point from "./composites/Point";
 import InvalidSVGPathException from "./exceptions/InvalidSVGPathException";
+import { Bezier } from "bezier-js"; // consider switching entire Ease class to bezier-js 
 
 export default class Ease {
     constructor(...anchors) {
@@ -37,6 +38,14 @@ export default class Ease {
         return points;
     }
 
+    computeValue(t) {
+        const [segmentStartAnchor, segmentEndAnchor] = findBezierSegment(this._anchors, t);
+        const segmentBezier = new Bezier(segmentStartAnchor, segmentStartAnchor.handle, segmentEndAnchor.handle, segmentEndAnchor);
+        const segmentBezierStep = segmentBezier.intersects({p1: {x: t, y: 0}, p2: {x: t, y: 1}}).shift();
+
+        return segmentBezier.get(segmentBezierStep).y;
+    }
+
     equals(ease) {
         return this.svgPath === ease.svgPath;
     }
@@ -49,6 +58,10 @@ export default class Ease {
 
     toString() {
         return this.svgPath;
+    }
+
+    clone() {
+        return Ease.of(...this._anchors.map(anchor => anchor.clone()));
     }
 
     static of(...anchors) {
@@ -121,6 +134,19 @@ export default class Ease {
 
         return path;
     }
+}
+
+function findBezierSegment(anchors, progress) {
+    let startAnchor, endAnchor;
+
+    for (let i = 0; i < anchors.length; i++) {
+        startAnchor = anchors[i];
+        endAnchor = anchors[i + 1];
+
+        if (startAnchor.x <= progress && endAnchor.x >= progress) break;
+    }
+
+    return [startAnchor, endAnchor];
 }
 
 function safeParseCoordinate(rawCoordinate) {

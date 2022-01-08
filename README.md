@@ -73,6 +73,8 @@ You can configure your own `Middleware` as described [here](https://github.com/N
 
 ### Credits
 
-[SidneyDouw/curvesjs](https://github.com/SidneyDouw/curvesjs) - minimalistic yet nonetheless powerful bezier curve editor with no dependencies - exactly what I've looked for. Hope it gets more attention.
+[SidneyDouw/curvesjs](https://github.com/SidneyDouw/curvesjs) - minimalistic yet nonetheless powerful bezier curve editor with no dependencies.
 
-[Jeremboo/dat.gui.image](https://github.com/Jeremboo/dat.gui.image) - gave me something to base on to add custom control for dat.GUI.
+[Pomax/bezierjs](https://github.com/Pomax/bezierjs) - a powerful bezier curve computation library.
+
+[Jeremboo/dat.gui.image](https://github.com/Jeremboo/dat.gui.image) - another custom control for dat.GUI, an inspiration for this package.

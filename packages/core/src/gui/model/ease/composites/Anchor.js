@@ -11,6 +11,12 @@ export default class Anchor extends Point {
         return Point.of(this.x, this.y);
     }
 
+    clone() {
+        const clone = Anchor.ofOrigin(this);
+        clone.handle.copy(this.handle);
+        return clone;
+    }
+
     static ofOriginAndHandle(originPointLike, handlePointLike) {
         const anchor = Anchor.ofOrigin(originPointLike);
         anchor.handle.copy(handlePointLike);
