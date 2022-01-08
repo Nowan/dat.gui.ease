@@ -2,18 +2,28 @@
 
 # dat.GUI.Ease.GSAP.v2
 
-Provides support for GreenSock [Ease](https://greensock.com/docs/v2/Easing/Ease) classes.
-[CustomEase](https://greensock.com/docs/v2/Easing/CustomEase) plugin can be provided to enable curve editing.
+Provides support for [GSAP easings](https://greensock.com/docs/v2/Easing).
+[CustomEase](https://greensock.com/docs/v2/Easing/CustomEase) plugin can be provided to enable `CustomEase` processing and ease editing.
 
 Example usage:
 ```javascript
 import * as dat from 'dat.gui';
 import { extend } from 'dat.gui.ease';
 import GSAPv2Middleware from 'dat.gui.ease.gsap.v2';
+import { Power1 } from "gsap/TweenMax";
 
 extend(dat).use(
      new GSAPv2Middleware(CustomEase)
 );
+
+const gui = new dat.GUI();
+const config = {
+     ease: Power1.easeOut
+     customEase: CustomEase.create("custom", "M 0,0 C 0.1,0.4 0.1,0.4 0.5,0.5 0.9,0.6 0.9,0.6 1,1")
+};
+
+gui.addEase(config, "ease");
+gui.addEase(config, "customEase");
 ```
 
 ## Installation
@@ -32,13 +42,15 @@ npm install --save-dev dat.gui dat.gui.ease dat.gui.ease.gsap.v2
 
 2. ES6 module
 ```javascript
-import GSAPv2Middleware from 'dat.gui.ease';
+import GSAPv2Middleware from 'dat.gui.ease.gsap.v2';
 // or
-import { Middleware as GSAPv2Middleware } from 'dat.gui.ease';
+import { Middleware as GSAPv2Middleware } from 'dat.gui.ease.gsap.v2';
+
 const middleware = new GSAPv2Middleware();
 ```
 3. CommonJS
 ```javascript
 const datGuiEaseGsapV2 = require('dat.gui.ease.gsap.v2');
+
 const middleware = new datGuiEaseGsapV2.Middleware();
 ```

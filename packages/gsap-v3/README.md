@@ -2,8 +2,8 @@
 
 # dat.GUI.Ease.GSAP.v3
 
-Provides support for GreenSock [Ease](https://greensock.com/docs/v3/Eases) classes.
-[CustomEase](https://greensock.com/docs/v3/Eases/CustomEase) plugin can be provided to enable curve editing.
+Provides support for [GSAP easings](https://greensock.com/docs/v3/Eases).
+[CustomEase](https://greensock.com/docs/v3/Eases/CustomEase) plugin can be provided to enable `CustomEase` processing and ease editing.
 
 Example usage:
 ```javascript
@@ -14,6 +14,15 @@ import GSAPv3Middleware from 'dat.gui.ease.gsap.v3';
 extend(dat).use(
      new GSAPv3Middleware(CustomEase)
 );
+
+const gui = new dat.GUI();
+const config = {
+     ease: "power1.in"
+     customEase: CustomEase.create("custom", "M 0,0 C 0.1,0.4 0.1,0.4 0.5,0.5 0.9,0.6 0.9,0.6 1,1")
+};
+
+gui.addEase(config, "ease");
+gui.addEase(config, "customEase");
 ```
 
 ## Installation
