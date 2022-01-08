@@ -71,17 +71,6 @@ You can configure your own `Middleware` as described [here](https://github.com/N
 
 <br>
 
-### Common issue
-#### Missing styles (es6)
-
-```javascript
-// build tools with treeshaking might ignore the following statement
-import styles from 'dat.gui.ease/dist/dat.gui.ease.css';
-
-// use this instead
-import 'dat.gui.ease/dist/dat.gui.ease.css'
-```
-
 ### Credits
 
 [SidneyDouw/curvesjs](https://github.com/SidneyDouw/curvesjs) - minimalistic yet nonetheless powerful bezier curve editor with no dependencies - exactly what I've looked for. Hope it gets more attention.
