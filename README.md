@@ -63,41 +63,11 @@ const config = { ease: "sine.in" };
 gui.addEase(config, "ease"); // Voila! Ease is editable in dat.GUI
 ```
 You can configure your own `Middleware` as described [here](https://github.com/Nowan/dat.gui.ease/tree/master/packages/core), or use from the list below:
-
-<table align="center">
-    <thead>
-        <tr>
-            <th align="center">Library</th>
-            <th colspan=2 align="center">Package</th>
-            <th align="center">Middleware</th>
-        </tr>
-    </thead>
-    <tbody>
-        <tr>
-            <td rowspan=2 align="center"><a link="https://greensock.com/">GSAP</a></td>
-            <td align="left"><a link="https://www.npmjs.com/package/dat.gui.ease.gsap.v2">dat.gui.ease.gsap.v2</a></td>
-            <td align="center"><img alt="npm" src="https://img.shields.io/npm/v/dat.gui.ease.gsap.v2"></td>
-            <td align="center"><a link="https://github.com/Nowan/dat.gui.ease/tree/master/packages/gsap-v2">GSAPv2Middleware</a></td>
-        </tr>
-        <tr>
-            <td align="left"><a link="https://www.npmjs.com/package/dat.gui.ease.gsap.v3">dat.gui.ease.gsap.v3</a></td>
-            <td align="center"><img alt="npm" src="https://img.shields.io/npm/v/dat.gui.ease.gsap.v3"></td>
-            <td align="center"><a link="https://github.com/Nowan/dat.gui.ease/tree/master/packages/gsap-v3">GSAPv3Middleware</a></td>
-        </tr>
-        <tr>
-            <td align="left"><a link="https://animejs.com/">anime.js</a></td>
-            <td align="left"><a link="https://www.npmjs.com/package/dat.gui.ease.animejs">dat.gui.ease.animejs</a></td>
-            <td align="center"><img alt="npm" src="https://img.shields.io/npm/v/dat.gui.ease.animejs"></td>
-            <td align="center"><a link="https://github.com/Nowan/dat.gui.ease/tree/master/packages/animejs">AnimeJSMiddleware</a></td>
-        </tr>
-        <tr>
-            <td align="center"><a link="http://tweenjs.github.io/tween.js/">tween.js</a></td>
-            <td align="left">in progress</td>
-            <td align="center">—</td>
-            <td align="center">—</td>
-        </tr>
-    </tbody>
-</table>
+| Library        | Package   | Middleware   |
+|:---------------:|:-------------:|:-------------:|
+| [GSAP](https://greensock.com/)  | [dat.gui.ease.gsap.v2](https://www.npmjs.com/package/dat.gui.ease.gsap.v2)&nbsp;&nbsp;&nbsp;[![npm](https://img.shields.io/npm/v/dat.gui.ease.gsap.v2)](https://www.npmjs.com/package/dat.gui.ease.gsap.v2)<br>[dat.gui.ease.gsap.v3](https://www.npmjs.com/package/dat.gui.ease.gsap.v3)&nbsp;&nbsp;&nbsp;[![npm](https://img.shields.io/npm/v/dat.gui.ease.gsap.v3)](https://www.npmjs.com/package/dat.gui.ease.gsap.v3) | [GSAPv2Middleware](https://github.com/Nowan/dat.gui.ease/tree/master/packages/gsap-v2)<br>[GSAPv3Middleware](https://github.com/Nowan/dat.gui.ease/tree/master/packages/gsap-v3) |
+| [anime.js](https://animejs.com/)  | [dat.gui.ease.animejs](https://www.npmjs.com/package/dat.gui.ease.animejs)&nbsp;&nbsp;&nbsp;[![npm](https://img.shields.io/npm/v/dat.gui.ease.animejs)](https://www.npmjs.com/package/dat.gui.ease.animejs) | [AnimeJSMiddleware](https://github.com/Nowan/dat.gui.ease/tree/master/packages/animejs) |
+| [tween.js](http://tweenjs.github.io/tween.js/)  | in progress | — |
 
 <br>
 
