@@ -1,6 +1,6 @@
 {
   "name": "dat.gui.ease.animejs",
-  "version": "0.2.4",
+  "version": "0.2.5",
   "description": "Allows to edit anime.js easings in dat.GUI",
   "keywords": [
     "dat.GUI",
