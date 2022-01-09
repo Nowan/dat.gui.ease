@@ -8,7 +8,7 @@ Example usage:
 ```javascript
 import * as dat from 'dat.gui';
 import { extend } from 'dat.gui.ease';
-import AnimeJSMiddleware, { CustomEase } from 'dat.gui.ease';
+import AnimeJSMiddleware, { CustomEase } from 'dat.gui.ease.animejs';
 
 extend(dat).use(
      new AnimeJSMiddleware()
@@ -48,7 +48,7 @@ const middleware = new AnimeJSMiddleware();
 ```
 3. CommonJS
 ```javascript
-const datGuiEaseAnimeJS = require('dat.gui.ease.gsap.v2');
+const datGuiEaseAnimeJS = require('dat.gui.ease.animejs');
 
 const middleware = new datGuiEaseAnimeJS.Middleware();
 ```
