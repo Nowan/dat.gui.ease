@@ -1,6 +1,6 @@
 {
   "name": "dat.gui.ease",
-  "version": "0.2.2",
+  "version": "0.2.3",
   "description": "Allows to edit easings in dat.GUI",
   "keywords": [
     "dat.GUI",
