@@ -2,10 +2,9 @@
 
 # dat.GUI.Ease
 
-An extension of [dat.GUI](https://github.com/dataarts/dat.gui) to edit animation easings in real time. 
+An extension of [dat.GUI](https://github.com/dataarts/dat.gui) to edit animation easings in real time. **[Live Demo](https://codepen.io/nowan-the-vuer/pen/xxXaqor)**
 
 ![Extension preview](https://raw.githubusercontent.com/Nowan/dat.gui.ease/master/docs/images/panel-preview.png)
-
 
 ## Installation
 ```bash
@@ -62,7 +61,7 @@ const config = { ease: "sine.in" };
 
 gui.addEase(config, "ease"); // Voila! Ease is editable in dat.GUI
 ```
-You can configure your own `Middleware` as described [here](https://github.com/Nowan/dat.gui.ease/tree/master/packages/core), or use from the list below:
+You can configure your own `Middleware` as described [here](https://github.com/Nowan/dat.gui.ease/tree/master/packages/core), or use one from the list below:
 | Library        | Package   | Middleware   |
 |:---------------:|:-------------:|:-------------:|
 | [GSAP](https://greensock.com/)  | [dat.gui.ease.gsap.v2](https://www.npmjs.com/package/dat.gui.ease.gsap.v2)&nbsp;&nbsp;&nbsp;[![npm](https://img.shields.io/npm/v/dat.gui.ease.gsap.v2)](https://www.npmjs.com/package/dat.gui.ease.gsap.v2)<br>[dat.gui.ease.gsap.v3](https://www.npmjs.com/package/dat.gui.ease.gsap.v3)&nbsp;&nbsp;&nbsp;[![npm](https://img.shields.io/npm/v/dat.gui.ease.gsap.v3)](https://www.npmjs.com/package/dat.gui.ease.gsap.v3) | [GSAPv2Middleware](https://github.com/Nowan/dat.gui.ease/tree/master/packages/gsap-v2)<br>[GSAPv3Middleware](https://github.com/Nowan/dat.gui.ease/tree/master/packages/gsap-v3) |
