@@ -1,14 +1,14 @@
-[![npm](https://img.shields.io/npm/v/dat.gui.ease.animejs)](https://www.npmjs.com/package/dat.gui.ease.animejs) ![license](https://img.shields.io/npm/l/dat.gui.ease.animejs) [![npm peer dependency version](https://img.shields.io/npm/dependency-version/dat.gui.ease.animejs/peer/dat.gui.ease)](https://www.npmjs.com/package/dat.gui.ease) [![npm peer dependency version](https://img.shields.io/npm/dependency-version/dat.gui.ease.animejs/peer/animejs)](https://www.npmjs.com/package/animejs)
+[![npm](https://img.shields.io/npm/v/dat.gui.ease.velocityjs)](https://www.npmjs.com/package/dat.gui.ease.velocityjs) ![license](https://img.shields.io/npm/l/dat.gui.ease.velocityjs) [![npm peer dependency version](https://img.shields.io/npm/dependency-version/dat.gui.ease.velocityjs/peer/dat.gui.ease)](https://www.npmjs.com/package/dat.gui.ease) [![npm peer dependency version](https://img.shields.io/npm/dependency-version/dat.gui.ease.velocityjs/peer/velocity-animate)](https://www.npmjs.com/package/velocityjs)
 
-# dat.GUI.Ease.AnimeJS
+# dat.GUI.Ease.VelocityJS
 
-Provides support for [anime.js](https://animejs.com/) [easings](https://animejs.com/documentation/#pennerFunctions).
+Provides support for [velocity.js](http://velocityjs.org/) [easings](http://velocityjs.org/#easing).
 
 Example usage:
 ```javascript
 import * as dat from 'dat.gui';
 import { extend } from 'dat.gui.ease';
-import VelocityJSMiddleware from 'dat.gui.ease';
+import VelocityJSMiddleware from 'dat.gui.ease.velocityjs';
 
 extend(dat).use(
      new VelocityJSMiddleware()
@@ -24,13 +24,13 @@ gui.addEase(config, "ease");
 
 ## Installation
 ```bash
-npm install --save animejs@^3.0.0
-npm install --save-dev dat.gui dat.gui.ease dat.gui.ease.animejs
+npm install --save velocity-animate@^1.5.0
+npm install --save-dev dat.gui dat.gui.ease dat.gui.ease.velocityjs
 ```
 ## Use in the project
 1. File include:
 ```html
-<script type="text/javascript" src="https://unpkg.com/dat.gui.ease.velocityjs@latest/dist/dat.gui.ease.animejs.min.js"></script>
+<script type="text/javascript" src="https://unpkg.com/dat.gui.ease.velocityjs@latest/dist/dat.gui.ease.velocityjs.min.js"></script>
 <script>
      const middleware = new datGuiEaseVelocityJS.Middleware();
 </script> 
@@ -38,15 +38,15 @@ npm install --save-dev dat.gui dat.gui.ease dat.gui.ease.animejs
 
 2. ES6 module
 ```javascript
-import VelocityJSMiddleware from 'dat.gui.ease.animejs';
+import VelocityJSMiddleware from 'dat.gui.ease.velocityjs';
 // or
-import { Middleware as VelocityJSMiddleware } from 'dat.gui.ease.animejs';
+import { Middleware as VelocityJSMiddleware } from 'dat.gui.ease.velocityjs';
 
 const middleware = new VelocityJSMiddleware();
 ```
 3. CommonJS
 ```javascript
-const datGuiEaseVelocityJS = require('dat.gui.ease.gsap.v2');
+const datGuiEaseVelocityJS = require('dat.gui.ease.velocityjs');
 
 const middleware = new datGuiEaseVelocityJS.Middleware();
 ```
