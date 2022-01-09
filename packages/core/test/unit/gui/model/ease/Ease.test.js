@@ -20,8 +20,12 @@ describe("Ease", () => {
     it (`Computes value of linear segmented ease`, () => {
         const ease = Ease.ofSVGPath("M 0,0 C 0,0 0,0 0.5,0.5 1,1 1,1 1,1");
 
+        expect(ease.computeValue(0)).toEqual(0);
+
         for (let i = 0; i <= 1; i += 0.1) {
             expect(ease.computeValue(i).toFixed(3)).toEqual(i.toFixed(3))
         }
+
+        expect(ease.computeValue(1)).toEqual(1);
     })
 });

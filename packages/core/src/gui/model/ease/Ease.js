@@ -40,10 +40,19 @@ export default class Ease {
 
     computeValue(t) {
         const [segmentStartAnchor, segmentEndAnchor] = findBezierSegment(this._anchors, t);
-        const segmentBezier = new Bezier(segmentStartAnchor, segmentStartAnchor.handle, segmentEndAnchor.handle, segmentEndAnchor);
-        const segmentBezierStep = segmentBezier.intersects({p1: {x: t, y: 0}, p2: {x: t, y: 1}}).shift();
+        const segmentT = (t - segmentStartAnchor.x) / (segmentEndAnchor.x - segmentStartAnchor.x);
+        
+        if (segmentT.toFixed(3) === "0.000" || segmentT.toFixed(3) === "1.000") {
+            const segmentAnchor = segmentT === 0 ? segmentStartAnchor : segmentEndAnchor;
 
-        return segmentBezier.get(segmentBezierStep).y;
+            return segmentAnchor.y;
+        }
+        else {
+            const segmentBezier = new Bezier(segmentStartAnchor, segmentStartAnchor.handle, segmentEndAnchor.handle, segmentEndAnchor);
+            const segmentBezierStep = segmentBezier.intersects({p1: {x: t, y: -10}, p2: {x: t, y: 10}}).shift();
+            
+            return segmentBezier.get(segmentBezierStep).y;
+        }
     }
 
     equals(ease) {
