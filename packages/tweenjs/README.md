@@ -1,4 +1,4 @@
-[![npm](https://img.shields.io/npm/v/dat.gui.ease.tweenjs)](https://www.npmjs.com/package/dat.gui.ease.tweenjs) ![license](https://img.shields.io/npm/l/dat.gui.ease.tweenjs) [![npm peer dependency version](https://img.shields.io/npm/dependency-version/dat.gui.ease.tweenjs/peer/dat.gui.ease)](https://www.npmjs.com/package/dat.gui.ease) [![npm peer dependency version](https://img.shields.io/npm/dependency-version/dat.gui.ease.tweenjs/peer/tweenjs)](https://www.npmjs.com/package/tweenjs)
+[![npm](https://img.shields.io/npm/v/dat.gui.ease.tweenjs)](https://www.npmjs.com/package/dat.gui.ease.tweenjs) ![license](https://img.shields.io/npm/l/dat.gui.ease.tweenjs) [![npm peer dependency version](https://img.shields.io/npm/dependency-version/dat.gui.ease.tweenjs/peer/dat.gui.ease)](https://www.npmjs.com/package/dat.gui.ease) [![npm peer dependency version](https://img.shields.io/npm/dependency-version/dat.gui.ease.tweenjs/peer/@tweenjs/tween.js)](https://www.npmjs.com/package/@tweenjs/tween.js)
 
 # dat.GUI.Ease.TweenJS
 
