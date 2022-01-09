@@ -8,20 +8,18 @@ Example usage:
 ```javascript
 import * as dat from 'dat.gui';
 import { extend } from 'dat.gui.ease';
-import AnimeJSMiddleware, { CustomEase } from 'dat.gui.ease';
+import VelocityJSMiddleware from 'dat.gui.ease';
 
 extend(dat).use(
-     new AnimeJSMiddleware()
+     new VelocityJSMiddleware()
 );
 
 const gui = new dat.GUI();
 const config = {
      ease: "easeOutSine"
-     customEase: new CustomEase("M 0,0 C 0.1,0.4 0.1,0.4 0.5,0.5 0.9,0.6 0.9,0.6 1,1")
 };
 
 gui.addEase(config, "ease");
-gui.addEase(config, "customEase");
 ```
 
 ## Installation
@@ -32,23 +30,23 @@ npm install --save-dev dat.gui dat.gui.ease dat.gui.ease.animejs
 ## Use in the project
 1. File include:
 ```html
-<script type="text/javascript" src="https://unpkg.com/dat.gui.ease.animejs@latest/dist/dat.gui.ease.animejs.min.js"></script>
+<script type="text/javascript" src="https://unpkg.com/dat.gui.ease.velocityjs@latest/dist/dat.gui.ease.animejs.min.js"></script>
 <script>
-     const middleware = new datGuiEaseAnimeJS.Middleware();
+     const middleware = new datGuiEaseVelocityJS.Middleware();
 </script> 
 ```
 
 2. ES6 module
 ```javascript
-import AnimeJSMiddleware from 'dat.gui.ease.animejs';
+import VelocityJSMiddleware from 'dat.gui.ease.animejs';
 // or
-import { Middleware as AnimeJSMiddleware } from 'dat.gui.ease.animejs';
+import { Middleware as VelocityJSMiddleware } from 'dat.gui.ease.animejs';
 
-const middleware = new AnimeJSMiddleware();
+const middleware = new VelocityJSMiddleware();
 ```
 3. CommonJS
 ```javascript
-const datGuiEaseAnimeJS = require('dat.gui.ease.gsap.v2');
+const datGuiEaseVelocityJS = require('dat.gui.ease.gsap.v2');
 
-const middleware = new datGuiEaseAnimeJS.Middleware();
+const middleware = new datGuiEaseVelocityJS.Middleware();
 ```

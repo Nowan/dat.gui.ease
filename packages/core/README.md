@@ -14,8 +14,12 @@ npm install --save-dev dat.gui dat.gui.ease
 1. File include:
 ```html
 <script  type="'text/javascript" src="https://unpkg.com/dat.gui@^0.7.7/build/dat.gui.min.js"></script>
-<script type="text/javascript" src="https://unpkg.com/dat.gui.ease@latest/dist/dat.gui.ease.min.js"></script><!-- adds 'datGuiEase' global variable -->
+<script type="text/javascript" src="https://unpkg.com/dat.gui.ease@latest/dist/dat.gui.ease.min.js"></script>
 <link rel="stylesheet" type="text/css" href="https://unpkg.com/dat.gui.ease@latest/dist/dat.gui.ease.css">
+
+<script>
+     const { datGuiEase } = window;
+</script>
 ```
 2. ES6 module
 ```javascript
@@ -51,10 +55,10 @@ datGuiEase.extend(dat).use(
 const gui = new dat.GUI();
 const config = { ease: "linear" };
 
-gui.add(config, "ease"); // Voila! "ease" property is processed as ease in dat.GUI
+gui.add(config, "ease"); // Voila! "ease" property is editable in dat.GUI as ease object
 ```
 
-For more customization options see API reference below.
+For more customization options, see the API reference below.
 
 ## Middleware API
 

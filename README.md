@@ -2,7 +2,7 @@
 
 # dat.GUI.Ease
 
-An extension of [dat.GUI](https://github.com/dataarts/dat.gui) to edit animation easings in real time. **[Live Demo](https://codepen.io/nowan-the-vuer/pen/xxXaqor)**
+An extension of [dat.GUI](https://github.com/dataarts/dat.gui) to edit animation easings in real time. See **[Live Demo](https://codepen.io/nowan-the-vuer/pen/xxXaqor)**.
 
 ![Extension preview](https://raw.githubusercontent.com/Nowan/dat.gui.ease/master/docs/images/panel-preview.png)
 
@@ -16,6 +16,10 @@ npm install --save-dev dat.gui dat.gui.ease
 <script type="'text/javascript" src="https://unpkg.com/dat.gui@^0.7.7/build/dat.gui.min.js"></script>
 <script type="text/javascript" src="https://unpkg.com/dat.gui.ease@latest/dist/dat.gui.ease.min.js"></script><!-- adds 'datGuiEase' global variable -->
 <link rel="stylesheet" type="text/css" href="https://unpkg.com/dat.gui.ease@latest/dist/dat.gui.ease.css">
+
+<script>
+     const { datGuiEase } = window;
+</script>
 ```
 2. ES6 module
 ```javascript
@@ -61,11 +65,12 @@ const config = { ease: "sine.in" };
 
 gui.addEase(config, "ease"); // Voila! Ease is editable in dat.GUI
 ```
-You can configure your own `Middleware` as described [here](https://github.com/Nowan/dat.gui.ease/tree/master/packages/core), or use one from the list below:
+You can either configure your own `Middleware` with [Middleware API](https://github.com/Nowan/dat.gui.ease/tree/master/packages/core#setUpMiddlewares), or use one of preconfigured ones for animation library you're using:
 | Library        | Package   | Middleware   |
 |:---------------:|:-------------:|:-------------:|
-| [GSAP](https://greensock.com/)  | [dat.gui.ease.gsap.v2](https://www.npmjs.com/package/dat.gui.ease.gsap.v2)&nbsp;&nbsp;&nbsp;[![npm](https://img.shields.io/npm/v/dat.gui.ease.gsap.v2)](https://www.npmjs.com/package/dat.gui.ease.gsap.v2)<br>[dat.gui.ease.gsap.v3](https://www.npmjs.com/package/dat.gui.ease.gsap.v3)&nbsp;&nbsp;&nbsp;[![npm](https://img.shields.io/npm/v/dat.gui.ease.gsap.v3)](https://www.npmjs.com/package/dat.gui.ease.gsap.v3) | [GSAPv2Middleware](https://github.com/Nowan/dat.gui.ease/tree/master/packages/gsap-v2)<br>[GSAPv3Middleware](https://github.com/Nowan/dat.gui.ease/tree/master/packages/gsap-v3) |
 | [anime.js](https://animejs.com/)  | [dat.gui.ease.animejs](https://www.npmjs.com/package/dat.gui.ease.animejs)&nbsp;&nbsp;&nbsp;[![npm](https://img.shields.io/npm/v/dat.gui.ease.animejs)](https://www.npmjs.com/package/dat.gui.ease.animejs) | [AnimeJSMiddleware](https://github.com/Nowan/dat.gui.ease/tree/master/packages/animejs) |
+| [GSAP](https://greensock.com/)  | [dat.gui.ease.gsap.v2](https://www.npmjs.com/package/dat.gui.ease.gsap.v2)&nbsp;&nbsp;&nbsp;[![npm](https://img.shields.io/npm/v/dat.gui.ease.gsap.v2)](https://www.npmjs.com/package/dat.gui.ease.gsap.v2)<br>[dat.gui.ease.gsap.v3](https://www.npmjs.com/package/dat.gui.ease.gsap.v3)&nbsp;&nbsp;&nbsp;[![npm](https://img.shields.io/npm/v/dat.gui.ease.gsap.v3)](https://www.npmjs.com/package/dat.gui.ease.gsap.v3) | [GSAPv2Middleware](https://github.com/Nowan/dat.gui.ease/tree/master/packages/gsap-v2)<br>[GSAPv3Middleware](https://github.com/Nowan/dat.gui.ease/tree/master/packages/gsap-v3) |
+| [velocity.js](http://velocityjs.org/)  | [dat.gui.ease.velocityjs](https://www.npmjs.com/package/dat.gui.ease.velocityjs)&nbsp;&nbsp;&nbsp;[![npm](https://img.shields.io/npm/v/dat.gui.ease.velocityjs)](https://www.npmjs.com/package/dat.gui.ease.velocityjs) | [VelocityJSMiddleware](https://github.com/Nowan/dat.gui.ease/tree/master/packages/velocityjs) |
 | [tween.js](http://tweenjs.github.io/tween.js/)  | in progress | — |
 
 <br>

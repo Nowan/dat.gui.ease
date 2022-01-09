@@ -35,7 +35,7 @@ npm install --save-dev dat.gui dat.gui.ease dat.gui.ease.gsap.v2
 1. File include:
 ```html
 <script type="text/javascript" src="https://unpkg.com/dat.gui.ease.gsap.v2@latest/dist/dat.gui.ease.gsap.v2.min.js"></script>
- <script>
+<script>
      const middleware = new datGuiEaseGsapV2.Middleware();
 </script> 
 ```
