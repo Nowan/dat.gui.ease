@@ -18,6 +18,10 @@ export function editButton(rootDomElement) {
     return rootDomElement.querySelector(".edit-button");
 }
 
+export function propertiesContainer(rootDomElement) {
+    return rootDomElement.querySelector(".properties-container");
+}
+
 export function editorCanvas(rootDomElement) {
     return rootDomElement.querySelector("canvas.editor");
 }

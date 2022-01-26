@@ -3,12 +3,14 @@ import GUIViewEvent from "./GUIViewEvent";
 import EasePanelDirector from "./dom/directors/EasePanelDirector";
 import HTMLElementDirector from "./HTMLElementDirector";
 import EaseEditorDirector from "./dom/directors/EaseEditorDirector";
+import EasePropertiesDirector from "./dom/directors/EasePropertiesDirector";
 
 class GUIView extends HTMLElementDirector {
     constructor(curves) {
         super(_renderTemplate(domTemplate));
 
         this._easePanelDirector = new EasePanelDirector(this._element, curves);
+        this._easePropertiesDirector = new EasePropertiesDirector(this._element);
         this._easeEditorDirector = null;
 
         this._easePanelDirector.on(GUIViewEvent.CURVE_PRESET_SELECTED, (...args) => this.emit(GUIViewEvent.CURVE_PRESET_SELECTED, ...args));
@@ -22,7 +24,8 @@ class GUIView extends HTMLElementDirector {
 
     setPreset(preset) {
         this._easePanelDirector.setPreset(preset);
-
+        this._easePropertiesDirector.values = preset.props;
+        
         if (this._isEditorOpen()) {
             this._easeEditorDirector.ease = preset.ease;
         }
