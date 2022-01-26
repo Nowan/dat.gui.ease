@@ -22,7 +22,7 @@ class GUIView extends HTMLElementDirector {
 
     setPreset(preset) {
         this._easePanelDirector.setPreset(preset);
-        
+
         if (this._isEditorOpen()) {
             this._easeEditorDirector.ease = preset.ease;
         }

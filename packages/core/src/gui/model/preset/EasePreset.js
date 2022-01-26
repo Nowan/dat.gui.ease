@@ -1,4 +1,5 @@
 import Ease from "../ease/Ease";
+import EasePresetProps from "./EasePresetProps";
 import Curve from "./enum/Curve";
 import Orientation from "./enum/Orientation";
 
@@ -10,10 +11,15 @@ class EasePreset {
         this.ease = easeOrSvgPath instanceof Ease ? easeOrSvgPath : Ease.ofSVGPath(easeOrSvgPath);
         this.curve = curve;
         this.orientation = orientation;
+        this.props = new EasePresetProps(this);
     }
 
     clone() {
-        return EasePreset.of(this.ease.toString(), this.curve, this.orientation);
+        const clone = EasePreset.of(this.ease.toString(), this.curve, this.orientation);
+        for (let [propertyName, propertyValue] of this.props.entries()) {
+            clone.props.add(propertyName, propertyValue);
+        }
+        return clone;
     }
 
     toString() {
@@ -22,6 +28,11 @@ class EasePreset {
 
     equals(preset) {
         return this.toString() === preset.toString();
+    }
+
+    property(propertyName, defaultValue, watcherFn) {
+        this.props.add(propertyName, defaultValue, watcherFn);
+        return this;
     }
 
     static of(svgPath, curve = EasePreset.CURVE.UNDEFINED, orientation = EasePreset.ORIENTATION.NONE) {

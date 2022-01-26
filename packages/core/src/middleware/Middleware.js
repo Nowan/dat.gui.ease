@@ -1,4 +1,5 @@
-import PresetCastEntry from "./cast/PresetCastEntry";
+import PredicateCastEntry from "./cast/PredicateCastEntry";
+import InstanceCastEntry from "./cast/InstanceCastEntry";
 import TransformCastEntry from "./cast/TransformCastEntry";
 
 class Middleware {
@@ -12,11 +13,26 @@ class Middleware {
     }
 
     get presets() {
-        return this._castEntries.filter(castEntry => castEntry instanceof PresetCastEntry).map(entry => entry.preset);
+        return this._castEntries.filter(castEntry => !(castEntry instanceof TransformCastEntry)).map(entry => entry.preset);
     }
 
-    preset(thirdPartyEase, nativeEasePreset) {
-        this.castEntries.push(PresetCastEntry.of(thirdPartyEase, nativeEasePreset));
+    preset(thirdPartyEaseOrPredicateFunction, ...followupArguments) {
+        switch (typeof thirdPartyEaseOrPredicateFunction) {
+            case "function":
+                this._predicatePreset(thirdPartyEaseOrPredicateFunction, ...followupArguments);
+                return this;
+            case "string":
+            case "object":
+                this._instancePreset(thirdPartyEaseOrPredicateFunction, ...followupArguments);
+                return this;
+            default:
+                console.warn(`Unsupported ease format: `, thirdPartyEaseOrPredicate);
+                return this;
+        }
+    }
+
+    transform(predicateFunction, thirdPartyToNativeCast, nativeToThirdPartyCast) {
+        this.castEntries.push(TransformCastEntry.of(predicateFunction, thirdPartyToNativeCast, nativeToThirdPartyCast));
         return this;
     }
 
@@ -28,12 +44,7 @@ class Middleware {
                 middleware.castEntries.push(TransformCastEntry.of(predicateFunction, thirdPartyToNativeCast, nativeToThirdPartyCast));
                 return middleware;
             }
-        }
-    }
-
-    transform(thirdPartyToNativeCast, nativeToThirdPartyCast) {
-        this.castEntries.push(TransformCastEntry.of(thirdPartyToNativeCast, nativeToThirdPartyCast));
-        return this;
+        };
     }
 
     isEditingSupported() {
@@ -72,6 +83,14 @@ class Middleware {
 
     static checkSignature(instanceLike) {
         return /^\[object DatGuiEase(?:.*)Middleware\]$/.test(instanceLike.toString());
+    }
+
+    _predicatePreset(predicateFunction, thirdPartyToNativeCast, nativeToThirdPartyCast, nativeEasePreset) {
+        this.castEntries.push(PredicateCastEntry.of(...arguments));
+    }
+
+    _instancePreset(thirdPartyEase, nativeEasePreset) {
+        this.castEntries.push(InstanceCastEntry.of(...arguments));
     }
 }
 

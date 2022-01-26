@@ -2,43 +2,44 @@ import EasePreset from "../../gui/model/preset/EasePreset";
 import EasePresetProvider from "../../gui/model/preset/EasePresetProvider";
 import CastEntry from "./CastEntry";
 
-class PresetCastEntry extends CastEntry {
+class InstanceCastEntry extends CastEntry {
     constructor(thirdPartyEase, nativeEasePresetOrPresetProvider) {
         super();
         
-        this.thirdPartyEase = thirdPartyEase;
-        this.nativeEasePreset = this._parseNativePreset(nativeEasePresetOrPresetProvider);
+        this._thirdPartyEase = thirdPartyEase;
+        this._preset = this._parseNativePreset(nativeEasePresetOrPresetProvider);
     }
 
     get preset() {
-        return this.nativeEasePreset;
+        return this._preset;
     }
 
     supportsCastInward(thirdPartyEase) {
-        return this.thirdPartyEase === thirdPartyEase && !!this.nativeEasePreset;
+        return this._thirdPartyEase === thirdPartyEase && !!this._preset;
     }
 
     supportsCastOutward(nativeEasePreset) {
-        return this.nativeEasePreset.equals(nativeEasePreset) && !!this.thirdPartyEase;
+        return this._preset.equals(nativeEasePreset) && !!this._thirdPartyEase;
     }
 
     castInward(thirdPartyEase) {
-        return this.nativeEasePreset;
+        return this._preset;
     }
 
     castOutward(nativeEasePreset) {
-        return this.thirdPartyEase;
+        return this._thirdPartyEase;
     }
 
     static of(thirdPartyEase, nativeEasePresetOrPresetProvider) {
-        return new PresetCastEntry(thirdPartyEase, nativeEasePresetOrPresetProvider);
+        return new InstanceCastEntry(...arguments);
     }
 
     _parseNativePreset(rawNativePreset) {
-        if (rawNativePreset instanceof EasePresetProvider) {
+        // instanceof seems broken after transpilation, added temporary signature checks
+        if (rawNativePreset instanceof EasePresetProvider || typeof rawNativePreset.next === "function") {
             return rawNativePreset.next();
         }
-        else if (rawNativePreset instanceof EasePreset) {
+        else if (rawNativePreset instanceof EasePreset || typeof rawNativePreset.clone === "function") {
             return rawNativePreset.clone();
         }
         else {
@@ -47,4 +48,4 @@ class PresetCastEntry extends CastEntry {
     }
 }
 
-export default PresetCastEntry;
+export default InstanceCastEntry;

@@ -26,6 +26,7 @@ export default class GUIController extends dat.controllers.Controller {
 
         this._view.on(GUIViewEvent.CURVE_PRESET_SELECTED, this._onCurvePresetSelected.bind(this));
         this._view.on(GUIViewEvent.ORIENTATION_PRESET_SELECTED, this._onOrientationPresetSelected.bind(this));
+        this._view.on(GUIViewEvent.CONFIG_PROPERTY_MODIFIED, this._onConfigPropertyModified.bind(this));
         this._view.on(GUIViewEvent.EDIT_EASE_CLICKED, this._onEditEaseClicked.bind(this));
         this._view.on(GUIViewEvent.EASE_MODIFIED, this._onEaseModified.bind(this));
         this._view.on(GUIViewEvent.ACCEPT_EASE_EDIT_CLICKED, this._onAcceptEaseEditClicked.bind(this));
@@ -107,6 +108,16 @@ export default class GUIController extends dat.controllers.Controller {
         this._view.setPreset(nextPreset);
 
         this._applyValue(nextPreset);
+    }
+
+    _onConfigPropertyModified(propertyName, propertyValue) {
+        console.log(propertyName, propertyValue);
+        // this._model.activePreset.config[propertyName] = propertyValue;
+
+        // if (this._model.activePreset.watchers.has(propertyName)) {
+        //     const watcher = this._model.activePreset.watchers.get(propertyName);
+
+        // }
     }
 
     _onEditEaseClicked() {

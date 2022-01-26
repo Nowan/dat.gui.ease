@@ -2,16 +2,16 @@ import EasePreset, { Curve } from "../../gui/model/preset/EasePreset";
 import CastEntry from "./CastEntry";
 
 class TransformCastEntry extends CastEntry {
-    constructor(selectorPredicate, thirdPartyToNativeCast, nativeToThirdPartyCast) {
+    constructor(predicateFunction, thirdPartyToNativeCast, nativeToThirdPartyCast) {
         super();
 
-        this._selectorPredicate = selectorPredicate;
+        this._predicate = predicateFunction;
         this._transformThirdPartyToNativeEase = thirdPartyToNativeCast;
         this._transformNativeToThirdPartyEase = nativeToThirdPartyCast;
     }
 
     supportsCastInward(thirdPartyEase) {
-        return this._selectorPredicate(thirdPartyEase);
+        return this._predicate(thirdPartyEase) && this._transformThirdPartyToNativeEase;
     }
 
     castInward(thirdPartyEase) {
@@ -22,7 +22,7 @@ class TransformCastEntry extends CastEntry {
         return this._transformNativeToThirdPartyEase(nativeEasePreset.ease);
     }
 
-    static of(selectorPredicate, thirdPartyToNativeCast, nativeToThirdPartyCast) {
+    static of(predicateFunction, thirdPartyToNativeCast, nativeToThirdPartyCast) {
         return new TransformCastEntry(...arguments);
     }
 }

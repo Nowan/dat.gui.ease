@@ -1,7 +1,11 @@
 import { Middleware, Ease, EasePreset, presets } from "dat.gui.ease"
-import { Power0, Power1, Power2, Power3, Power4, Expo, Circ } from "gsap";
+import { Power0, Power1, Power2, Power3, Power4, Expo, Circ, Back } from "gsap";
 
-const { Linear, CircIn, CircOut, CircInOut, ExpoIn, ExpoOut, ExpoInOut } = presets;
+const { Linear, CircIn, CircOut, CircInOut, ExpoIn, ExpoOut, ExpoInOut, BackIn, BackOut, BackInOut } = presets;
+
+const GsapBackIn = Object.getPrototypeOf(Back.easeIn);
+const GsapBackOut = Object.getPrototypeOf(Back.easeOut);
+const GsapBackInOut = Object.getPrototypeOf(Back.easeInOut);
 
 export default class GSAPv2Middleware extends Middleware {
     constructor(CustomEase) {
@@ -28,7 +32,8 @@ export default class GSAPv2Middleware extends Middleware {
             .preset(Circ.easeInOut, CircInOut);
 
         if (typeof CustomEase === "function") {
-            this.pick(datObject => datObject instanceof CustomEase).transform(
+            this.transform(
+                datObject => datObject instanceof CustomEase,
                 gsapEase => Ease.ofSVGPath(gsapEase.data),
                 middlewareEase => CustomEase.create("custom", middlewareEase.svgPath));
         }
