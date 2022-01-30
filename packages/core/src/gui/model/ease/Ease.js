@@ -3,10 +3,16 @@ import Handle from "./composites/Handle";
 import Point from "./composites/Point";
 import InvalidSVGPathException from "./exceptions/InvalidSVGPathException";
 import { Bezier } from "bezier-js"; // consider switching entire Ease class to bezier-js 
+import EaseProperties from "./EaseProperties";
 
-export default class Ease {
+class Ease {
     constructor(...anchors) {
         this._anchors = Array.from(anchors);
+        this._props = new EaseProperties(this);
+    }
+
+    get props() {
+        return this._props;
     }
 
     get anchors() {
@@ -70,7 +76,11 @@ export default class Ease {
     }
 
     clone() {
-        return Ease.of(...this._anchors.map(anchor => anchor.clone()));
+        const clone = Ease.of(...this._anchors.map(anchor => anchor.clone()));
+        for (let [propertyName, property] of this._props.entries()) {
+            clone.props.add(propertyName, property.value, property.mutation, property.uiConfig);
+        }
+        return clone;
     }
 
     static of(...anchors) {
@@ -143,6 +153,10 @@ export default class Ease {
 
         return path;
     }
+
+    static checkSignature(object) {
+        return Array.isArray(object.anchors) && typeof object.svgPath === "string" && typeof object.computeValue === "function";
+    }
 }
 
 function findBezierSegment(anchors, progress) {
@@ -165,8 +179,11 @@ function safeParseCoordinate(rawCoordinate) {
 }
 
 export {
+    Ease,
     Anchor,
     Handle,
     Point,
     InvalidSVGPathException
 }
+
+export default Ease;

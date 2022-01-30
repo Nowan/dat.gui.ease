@@ -1,11 +1,30 @@
 import { Middleware, Ease, EasePreset, presets } from "dat.gui.ease"
 import { Power0, Power1, Power2, Power3, Power4, Expo, Circ, Back } from "gsap";
+import cubicEquationRoots from "./cubicEquationRoots";
 
 const { Linear, CircIn, CircOut, CircInOut, ExpoIn, ExpoOut, ExpoInOut, BackIn, BackOut, BackInOut } = presets;
 
 const GsapBackIn = Object.getPrototypeOf(Back.easeIn);
 const GsapBackOut = Object.getPrototypeOf(Back.easeOut);
 const GsapBackInOut = Object.getPrototypeOf(Back.easeInOut);
+
+var createBackInEase = function(c1, c3) {
+    const roots = cubicEquationRoots(c3, c1, 0, 1);
+    const overshootHandleY = c3 * roots[1].i;
+    const ease = Ease.ofSVGPath(`M 0,0 C 0.34,${overshootHandleY.toFixed(3)} 0.64,1 1,1`);
+    ease.props.add("overshoot", c1, mutateBackInEase, { min: 0.5, max: 5, step: 0.1 });
+
+    return ease;
+}
+
+var mutateBackInEase = function(ease, value) {
+    const c1 = value, c3 = value + 1;
+    const roots = cubicEquationRoots(c3, c1, 0, 1);
+    
+    ease.firstAnchor.handle.y = Number((c3 * roots[1].i).toFixed(3));
+
+    return ease;
+}
 
 export default class GSAPv2Middleware extends Middleware {
     constructor(CustomEase) {
@@ -29,7 +48,13 @@ export default class GSAPv2Middleware extends Middleware {
             .preset(Expo.easeInOut, ExpoInOut)
             .preset(Circ.easeIn, CircIn)
             .preset(Circ.easeOut, CircOut)
-            .preset(Circ.easeInOut, CircInOut);
+            .preset(Circ.easeInOut, CircInOut)
+            .preset(
+                datObject => typeof datObject === "object" && Object.getPrototypeOf(datObject) === GsapBackOut, 
+                gsapBackOutEase => createBackInEase(gsapBackOutEase._p1, gsapBackOutEase._p2),
+                middlewareEase => Back.easeOut.config(middlewareEase.props.getValue("overshoot")),
+                BackOut.property("overshoot", 1.7, mutateBackInEase, { min: 0.5, max: 5, step: 0.1 })
+            );
 
         if (typeof CustomEase === "function") {
             this.transform(

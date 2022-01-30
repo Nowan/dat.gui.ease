@@ -16,8 +16,12 @@ class EasePresetProvider {
         return this;
     }
 
-    property(propertyName, defaultValue) {
-        this._props[propertyName] = defaultValue;
+    property(propertyName, defaultValue, mutationFunction, uiConfig) {
+        this._props[propertyName] = {
+            uiConfig,
+            value: defaultValue,
+            mutate: mutationFunction
+        };
         return this;
     }
 
@@ -32,8 +36,8 @@ class EasePresetProvider {
             preset.orientation = this._orientationAlias;
         }
 
-        for (let propertyName in this._props) {
-            preset.property(propertyName, this._props[propertyName]);
+        for (let [propertyName, propertyEntry] of Object.entries(this._props)) {
+            preset.property(propertyName, propertyEntry.value, propertyEntry.mutate, propertyEntry.uiConfig);
         }
 
         return preset;
@@ -41,6 +45,10 @@ class EasePresetProvider {
 
     static ofSample(preset) {
         return new EasePresetProvider(() => preset.clone());
+    }
+
+    static checkSignature(object) {
+        return typeof object.next === "function";
     }
 }
 

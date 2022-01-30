@@ -16,6 +16,7 @@ class GUIView extends HTMLElementDirector {
         this._easePanelDirector.on(GUIViewEvent.CURVE_PRESET_SELECTED, (...args) => this.emit(GUIViewEvent.CURVE_PRESET_SELECTED, ...args));
         this._easePanelDirector.on(GUIViewEvent.ORIENTATION_PRESET_SELECTED, (...args) => this.emit(GUIViewEvent.ORIENTATION_PRESET_SELECTED, ...args));
         this._easePanelDirector.on(GUIViewEvent.EDIT_EASE_CLICKED, (...args) => this.emit(GUIViewEvent.EDIT_EASE_CLICKED, ...args));
+        this._easePropertiesDirector.on(GUIViewEvent.PROPERTY_MODIFIED, (...args) => this.emit(GUIViewEvent.PROPERTY_MODIFIED, ...args));
     }
 
     setOrientations(orientations) {
@@ -24,7 +25,7 @@ class GUIView extends HTMLElementDirector {
 
     setPreset(preset) {
         this._easePanelDirector.setPreset(preset);
-        this._easePropertiesDirector.values = preset.props;
+        this._easePropertiesDirector.values = preset.ease.props;
         
         if (this._isEditorOpen()) {
             this._easeEditorDirector.ease = preset.ease;

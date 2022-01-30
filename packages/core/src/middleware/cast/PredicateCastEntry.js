@@ -36,10 +36,10 @@ class PredicateCastEntry extends CastEntry {
 
     _parseNativePreset(rawNativePreset) {
         // instanceof seems broken after transpilation, added temporary signature checks
-        if (rawNativePreset instanceof EasePresetProvider || typeof rawNativePreset.next === "function") {
+        if (rawNativePreset instanceof EasePresetProvider || EasePresetProvider.checkSignature(rawNativePreset)) {
             return rawNativePreset.next();
         }
-        else if (rawNativePreset instanceof EasePreset || typeof rawNativePreset.clone === "function") {
+        else if (rawNativePreset instanceof EasePreset || EasePreset.checkSignature(rawNativePreset)) {
             return rawNativePreset.clone();
         }
         else {

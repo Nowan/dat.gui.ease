@@ -1,5 +1,4 @@
 import Ease from "../ease/Ease";
-import EasePresetProps from "./EasePresetProps";
 import Curve from "./enum/Curve";
 import Orientation from "./enum/Orientation";
 
@@ -11,15 +10,10 @@ class EasePreset {
         this.ease = easeOrSvgPath instanceof Ease ? easeOrSvgPath : Ease.ofSVGPath(easeOrSvgPath);
         this.curve = curve;
         this.orientation = orientation;
-        this.props = new EasePresetProps(this);
     }
 
     clone() {
-        const clone = EasePreset.of(this.ease.toString(), this.curve, this.orientation);
-        for (let [propertyName, propertyValue] of this.props.entries()) {
-            clone.props.add(propertyName, propertyValue);
-        }
-        return clone;
+        return EasePreset.of(this.ease.clone(), this.curve, this.orientation);
     }
 
     toString() {
@@ -30,13 +24,17 @@ class EasePreset {
         return this.toString() === preset.toString();
     }
 
-    property(propertyName, defaultValue, watcherFn) {
-        this.props.add(propertyName, defaultValue, watcherFn);
+    property(propertyName, defaultValue, mutationFunction, uiConfig) {
+        this.ease.props.add(propertyName, defaultValue, mutationFunction, uiConfig);
         return this;
     }
 
     static of(svgPath, curve = EasePreset.CURVE.UNDEFINED, orientation = EasePreset.ORIENTATION.NONE) {
         return new EasePreset(svgPath, curve, orientation);
+    }
+
+    static checkSignature(object) {
+        return typeof object.ease === "string" && typeof object.curve === "string" && typeof object.orientation === "string" && typeof object.clone === "function";
     }
 }
 
