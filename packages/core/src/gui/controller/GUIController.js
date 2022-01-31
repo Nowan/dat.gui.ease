@@ -93,6 +93,7 @@ export default class GUIController extends dat.controllers.Controller {
         const nextOrientation = nextOrientations.includes(currentOrientation) ? currentOrientation : nextOrientations[0];
         const nextPreset = this._model.getMatchingPreset(nextCurve, nextOrientation);
 
+        this._model.activePreset.ease.props.resetValues();
         this._model.activePreset = nextPreset;
 
         this._view.setOrientations(nextOrientations);
@@ -103,6 +104,7 @@ export default class GUIController extends dat.controllers.Controller {
 
     _onOrientationPresetSelected(nextOrientation) {
         const nextPreset = this._model.getMatchingPreset(this._model.activePreset.curve, nextOrientation);
+        nextPreset.ease.props.copyValues(this._model.activePreset.ease.props);
 
         this._model.activePreset = nextPreset;
         this._view.setPreset(nextPreset);

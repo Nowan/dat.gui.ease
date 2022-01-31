@@ -20,4 +20,18 @@ export default class EaseProperties extends Map {
             this.get(propertyName).value = value;
         }
     }
+
+    copyValues(props) {
+        for (let property of props.values()) {
+            if (this.has(property.name)) {
+                this.get(property.name).value = property.value;
+            }
+        }
+    }
+
+    resetValues() {
+        for (let property of this.values()) {
+            property.reset();
+        }
+    }
 }

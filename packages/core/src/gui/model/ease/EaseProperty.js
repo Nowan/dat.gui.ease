@@ -1,7 +1,8 @@
 class EaseProperty {
     constructor(name, value, mutationFunction, uiConfig) {
         this._name = name;
-        this._value = value;
+        this._defaultValue = value;
+        this._value = this._defaultValue;
         this._mutationFunction = mutationFunction;
         this._uiConfig = uiConfig;
     }
@@ -30,6 +31,10 @@ class EaseProperty {
         if (this._mutationFunction) {
             this._mutationFunction(ease, value);
         }
+    }
+    
+    reset() {
+        this._value = this._defaultValue;
     }
 }
 
