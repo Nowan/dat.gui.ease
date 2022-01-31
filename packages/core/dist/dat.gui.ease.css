@@ -86,19 +86,25 @@
                 color: #ffffff; }
               .dg .cr.ease .ease-gui .header .c .ease-selector .template-selector select:disabled {
                 cursor: auto; }
-    .dg .cr.ease .ease-gui .properties-container li.cr {
-      border-left-color: transparent; }
-      .dg .cr.ease .ease-gui .properties-container li.cr span.property-name {
-        color: #c1ff4d;
-        font-weight: bold;
-        font-size: 9px; }
-      .dg .cr.ease .ease-gui .properties-container li.cr div.c div.slider div.slider-fg {
-        background-color: #88CE02; }
-      .dg .cr.ease .ease-gui .properties-container li.cr div.c input {
-        color: #c1ff4d; }
+    .dg .cr.ease .ease-gui .properties-container {
+      margin-bottom: 1px; }
+      .dg .cr.ease .ease-gui .properties-container li.cr {
+        border: none;
+        height: 22px; }
+        .dg .cr.ease .ease-gui .properties-container li.cr span.property-name {
+          color: #c1ff4d;
+          font-weight: bold;
+          font-size: 8px;
+          text-align: end;
+          padding-right: 12px; }
+        .dg .cr.ease .ease-gui .properties-container li.cr div.c div.slider div.slider-fg {
+          background-color: #88CE02; }
+        .dg .cr.ease .ease-gui .properties-container li.cr div.c input {
+          color: #c1ff4d; }
     .dg .cr.ease .ease-gui .editor-container {
       width: 100%;
-      background-color: #303030; }
+      background-color: #303030;
+      border-top: solid #2d2d2d 3px; }
       .dg .cr.ease .ease-gui .editor-container .editor {
         box-sizing: border-box;
         width: 100%;

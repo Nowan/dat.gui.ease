@@ -13,7 +13,7 @@ export default class GUIController extends dat.controllers.Controller {
 
         this._middleware = middleware;
         this._model = new GUIModel(middleware);
-        this._view = new GUIView(this._model.curves);
+        this._view = new GUIView(property, this._model.curves);
 
         this._model.activePreset = preset;
 

@@ -129,18 +129,25 @@ $color-dark: #679e00;
             }
 
             .properties-container {
+                margin-bottom: 1px;
+
                 li.cr {
-                    border-left-color: transparent;
+                    border: none;
+                    height: 22px;
 
                     span.property-name {
                         color: $color-property;
                         font-weight: bold;
-                        font-size: 9px;
+                        font-size: 8px;
+                        text-align: end;
+                        padding-right: 12px;
                     }
 
                     div.c {
-                        div.slider div.slider-fg {
-                            background-color: $color-regular;
+                        div.slider {
+                            div.slider-fg {
+                                background-color: $color-regular;
+                            }
                         }
 
                         input {
@@ -153,6 +160,7 @@ $color-dark: #679e00;
             .editor-container {
                 width: 100%;
                 background-color: #303030;
+                border-top: solid #2d2d2d 3px;
 
                 .editor {
                     box-sizing: border-box;

@@ -6,8 +6,10 @@ import EaseEditorDirector from "./dom/directors/EaseEditorDirector";
 import EasePropertiesDirector from "./dom/directors/EasePropertiesDirector";
 
 class GUIView extends HTMLElementDirector {
-    constructor(curves) {
+    constructor(guiName, curves) {
         super(_renderTemplate(domTemplate));
+
+        this._element.querySelector(".header .property-name").innerHTML = guiName;
 
         this._easePanelDirector = new EasePanelDirector(this._element, curves);
         this._easePropertiesDirector = new EasePropertiesDirector(this._element);
@@ -26,7 +28,7 @@ class GUIView extends HTMLElementDirector {
     setPreset(preset) {
         this._easePanelDirector.setPreset(preset);
         this._easePropertiesDirector.values = preset.ease.props;
-        
+
         if (this._isEditorOpen()) {
             this._easeEditorDirector.ease = preset.ease;
         }
