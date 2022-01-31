@@ -90,8 +90,8 @@ class Ease {
     static ofSVGPath(svgPath) {
         try {
             const trimmedPath = svgPath.trim();
-            const [startX, startY] = trimmedPath.match(/^M *(?<x>[\d\.]+),(?<y>[\d\.]+)/).splice(-2).map(safeParseCoordinate);
-            const cCoords = trimmedPath.replace(/^M.*C */, "").replace(/ *$/, "").split(/[ ,]/).map(safeParseCoordinate);
+            const [startX, startY] = trimmedPath.match(/^M *(?<x>-?[\d\.]+),(?<y>-?[\d\.]+)/).splice(-2).map(safeParseCoordinate);
+            const cCoords = trimmedPath.replace(/^M.*C */, "").split(/[ ,]/).map(safeParseCoordinate);
 
             if (cCoords.length % 6 !== 0) {
                 throw new Error("Irregular number of coordinates provided.")

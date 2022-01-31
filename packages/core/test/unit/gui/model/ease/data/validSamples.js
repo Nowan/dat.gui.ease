@@ -42,5 +42,9 @@ export default new Map([
         Anchor.ofOriginAndHandle(Point.of(0.5, 0.5), Point.of(0.25, 1)),
         Anchor.ofOriginAndHandle(Point.of(0.5, 0.5), Point.of(0.75, 0)),
         Anchor.ofOriginAndHandle(Point.of(1, 1), Point.of(1, 1))
+    )],
+    ["M -1,-0.5 C 0,-1.56 1,1 1,1", Ease.of(
+        Anchor.ofOriginAndHandle(Point.of(-1, -0.5), Point.of(0, -1.56)),
+        Anchor.ofOriginAndHandle(Point.of(1, 1), Point.of(1, 1))
     )]
 ]);
