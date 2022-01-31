@@ -81,19 +81,19 @@ export default class GSAPv2Middleware extends Middleware {
             .preset(
                 datObject => typeof datObject === "object" && Object.getPrototypeOf(datObject) === GsapBackIn, 
                 gsapBackOutEase => createEaseBackIn(gsapBackOutEase._p1, gsapBackOutEase._p2),
-                middlewareEase => Back.easeIn.config(middlewareEase.props.getValue("overshoot")),
+                middlewareEase => middlewareEase.props.has("overshoot") && Back.easeIn.config(middlewareEase.props.getValue("overshoot")),
                 BackIn.property("overshoot", 1.7, mutateEaseBackIn, { min: 0.5, max: 5, step: 0.1 })
             )
             .preset(
                 datObject => typeof datObject === "object" && Object.getPrototypeOf(datObject) === GsapBackOut, 
                 gsapBackOutEase => createEaseBackOut(gsapBackOutEase._p1, gsapBackOutEase._p2),
-                middlewareEase => Back.easeOut.config(middlewareEase.props.getValue("overshoot")),
+                middlewareEase => middlewareEase.props.has("overshoot") && Back.easeOut.config(middlewareEase.props.getValue("overshoot")),
                 BackOut.property("overshoot", 1.7, mutateEaseBackOut, { min: 0.5, max: 5, step: 0.1 })
             )
             .preset(
                 datObject => typeof datObject === "object" && Object.getPrototypeOf(datObject) === GsapBackInOut, 
                 gsapBackOutEase => createEaseBackInOut(gsapBackOutEase._p1, gsapBackOutEase._p2),
-                middlewareEase => Back.easeInOut.config(middlewareEase.props.getValue("overshoot")),
+                middlewareEase => middlewareEase.props.has("overshoot") && Back.easeInOut.config(middlewareEase.props.getValue("overshoot")),
                 BackInOut.property("overshoot", 1.7, mutateEaseBackInOut, { min: 0.5, max: 5, step: 0.1 })
             );
 

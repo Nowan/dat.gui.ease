@@ -71,7 +71,7 @@ function createNumberSliderController(config, property) {
     });
 
     wrapperElement.classList.add("number", "has-slider");
-    wrapperElement.querySelector("span.property-name").innerHTML = property.name;
+    wrapperElement.querySelector("span.property-name").innerHTML = property.name.toUpperCase();
     wrapperElement.querySelector("div.c").append(sliderController.domElement, boxController.domElement);
 
     sliderController.domElement = wrapperElement;

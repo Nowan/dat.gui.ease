@@ -1,3 +1,4 @@
+$color-property: #c1ff4d;
 $color-light: #ace247;
 $color-regular: #88CE02;
 $color-dark: #679e00;
@@ -122,6 +123,28 @@ $color-dark: #679e00;
                                     cursor: auto;
                                 }
                             }
+                        }
+                    }
+                }
+            }
+
+            .properties-container {
+                li.cr {
+                    border-left-color: transparent;
+
+                    span.property-name {
+                        color: $color-property;
+                        font-weight: bold;
+                        font-size: 9px;
+                    }
+
+                    div.c {
+                        div.slider div.slider-fg {
+                            background-color: $color-regular;
+                        }
+
+                        input {
+                            color: $color-property;
                         }
                     }
                 }
