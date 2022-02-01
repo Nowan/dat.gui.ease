@@ -26,6 +26,10 @@ class PredicateCastEntry extends CastEntry {
         return preset;
     }
 
+    supportsCastOutward(nativeEasePreset) {
+        return nativeEasePreset.curve === this._preset.curve && nativeEasePreset.orientation === this._preset.orientation;
+    }
+
     castOutward(nativeEasePreset) {
         return this._transformNativeToThirdPartyEase(nativeEasePreset.ease);
     }
