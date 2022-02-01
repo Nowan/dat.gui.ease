@@ -23,7 +23,7 @@ class InstanceCastEntry extends CastEntry {
     }
 
     castInward(thirdPartyEase) {
-        return this._preset;
+        return this._preset.clone();
     }
 
     castOutward(nativeEasePreset) {

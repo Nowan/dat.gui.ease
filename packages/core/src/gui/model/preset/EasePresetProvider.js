@@ -1,6 +1,6 @@
 class EasePresetProvider {
-    constructor(providerFunction) {
-        this._providerFunction = providerFunction;
+    constructor(samplePreset) {
+        this._sample = samplePreset;
         this._curveAlias = null;
         this._orientationAlias = null;
         this._props = {};
@@ -26,7 +26,7 @@ class EasePresetProvider {
     }
 
     next() {
-        const preset = this._providerFunction();
+        const preset = this._sample.clone();
         
         if (this._curveAlias) {
             preset.curve = this._curveAlias;
@@ -44,7 +44,7 @@ class EasePresetProvider {
     }
 
     static ofSample(preset) {
-        return new EasePresetProvider(() => preset.clone());
+        return new EasePresetProvider(preset);
     }
 
     static checkSignature(object) {
