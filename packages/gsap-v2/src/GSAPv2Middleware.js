@@ -1,59 +1,13 @@
 import { Middleware, Ease, EasePreset, presets } from "dat.gui.ease"
 import { Power0, Power1, Power2, Power3, Power4, Expo, Circ, Back } from "gsap";
-import cubicEquationRoots from "./cubicEquationRoots";
+import BackEasePreset from "./presets/BackEasePreset";
 
-const { Linear, CircIn, CircOut, CircInOut, ExpoIn, ExpoOut, ExpoInOut, BackIn, BackOut, BackInOut } = presets;
+const { Linear, CircIn, CircOut, CircInOut, ExpoIn, ExpoOut, ExpoInOut } = presets;
+const { IN: BackIn, OUT: BackOut, IN_OUT: BackInOut } = BackEasePreset;
 
 const GsapBackIn = Object.getPrototypeOf(Back.easeIn);
 const GsapBackOut = Object.getPrototypeOf(Back.easeOut);
 const GsapBackInOut = Object.getPrototypeOf(Back.easeInOut);
-
-var createEaseBackIn = function(c1, c3) {
-    const ease = Ease.ofSVGPath(`M 0,0 C 0.36,0 0.66,-0.56 1,1`);
-    ease.props.add("overshoot", c1, mutateEaseBackIn, { min: 0.5, max: 5, step: 0.1 });
-
-    return mutateEaseBackIn(ease, c1, c3);
-}
-
-var createEaseBackOut = function(c1, c3) {
-    const ease = Ease.ofSVGPath(`M 0,0 C 0.34,1.56 0.64,1 1,1`);
-    ease.props.add("overshoot", c1, mutateEaseBackOut, { min: 0.5, max: 5, step: 0.1 });
-
-    return mutateEaseBackOut(ease, c1, c3);
-}
-
-var createEaseBackInOut = function(c1, c3) {
-    const ease = Ease.ofSVGPath(`M 0,0 C 0.68,-0.6 0.32,1.6 1,1`);
-    ease.props.add("overshoot", c1, mutateEaseBackInOut, { min: 0.5, max: 5, step: 0.1 });
-    
-    return mutateEaseBackInOut(ease, c1, c3);
-}
-
-var mutateEaseBackIn = function(ease, c1, c3 = c1 + 1) {
-    const roots = cubicEquationRoots(c3, c1, 0, 1);
-
-    ease.lastAnchor.handle.y = Number(1 - c3 * roots[1].i).toFixed(3);
-
-    return ease;
-}
-
-var mutateEaseBackOut = function(ease, c1, c3 = c1 + 1) {
-    const roots = cubicEquationRoots(c3, c1, 0, 1);
-
-    ease.firstAnchor.handle.y = Number((c3 * roots[1].i).toFixed(3));
-
-    return ease;
-}
-
-var mutateEaseBackInOut = function(ease, c1, c3 = c1 + 1) {
-    const roots = cubicEquationRoots(c3, c1, 0, 1);
-    const handleY = c3 * roots[1].i;
-
-    ease.firstAnchor.handle.y = Number((1 - handleY).toFixed(3));
-    ease.lastAnchor.handle.y = Number(handleY.toFixed(3));
-
-    return ease;
-}
 
 export default class GSAPv2Middleware extends Middleware {
     constructor(CustomEase) {
@@ -80,21 +34,21 @@ export default class GSAPv2Middleware extends Middleware {
             .preset(Circ.easeInOut, CircInOut)
             .preset(
                 datObject => typeof datObject === "object" && Object.getPrototypeOf(datObject) === GsapBackIn, 
-                gsapBackInEase => createEaseBackIn(gsapBackInEase._p1, gsapBackInEase._p2),
+                gsapBackInEase => BackIn.createEase(gsapBackInEase._p1, gsapBackInEase._p2),
                 middlewareEase => Back.easeIn.config(middlewareEase.props.getValue("overshoot")),
-                BackIn.property("overshoot", 1.7, mutateEaseBackIn, { min: 0.5, max: 5, step: 0.1 })
+                BackIn
             )
             .preset(
                 datObject => typeof datObject === "object" && Object.getPrototypeOf(datObject) === GsapBackOut, 
-                gsapBackOutEase => createEaseBackOut(gsapBackOutEase._p1, gsapBackOutEase._p2),
+                gsapBackOutEase => BackOut.createEase(gsapBackOutEase._p1, gsapBackOutEase._p2),
                 middlewareEase => Back.easeOut.config(middlewareEase.props.getValue("overshoot")),
-                BackOut.property("overshoot", 1.7, mutateEaseBackOut, { min: 0.5, max: 5, step: 0.1 })
+                BackOut
             )
             .preset(
                 datObject => typeof datObject === "object" && Object.getPrototypeOf(datObject) === GsapBackInOut, 
-                gsapBackOutEase => createEaseBackInOut(gsapBackOutEase._p1, gsapBackOutEase._p2),
+                gsapBackInOutEase => BackInOut.createEase(gsapBackInOutEase._p1, gsapBackInOutEase._p2),
                 middlewareEase => Back.easeInOut.config(middlewareEase.props.getValue("overshoot")),
-                BackInOut.property("overshoot", 1.7, mutateEaseBackInOut, { min: 0.5, max: 5, step: 0.1 })
+                BackInOut
             );
 
         if (typeof CustomEase === "function") {

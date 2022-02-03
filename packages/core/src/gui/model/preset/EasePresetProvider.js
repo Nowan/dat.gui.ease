@@ -6,6 +6,18 @@ class EasePresetProvider {
         this._props = {};
     }
 
+    get ease() {
+        return this._sample.ease;
+    }
+
+    get curve() {
+        return this._curveAlias || this._sample.curve;
+    }
+
+    get orientation() {
+        return this._orientationAlias || this._sample.orientation;
+    }
+
     withAlias(curveAlias) {
         this._curveAlias = curveAlias;
         return this;
@@ -27,14 +39,9 @@ class EasePresetProvider {
 
     next() {
         const preset = this._sample.clone();
-        
-        if (this._curveAlias) {
-            preset.curve = this._curveAlias;
-        }
 
-        if (this._orientationAlias) {
-            preset.orientation = this._orientationAlias;
-        }
+        preset.curve = this.curve;
+        preset.orientation = this.orientation;
 
         for (let [propertyName, propertyEntry] of Object.entries(this._props)) {
             preset.property(propertyName, propertyEntry.value, propertyEntry.mutate, propertyEntry.uiConfig);
