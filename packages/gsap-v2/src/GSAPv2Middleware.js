@@ -1,6 +1,7 @@
 import { Middleware, Ease, presets } from "dat.gui.ease"
-import { Power0, Power1, Power2, Power3, Power4, Expo, Circ, Back } from "gsap";
+import { Power0, Power1, Power2, Power3, Power4, Expo, Circ, Back, SteppedEase } from "gsap";
 import { BackIn, BackOut, BackInOut } from "./presets/Back";
+import { Stepped } from "./presets/Stepped";
 import {
     Power0 as Power0None,
     Power1In, Power1Out, Power1InOut, 
@@ -51,6 +52,11 @@ export default class GSAPv2Middleware extends Middleware {
                 BackInOut, gsapBackEasePredicate(GsapBackInOut), 
                 gsapBackInOutEase => BackInOut.createEase(gsapBackInOutEase._p1, gsapBackInOutEase._p2),
                 middlewareEase => Back.easeInOut.config(middlewareEase.props.getValue("overshoot"))
+            )
+            .preset(Stepped, 
+                datObject => typeof datObject === "object" && datObject instanceof SteppedEase,
+                gsapBackInEase => Stepped.createEase(1 / gsapBackInEase._p1),
+                middlewareEase => SteppedEase.config(middlewareEase.props.getValue("steps"))
             );
 
         if (typeof CustomEase === "function") {

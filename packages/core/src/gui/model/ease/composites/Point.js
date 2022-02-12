@@ -9,6 +9,17 @@ export default class Point {
         this.y = pointLike.y;
     }
 
+    set(xOrPointLike, y) {
+        if (typeof xOrPointLike === "object") {
+            this.x = xOrPointLike.x;
+            this.y = xOrPointLike.y;
+        }
+        else {
+            this.x = xOrPointLike;
+            this.y = y;
+        }
+    }
+
     static of(x, y) {
         return new Point(x, y);
     }
