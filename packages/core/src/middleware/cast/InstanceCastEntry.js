@@ -3,11 +3,11 @@ import EasePresetProvider from "../../gui/model/preset/EasePresetProvider";
 import CastEntry from "./CastEntry";
 
 class InstanceCastEntry extends CastEntry {
-    constructor(thirdPartyEase, nativeEasePresetOrPresetProvider) {
+    constructor(nativeEasePresetOrPresetProvider, thirdPartyEase) {
         super();
         
-        this._thirdPartyEase = thirdPartyEase;
         this._preset = this._parseNativePreset(nativeEasePresetOrPresetProvider);
+        this._thirdPartyEase = thirdPartyEase;
     }
 
     get preset() {

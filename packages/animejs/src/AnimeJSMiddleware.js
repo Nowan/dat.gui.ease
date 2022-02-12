@@ -16,31 +16,31 @@ export default class AnimeJSMiddleware extends Middleware {
     constructor() {
         super("AnimeJS");
         
-        this.preset("linear", Linear)
-            .preset("easeInSine", SineIn)
-            .preset("easeOutSine", SineOut)
-            .preset("easeInOutSine", SineInOut)
-            .preset("easeInQuad", QuadIn)
-            .preset("easeOutQuad", QuadOut)
-            .preset("easeInOutQuad", QuadInOut)
-            .preset("easeInCubic", CubicIn)
-            .preset("easeOutCubic", CubicOut)
-            .preset("easeInOutCubic", CubicInOut)
-            .preset("easeInQuart", QuartIn)
-            .preset("easeOutQuart", QuartOut)
-            .preset("easeInOutQuart", QuartInOut)
-            .preset("easeInExpo", ExpoIn)
-            .preset("easeOutExpo", ExpoOut)
-            .preset("easeInOutExpo", ExpoInOut)
-            .preset("easeInCirc", CircIn)
-            .preset("easeOutCirc", CircOut)
-            .preset("easeInOutCirc", CircInOut)
-            .preset("easeInBack", BackIn)
-            .preset("easeOutBack", BackOut)
-            .preset("easeInOutBack", BackInOut)
-            .pick(datObject => CustomEase.checkSignature(datObject)).transform(
+        this.preset(Linear, "linear")
+            .preset(SineIn, "easeInSine")
+            .preset(SineOut, "easeOutSine")
+            .preset(SineInOut, "easeInOutSine")
+            .preset(QuadIn, "easeInQuad")
+            .preset(QuadOut, "easeOutQuad")
+            .preset(QuadInOut, "easeInOutQuad")
+            .preset(CubicIn, "easeInCubic")
+            .preset(CubicOut, "easeOutCubic")
+            .preset(CubicInOut, "easeInOutCubic")
+            .preset(QuartIn, "easeInQuart")
+            .preset(QuartOut, "easeOutQuart")
+            .preset(QuartInOut, "easeInOutQuart")
+            .preset(ExpoIn, "easeInExpo")
+            .preset(ExpoOut, "easeOutExpo")
+            .preset(ExpoInOut, "easeInOutExpo")
+            .preset(CircIn, "easeInCirc")
+            .preset(CircOut, "easeOutCirc")
+            .preset(CircInOut, "easeInOutCirc")
+            .preset(BackIn, "easeInBack")
+            .preset(BackOut, "easeOutBack")
+            .preset(BackInOut, "easeInOutBack")
+            .transform(
+                datObject => CustomEase.checkSignature(datObject),
                 datEase => datEase.ease.clone(),
-                middlewareEase => new CustomEase(middlewareEase.svgPath)
-            )
+                middlewareEase => new CustomEase(middlewareEase.svgPath));
     }
 }

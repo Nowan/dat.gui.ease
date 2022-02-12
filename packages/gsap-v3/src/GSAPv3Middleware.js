@@ -13,31 +13,31 @@ class GSAPv3Middleware extends Middleware {
     constructor(CustomEase) {
         super("GSAPv3");
         
-        this.preset("none", Power0)
-            .preset("power1.in", Power1In)
-            .preset("power1.out", Power1Out)
-            .preset("power1.inOut", Power1InOut)
-            .preset("power2.in", Power2In)
-            .preset("power2.out", Power2Out)
-            .preset("power2.inOut", Power2InOut)
-            .preset("power3.in", Power3In)
-            .preset("power3.out", Power3Out)
-            .preset("power3.inOut", Power3InOut)
-            .preset("power4.in", Power4In)
-            .preset("power4.out", Power4Out)
-            .preset("power4.inOut", Power4InOut)
-            .preset("expo.in", ExpoIn)
-            .preset("expo.out", ExpoOut)
-            .preset("expo.inOut", ExpoInOut)
-            .preset("circ.in", CircIn)
-            .preset("circ.out", CircOut)
-            .preset("circ.inOut", CircInOut);
+        this.preset(Power0, "none")
+            .preset(Power1In, "power1.in")
+            .preset(Power1Out, "power1.out")
+            .preset(Power1InOut, "power1.inOut")
+            .preset(Power2In, "power2.in")
+            .preset(Power2Out, "power2.out")
+            .preset(Power2InOut, "power2.inOut")
+            .preset(Power3In, "power3.in")
+            .preset(Power3Out, "power3.out")
+            .preset(Power3InOut, "power3.inOut")
+            .preset(Power4In, "power4.in")
+            .preset(Power4Out, "power4.out")
+            .preset(Power4InOut, "power4.inOut")
+            .preset(ExpoIn, "expo.in")
+            .preset(ExpoOut, "expo.out")
+            .preset(ExpoInOut, "expo.inOut")
+            .preset(CircIn, "circ.in")
+            .preset(CircOut, "circ.out")
+            .preset(CircInOut, "circ.inOut");
 
         if (typeof CustomEase === "function") {
-            this.pick(datObject => typeof datObject.custom === "object" && datObject.custom instanceof CustomEase).transform(
+            this.transform(
+                datObject => typeof datObject === "object" && typeof datObject.custom === "object" && datObject.custom instanceof CustomEase,
                 gsapEase => Ease.ofSVGPath(gsapEase.custom.data),
-                middlewareEase => CustomEase.create("custom", middlewareEase.svgPath)
-            );
+                middlewareEase => CustomEase.create("custom", middlewareEase.svgPath));
         }
     }
 }

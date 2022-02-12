@@ -16,14 +16,14 @@ class Middleware {
         return this._castEntries.filter(castEntry => !(castEntry instanceof TransformCastEntry)).map(entry => entry.preset);
     }
 
-    preset(thirdPartyEaseOrPredicateFunction, ...followupArguments) {
+    preset(nativeEasePreset, thirdPartyEaseOrPredicateFunction, ...followupArguments) {
         switch (typeof thirdPartyEaseOrPredicateFunction) {
             case "function":
-                this._predicatePreset(thirdPartyEaseOrPredicateFunction, ...followupArguments);
+                this._predicatePreset(nativeEasePreset, thirdPartyEaseOrPredicateFunction, ...followupArguments);
                 return this;
             case "string":
             case "object":
-                this._instancePreset(thirdPartyEaseOrPredicateFunction, ...followupArguments);
+                this._instancePreset(nativeEasePreset, thirdPartyEaseOrPredicateFunction);
                 return this;
             default:
                 console.warn(`Unsupported ease format: `, thirdPartyEaseOrPredicate);
@@ -85,11 +85,11 @@ class Middleware {
         return /^\[object DatGuiEase(?:.*)Middleware\]$/.test(instanceLike.toString());
     }
 
-    _predicatePreset(predicateFunction, thirdPartyToNativeCast, nativeToThirdPartyCast, nativeEasePreset) {
+    _predicatePreset(nativeEasePreset, predicateFunction, thirdPartyToNativeCast, nativeToThirdPartyCast) {
         this.castEntries.push(PredicateCastEntry.of(...arguments));
     }
 
-    _instancePreset(thirdPartyEase, nativeEasePreset) {
+    _instancePreset(nativeEasePreset, thirdPartyEase) {
         this.castEntries.push(InstanceCastEntry.of(...arguments));
     }
 }

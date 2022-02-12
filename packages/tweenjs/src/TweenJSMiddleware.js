@@ -16,27 +16,28 @@ export default class TweenJSMiddleware extends Middleware {
     constructor() {
         super("TweenJS");
         
-        this.preset(Easing.Linear.None, Linear)
-            .preset(Easing.Sinusoidal.In, SineIn)
-            .preset(Easing.Sinusoidal.Out, SineOut)
-            .preset(Easing.Sinusoidal.InOut, SineInOut)
-            .preset(Easing.Quadratic.In, QuadIn)
-            .preset(Easing.Quadratic.Out, QuadOut)
-            .preset(Easing.Quadratic.InOut, QuadInOut)
-            .preset(Easing.Cubic.In, CubicIn)
-            .preset(Easing.Cubic.Out, CubicOut)
-            .preset(Easing.Cubic.InOut, CubicInOut)
-            .preset(Easing.Quartic.In, QuartIn)
-            .preset(Easing.Quartic.Out, QuartOut)
-            .preset(Easing.Quartic.InOut, QuartInOut)
-            .preset(Easing.Exponential.In, ExpoIn)
-            .preset(Easing.Exponential.Out, ExpoOut)
-            .preset(Easing.Exponential.InOut, ExpoInOut)
-            .preset(Easing.Circular.In, CircIn)
-            .preset(Easing.Circular.Out, CircOut)
-            .preset(Easing.Circular.InOut, CircInOut)
-            .pick(datObject => CustomEase.checkSignature(datObject)).transform(
+        this.preset(Linear, Easing.Linear.None)
+            .preset(SineIn, Easing.Sinusoidal.In)
+            .preset(SineOut, Easing.Sinusoidal.Out)
+            .preset(SineInOut, Easing.Sinusoidal.InOut)
+            .preset(QuadIn, Easing.Quadratic.In)
+            .preset(QuadOut, Easing.Quadratic.Out)
+            .preset(QuadInOut, Easing.Quadratic.InOut)
+            .preset(CubicIn, Easing.Cubic.In)
+            .preset(CubicOut, Easing.Cubic.Out)
+            .preset(CubicInOut, Easing.Cubic.InOut)
+            .preset(QuartIn, Easing.Quartic.In)
+            .preset(QuartOut, Easing.Quartic.Out)
+            .preset(QuartInOut, Easing.Quartic.InOut)
+            .preset(ExpoIn, Easing.Exponential.In)
+            .preset(ExpoOut, Easing.Exponential.Out)
+            .preset(ExpoInOut, Easing.Exponential.InOut)
+            .preset(CircIn, Easing.Circular.In)
+            .preset(CircOut, Easing.Circular.Out)
+            .preset(CircInOut, Easing.Circular.InOut)
+            .transform(
+                datObject => CustomEase.checkSignature(datObject),
                 datEase => datEase.ease.clone(),
-                middlewareEase => new CustomEase(middlewareEase.svgPath))
+                middlewareEase => new CustomEase(middlewareEase.svgPath));
     }
 }

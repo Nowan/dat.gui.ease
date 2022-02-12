@@ -3,13 +3,13 @@ import EasePresetProvider from "../../gui/model/preset/EasePresetProvider";
 import CastEntry from "./CastEntry";
 
 class PredicateCastEntry extends CastEntry {
-    constructor(predicateFunction, thirdPartyToNativeCast, nativeToThirdPartyCast, nativeEasePresetOrPresetProvider) {
+    constructor(nativeEasePresetOrPresetProvider, predicateFunction, thirdPartyToNativeCast, nativeToThirdPartyCast) {
         super();
 
+        this._preset = this._parseNativePreset(nativeEasePresetOrPresetProvider);
         this._predicate = predicateFunction;
         this._transformThirdPartyToNativeEase = thirdPartyToNativeCast;
         this._transformNativeToThirdPartyEase = nativeToThirdPartyCast;
-        this._preset = this._parseNativePreset(nativeEasePresetOrPresetProvider);
     }
 
     get preset() {
